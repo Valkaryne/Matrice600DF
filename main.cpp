@@ -1,4 +1,4 @@
-#include "matricedfview.hpp"
+#include "View/matricedfview.hpp"
 #include <QApplication>
 
 int main(int argc, char *argv[])

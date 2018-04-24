@@ -25,10 +25,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        matricedfview.cpp
+    View/matricedfview.cpp
 
 HEADERS += \
-        matricedfview.hpp
+    View/matricedfview.hpp
 
 FORMS += \
-        matricedfview.ui
+    View/matricedfview.ui
