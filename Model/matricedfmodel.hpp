@@ -1,8 +1,9 @@
 #ifndef MATRICEDFMODEL_HPP
 #define MATRICEDFMODEL_HPP
 
+#include "modelinterface.hpp"
 
-class MatriceDFModel
+class MatriceDFModel : public ModelInterface
 {
 public:
     MatriceDFModel();

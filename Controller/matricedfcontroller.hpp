@@ -4,7 +4,7 @@
 #include <Model/matricedfmodel.hpp>
 #include <View/matricedfview.hpp>
 
-class MatriceDFController
+class MatriceDFController : public ControllerInterface
 {
 public:
     MatriceDFController();

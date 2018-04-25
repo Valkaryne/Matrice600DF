@@ -33,7 +33,9 @@ SOURCES += \
     Utils/polarplot.cpp \
     Controller/matricedfcontroller.cpp \
     Model/matricedfmodel.cpp \
-    Utils/udpchannel.cpp
+    Utils/udpchannel.cpp \
+    Controller/controllerinterface.cpp \
+    Model/modelinterface.cpp
 
 HEADERS += \
     View/matricedfview.hpp \
@@ -44,7 +46,9 @@ HEADERS += \
     Utils/polarplot.hpp \
     Controller/matricedfcontroller.hpp \
     Model/matricedfmodel.hpp \
-    Utils/udpchannel.hpp
+    Utils/udpchannel.hpp \
+    Controller/controllerinterface.hpp \
+    Model/modelinterface.hpp
 
 FORMS += \
     View/matricedfview.ui
