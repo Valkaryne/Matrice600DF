@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -30,7 +30,10 @@ SOURCES += \
     Utils/spectrumplot.cpp \
     Utils/amplitudespectrumplot.cpp \
     Utils/phasespectrumplot.cpp \
-    Utils/polarplot.cpp
+    Utils/polarplot.cpp \
+    Controller/matricedfcontroller.cpp \
+    Model/matricedfmodel.cpp \
+    Utils/udpchannel.cpp
 
 HEADERS += \
     View/matricedfview.hpp \
@@ -38,7 +41,10 @@ HEADERS += \
     Utils/spectrumplot.hpp \
     Utils/amplitudespectrumplot.hpp \
     Utils/phasespectrumplot.hpp \
-    Utils/polarplot.hpp
+    Utils/polarplot.hpp \
+    Controller/matricedfcontroller.hpp \
+    Model/matricedfmodel.hpp \
+    Utils/udpchannel.hpp
 
 FORMS += \
     View/matricedfview.ui

@@ -68,6 +68,9 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="mapDockWidget">
+   <property name="floating">
+    <bool>true</bool>
+   </property>
    <property name="features">
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
@@ -80,6 +83,9 @@
    <widget class="QWidget" name="mapWidget"/>
   </widget>
   <widget class="QDockWidget" name="videoDockWidget">
+   <property name="floating">
+    <bool>true</bool>
+   </property>
    <property name="features">
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
