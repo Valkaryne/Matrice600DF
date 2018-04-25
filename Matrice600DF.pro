@@ -25,10 +25,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    View/matricedfview.cpp
+    View/matricedfview.cpp \
+    Utils/spectrumwaterfall.cpp \
+    Utils/spectrumplot.cpp \
+    Utils/amplitudespectrumplot.cpp \
+    Utils/phasespectrumplot.cpp \
+    Utils/polarplot.cpp
 
 HEADERS += \
-    View/matricedfview.hpp
+    View/matricedfview.hpp \
+    Utils/spectrumwaterfall.hpp \
+    Utils/spectrumplot.hpp \
+    Utils/amplitudespectrumplot.hpp \
+    Utils/phasespectrumplot.hpp \
+    Utils/polarplot.hpp
 
 FORMS += \
     View/matricedfview.ui
+
+CONFIG += \
+    qwt \
+    qwtpolar

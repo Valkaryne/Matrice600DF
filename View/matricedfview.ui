@@ -34,6 +34,12 @@
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="spectrumDockWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <property name="features">
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
@@ -43,7 +49,9 @@
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="QWidget" name="spectrumWidget"/>
+   <widget class="QWidget" name="spectrumWidget">
+    <layout class="QVBoxLayout" name="analysisLayout"/>
+   </widget>
   </widget>
   <widget class="QDockWidget" name="polarDockWidget">
    <property name="features">
@@ -55,7 +63,9 @@
    <attribute name="dockWidgetArea">
     <number>2</number>
    </attribute>
-   <widget class="QWidget" name="polarWidget"/>
+   <widget class="QWidget" name="polarWidget">
+    <layout class="QHBoxLayout" name="polarLayout"/>
+   </widget>
   </widget>
   <widget class="QDockWidget" name="mapDockWidget">
    <property name="features">

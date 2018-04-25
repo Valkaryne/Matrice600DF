@@ -2,6 +2,11 @@
 #define MATRICEDFVIEW_HPP
 
 #include <QMainWindow>
+#include <Utils/spectrumwaterfall.hpp>
+#include <Utils/spectrumplot.hpp>
+#include <Utils/amplitudespectrumplot.hpp>
+#include <Utils/phasespectrumplot.hpp>
+#include <Utils/polarplot.hpp>
 
 namespace Ui {
 class MatriceDFView;
@@ -17,6 +22,10 @@ public:
 
 private:
     Ui::MatriceDFView *ui;
+    SpectrumWaterfall   *spectrumWaterfall;
+    SpectrumPlot        *amplitudeSpectrumPlot;
+    SpectrumPlot        *phaseSpectrumPlot;
+    PolarPlot           *polarPlot;
 };
 
 #endif // MATRICEDFVIEW_HPP
