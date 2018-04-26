@@ -1,17 +1,22 @@
 #ifndef MATRICEDFCONTROLLER_HPP
 #define MATRICEDFCONTROLLER_HPP
 
+#include "controllerinterface.hpp"
+#include <Model/modelinterface.hpp>
 #include <Model/matricedfmodel.hpp>
-#include <View/matricedfview.hpp>
+//#include <View/matricedfview.hpp>
 
 class MatriceDFController : public ControllerInterface
 {
+
 public:
-    MatriceDFController();
+    explicit MatriceDFController(ModelInterface *model = 0);
+
 
 private:
-    MatriceDFModel  *model;
-    MatriceDFView   *view;
+    void makeConnections(MatriceDFView *view);
+
+    ModelInterface  *model;
 };
 
 #endif // MATRICEDFCONTROLLER_HPP

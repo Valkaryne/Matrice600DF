@@ -3,8 +3,10 @@
 #include "matricedfview.hpp"
 #include "ui_matricedfview.h"
 
-MatriceDFView::MatriceDFView(QWidget *parent) :
+MatriceDFView::MatriceDFView(QWidget *parent, ControllerInterface *controller, ModelInterface *model) :
     QMainWindow(parent),
+    controller(controller),
+    model(model),
     ui(new Ui::MatriceDFView)
 {
     ui->setupUi(this);

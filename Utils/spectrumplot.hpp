@@ -3,6 +3,7 @@
 
 #include <qwt_plot.h>
 #include <qwt_plot_zoomer.h>
+#include <qwt_plot_curve.h>
 #include <qwt_plot_picker.h>
 #include <qwt_picker_machine.h>
 #include <qwt_scale_draw.h>
@@ -12,6 +13,8 @@
 #include <qwt_plot_marker.h>
 #include <qwt_wheel.h>
 #include <qwt_symbol.h>
+
+#include "constset.hpp"
 
 class SpectrumPlot : public QwtPlot
 {
@@ -23,9 +26,12 @@ public:
     /* Hints for resize QwtPlot */
     QSize minimumSizeHint() const { return QSize(600, 150); }
 
+
+
 public slots:
 
-private:
+protected:
+    double cntrFrequency;
 };
 
 #endif // SPECTRUMPLOT_HPP

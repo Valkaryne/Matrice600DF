@@ -5,8 +5,24 @@
 
 class MatriceDFModel : public ModelInterface
 {
+    Q_OBJECT
+
 public:
     MatriceDFModel();
+
+    void initializeModel();
+    UdpChannel* getUDPChannel();
+
+private slots:
+    void samplesHandler(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
+                        const QVector<double> samplesPh);
+
+signals:
+    void amplitudeSamplesReady(const QVector<double> amplitudeOne, const QVector<double> amplitudeTwo);
+    void phaseSamplesReady(const QVector<double> phaseDiff);
+
+private:
+    double gain;
 };
 
 #endif // MATRICEDFMODEL_HPP

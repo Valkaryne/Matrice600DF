@@ -1,7 +1,8 @@
 #include "spectrumplot.hpp"
 
 SpectrumPlot::SpectrumPlot(QWidget *parent)
-    : QwtPlot(parent)
+    : QwtPlot(parent),
+      cntrFrequency(70)
 {
     /* Canvas */
     QwtPlotCanvas *canvas = new QwtPlotCanvas;

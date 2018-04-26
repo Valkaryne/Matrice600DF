@@ -54,6 +54,12 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="polarDockWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <property name="features">
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
    </property>
@@ -68,6 +74,12 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="mapDockWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <property name="floating">
     <bool>true</bool>
    </property>
@@ -83,8 +95,14 @@
    <widget class="QWidget" name="mapWidget"/>
   </widget>
   <widget class="QDockWidget" name="videoDockWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <property name="floating">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="features">
     <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
@@ -99,7 +117,7 @@
   </widget>
   <widget class="QDockWidget" name="plotConfigDockWidget">
    <property name="sizePolicy">
-    <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
@@ -418,7 +436,7 @@ QRadioButton::indicator::checked {
   </widget>
   <widget class="QDockWidget" name="flightConfigDockWidget">
    <property name="sizePolicy">
-    <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
@@ -664,7 +682,7 @@ QRadioButton::indicator::checked {
   </widget>
   <widget class="QDockWidget" name="usrpConfigDockWidget">
    <property name="sizePolicy">
-    <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
@@ -808,7 +826,7 @@ QRadioButton::indicator::checked {
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="markersButtonGroup"/>
   <buttongroup name="modeButtonGroup"/>
+  <buttongroup name="markersButtonGroup"/>
  </buttongroups>
 </ui>

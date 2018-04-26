@@ -1,6 +1,6 @@
 //#include "View/matricedfview.hpp"
 #include "Model/matricedfmodel.hpp"
-#include "Controller/matricedfcontroller.hpp".hpp"
+#include "Controller/matricedfcontroller.hpp"
 #include <QApplication>
 
 #include <QtMath>

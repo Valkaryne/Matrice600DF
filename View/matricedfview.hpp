@@ -23,7 +23,8 @@ class MatriceDFView : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MatriceDFView(QWidget *parent = 0);
+    explicit MatriceDFView(QWidget *parent = 0, ControllerInterface *controller = 0,
+                           ModelInterface *model = 0);
     ~MatriceDFView();
 
 private:

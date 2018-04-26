@@ -5,7 +5,7 @@
 #include <QUdpSocket>
 #include <QNetworkDatagram>
 
-class UdpChannel
+class UdpChannel : public QObject
 {
     Q_OBJECT
 public:

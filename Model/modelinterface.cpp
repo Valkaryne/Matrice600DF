@@ -1,6 +1,6 @@
-#include "modelinterface.hpp"
+//#include "modelinterface.hpp"
 
-ModelInterface::ModelInterface()
+/* ModelInterface::ModelInterface()
 {
 
-}
+} */

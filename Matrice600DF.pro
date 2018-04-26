@@ -34,8 +34,8 @@ SOURCES += \
     Controller/matricedfcontroller.cpp \
     Model/matricedfmodel.cpp \
     Utils/udpchannel.cpp \
-    Controller/controllerinterface.cpp \
-    Model/modelinterface.cpp
+    #Controller/controllerinterface.cpp \
+    #Model/modelinterface.cpp
 
 HEADERS += \
     View/matricedfview.hpp \
@@ -48,7 +48,8 @@ HEADERS += \
     Model/matricedfmodel.hpp \
     Utils/udpchannel.hpp \
     Controller/controllerinterface.hpp \
-    Model/modelinterface.hpp
+    Model/modelinterface.hpp \
+    Utils/constset.hpp
 
 FORMS += \
     View/matricedfview.ui
