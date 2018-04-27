@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,10 +25,35 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        matricedfview.cpp
+    View/matricedfview.cpp \
+    Utils/spectrumwaterfall.cpp \
+    Utils/spectrumplot.cpp \
+    Utils/amplitudespectrumplot.cpp \
+    Utils/phasespectrumplot.cpp \
+    Utils/polarplot.cpp \
+    Controller/matricedfcontroller.cpp \
+    Model/matricedfmodel.cpp \
+    Utils/udpchannel.cpp \
+    #Controller/controllerinterface.cpp \
+    #Model/modelinterface.cpp
 
 HEADERS += \
-        matricedfview.hpp
+    View/matricedfview.hpp \
+    Utils/spectrumwaterfall.hpp \
+    Utils/spectrumplot.hpp \
+    Utils/amplitudespectrumplot.hpp \
+    Utils/phasespectrumplot.hpp \
+    Utils/polarplot.hpp \
+    Controller/matricedfcontroller.hpp \
+    Model/matricedfmodel.hpp \
+    Utils/udpchannel.hpp \
+    Controller/controllerinterface.hpp \
+    Model/modelinterface.hpp \
+    Utils/constset.hpp
 
 FORMS += \
-        matricedfview.ui
+    View/matricedfview.ui
+
+CONFIG += \
+    qwt \
+    qwtpolar
