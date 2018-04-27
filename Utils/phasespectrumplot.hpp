@@ -11,8 +11,10 @@ public:
     PhaseSpectrumPlot(QWidget *parent);
 
 public slots:
+    void updateCurve(const QVector<double> &samplesPh);
 
 private:
+    QwtPlotCurve    *curve;
 };
 
 #endif // PHASESPECTRUMPLOT_HPP

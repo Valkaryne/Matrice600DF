@@ -16,6 +16,7 @@ public:
 private:
     void makeConnections();
 
+    //MatriceDFView   *view;
     ModelInterface  *model;
 };
 

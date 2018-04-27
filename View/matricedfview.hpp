@@ -26,6 +26,8 @@ public:
     explicit MatriceDFView(QWidget *parent = 0, ControllerInterface *controller = 0,
                            ModelInterface *model = 0);
     ~MatriceDFView();
+    AmplitudeSpectrumPlot* getAmplitudeSpectrumPlot();
+    PhaseSpectrumPlot* getPhaseSpectrumPlot();
 
 private:
     Ui::MatriceDFView   *ui;

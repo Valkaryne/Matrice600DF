@@ -38,3 +38,13 @@ MatriceDFView::~MatriceDFView()
 {
     delete ui;
 }
+
+AmplitudeSpectrumPlot* MatriceDFView::getAmplitudeSpectrumPlot()
+{
+    return (AmplitudeSpectrumPlot*) amplitudeSpectrumPlot;
+}
+
+PhaseSpectrumPlot* MatriceDFView::getPhaseSpectrumPlot()
+{
+    return (PhaseSpectrumPlot*) phaseSpectrumPlot;
+}

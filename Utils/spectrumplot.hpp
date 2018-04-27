@@ -26,8 +26,6 @@ public:
     /* Hints for resize QwtPlot */
     QSize minimumSizeHint() const { return QSize(600, 150); }
 
-
-
 public slots:
 
 protected:

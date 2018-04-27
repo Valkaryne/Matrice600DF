@@ -5,7 +5,13 @@ MatriceDFController::MatriceDFController(ModelInterface *model)
 {
     MatriceDFView *view = new MatriceDFView(0, this, model);
     view->show();
+    //view = new MatriceDFView(0, this, model);
     model->initializeModel();
+    makeConnections();
+    connect(model, SIGNAL(amplitudeSamplesReady(QVector<double>,QVector<double>)),
+            view->getAmplitudeSpectrumPlot(), SLOT(updateCurve(QVector<double>,QVector<double>)));
+    connect(model, SIGNAL(phaseSamplesReady(QVector<double>)),
+            view->getPhaseSpectrumPlot(), SLOT(updateCurve(QVector<double>)));
 }
 
 void MatriceDFController::makeConnections()

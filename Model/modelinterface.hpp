@@ -21,6 +21,8 @@ public slots:
                                 const QVector<double> samplesPh) = 0;
 
 signals:
+    virtual void amplitudeSamplesReady(const QVector<double> amplitudeOne, const QVector<double> amplitudeTwo) = 0;
+    virtual void phaseSamplesReady(const QVector<double> phaseDiff) = 0;
 
 protected:
     UdpChannel  *udpChannel;
