@@ -2,7 +2,6 @@
 #define CONTROLLERINTERFACE_HPP
 
 #include <Model/modelinterface.hpp>
-#include <View/matricedfview.hpp>
 
 class ControllerInterface : public QObject
 {
@@ -11,7 +10,7 @@ public:
     explicit ControllerInterface(ModelInterface *model = 0) {}
 
 private:
-    virtual void makeConnections(MatriceDFView *view) = 0;
+    virtual void makeConnections() = 0;
 };
 
 #endif // CONTROLLERINTERFACE_HPP

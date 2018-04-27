@@ -4,7 +4,7 @@
 #include "controllerinterface.hpp"
 #include <Model/modelinterface.hpp>
 #include <Model/matricedfmodel.hpp>
-//#include <View/matricedfview.hpp>
+#include <View/matricedfview.hpp>
 
 class MatriceDFController : public ControllerInterface
 {
@@ -14,7 +14,7 @@ public:
 
 
 private:
-    void makeConnections(MatriceDFView *view);
+    void makeConnections();
 
     ModelInterface  *model;
 };
