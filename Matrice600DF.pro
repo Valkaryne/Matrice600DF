@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui network
+QT       += webengine webenginewidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -23,7 +24,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += main.cpp \
-    Utils/MatriceTelemetry.pb.cc
+    #Utils/MatriceTelemetry.pb.cc
 
 SOURCES += \
     View/matricedfview.cpp \
@@ -49,7 +50,7 @@ HEADERS += \
     Controller/controllerinterface.hpp \
     Model/modelinterface.hpp \
     Utils/constset.hpp \
-    Utils/MatriceTelemetry.pb.h
+    #Utils/MatriceTelemetry.pb.h
 
 FORMS += \
     View/matricedfview.ui
@@ -61,10 +62,13 @@ CONFIG += \
 #QMAKE_CXXFLAGS_DEBUG += /MTd
 #QMAKE_CXXFLAGS_RELEASE += /MT
 
-win32:CONFIG(release, debug|release): LIBS += -LC:/Path/to/install/lib/ -llibprotobuf
-else:win32:CONFIG(debug, debug|release): LIBS += -LC:/Path/to/install/lib/ -llibprotobufd
+#win32:CONFIG(release, debug|release): LIBS += -LC:/Path/to/install/lib/ -llibprotobuf
+#else:win32:CONFIG(debug, debug|release): LIBS += -LC:/Path/to/install/lib/ -llibprotobufd
 
-INCLUDEPATH += C:/Path/to/install/include
-DEPENDPATH += C:/Path/to/install/include
+#INCLUDEPATH += C:/Path/to/install/include
+#DEPENDPATH += C:/Path/to/install/include
+
+RESOURCES += \
+    resources.qrc
 
 

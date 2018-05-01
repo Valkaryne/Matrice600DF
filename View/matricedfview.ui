@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>817</width>
     <height>600</height>
    </rect>
   </property>
@@ -19,8 +19,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>21</height>
+     <width>817</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>
@@ -92,7 +92,38 @@
    <attribute name="dockWidgetArea">
     <number>2</number>
    </attribute>
-   <widget class="QWidget" name="mapWidget"/>
+   <widget class="QWidget" name="mapWidget">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <layout class="QVBoxLayout" name="mapLayout"/>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="mapControlLayout">
+       <item>
+        <widget class="QPushButton" name="decrAngleButton">
+         <property name="text">
+          <string>&lt;&lt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="incrAngleButton">
+         <property name="text">
+          <string>&gt;&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="makeDirButton">
+         <property name="text">
+          <string>Direction</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QDockWidget" name="videoDockWidget">
    <property name="sizePolicy">
@@ -826,7 +857,7 @@ QRadioButton::indicator::checked {
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="modeButtonGroup"/>
   <buttongroup name="markersButtonGroup"/>
+  <buttongroup name="modeButtonGroup"/>
  </buttongroups>
 </ui>

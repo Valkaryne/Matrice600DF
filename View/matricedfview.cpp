@@ -32,9 +32,33 @@ MatriceDFView::MatriceDFView(QWidget *parent, ControllerInterface *controller, M
 
     polarPlot = new PolarPlot(this);
     ui->polarLayout->addWidget(polarPlot);
+
+    // FIXIT: Create composite object from webview
+    webview = new QWebEngineView();
+    ui->mapLayout->addWidget(webview);
+
+    QWebChannel *webChannel = new QWebChannel();
+    webChannel->registerObject("demoWindow", this);
+    webview->page()->setWebChannel(webChannel);
+    webview->page()->load(QUrl("qrc:/map.html"));
 }
 
 MatriceDFView::~MatriceDFView()
 {
     delete ui;
+}
+
+void MatriceDFView::on_decrAngleButton_clicked()
+{
+    webview->page()->runJavaScript("decrAngle();");
+}
+
+void MatriceDFView::on_incrAngleButton_clicked()
+{
+    webview->page()->runJavaScript("incrAngle();");
+}
+
+void MatriceDFView::on_makeDirButton_clicked()
+{
+    webview->page()->runJavaScript("makeBeam();");
 }

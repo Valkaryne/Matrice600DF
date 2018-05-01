@@ -14,6 +14,12 @@
 #include <Controller/controllerinterface.hpp>
 #include <Controller/matricedfcontroller.hpp>
 
+// FIXIT: Create composite object from webview
+#include <QtWebEngineWidgets/QWebEngineView>
+#include <QtWebEngineWidgets/QWebEnginePage>
+#include <QtWebEngineWidgets/QWebEngineSettings>
+#include <QtWebChannel/QWebChannel>
+
 namespace Ui {
 class MatriceDFView;
 }
@@ -26,6 +32,16 @@ public:
     explicit MatriceDFView(QWidget *parent = 0, ControllerInterface *controller = 0,
                            ModelInterface *model = 0);
     ~MatriceDFView();
+
+    // FIXIT: Create composite object from webview
+    QWebEngineView  *webview;
+
+private slots:
+    void on_decrAngleButton_clicked();
+
+    void on_incrAngleButton_clicked();
+
+    void on_makeDirButton_clicked();
 
 private:
     Ui::MatriceDFView   *ui;

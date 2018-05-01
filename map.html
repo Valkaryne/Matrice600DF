@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <style type="text/css">
+            html { height: 100% }
+            body { height: 100%; margin: 0; padding: 0 }
+            #map-canvas { height: 100% }
+        </style>
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript" src="qrc:/qwebchannel.js"></script>
+        <!--<script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?
+            key=AIzaSyAuGX525HTWiWZHUNtEBqiiZKuqihDdrMc&libraries=drawing">
+        </script> -->
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuGX525HTWiWZHUNtEBqiiZKuqihDdrMc&libraries=drawing"></script>
+        <script type="text/javascript">
+			new QWebChannel(qt.webChannelTransport, function(channel) {
+				demoWindow = channel.objects.demoWindow;
+			});
+			
+            var map;
+			var markers = [];
+			var target = [];
+			var yaw = 45;
+			var latitude = 53.952373;
+			var longitude = 27.667157;
+			var dronePosition = { lat: latitude, lng: longitude };
+			
+			var specCoeff = 0.000009015629947718322;
+			var radius = 6371;
+			
+            function initialize()
+            {
+				var minsk = { lat: 53.931370, lng: 27.636620 };
+				
+				map = new google.maps.Map(document.getElementById('map-canvas'), {
+					zoom: 12,
+					center: minsk,
+					mapTypeId: 'terrain'
+				});
+				
+				// This event listener will call addMarker() when the map is clicked.
+				map.addListener('click', function(event) {
+				deleteMarkers();
+					addMarker(event.latLng);
+					demoWindow.setPointOnMap(event.latLng.lat(), event.latLng.lng());
+				});
+				
+				// Adds a marker at the center of the map.
+				addMarker(minsk);
+				
+				alphaUpdate(yaw);
+			}
+			
+			function addMarker(location) {
+	
+				var marker = new google.maps.Marker({
+					position: location,
+					map: map
+				});
+				target.push(marker);
+			}
+			
+
+            function setMapOnAll(map) {
+				for (var i = 0; i < markers.length; i++) {
+					markers[i].setMap(map);
+				}
+				for (var i = 0; i < target.length; i++) {
+					target[i].setMap(map);
+				}
+			}
+			
+			function clearMarkers() {
+				setMapOnAll(null);
+			}
+			
+			function deleteMarkers() {
+				clearMarkers();
+				markers = [];
+				target = [];
+			}
+			
+			function alphaUpdate(yaw) {
+				for (var i = 0; i < markers.length; i++) {
+					markers[i].setMap(null);
+				}
+				markers = [];
+				var point = new google.maps.Marker({
+					position: dronePosition,
+					map: map,
+					icon: {
+						path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+						scale: 6,
+						fillColor: "red",
+						fillOpacity: 0.8,
+						strokeWeight: 1.5,
+						rotation: yaw
+					}
+				});
+				markers.push(point);
+			}
+			
+			function decrAngle() {
+				yaw--;
+				alphaUpdate(yaw);
+			}
+			
+			function incrAngle() {
+				yaw++;
+				alphaUpdate(yaw);
+			}
+			
+			function makeBeam() {
+				//var x0 = radius * Math.cos(position.lat()) * Math.cos(position.lng());
+				//var y0 = radius * Math.cos(position.lat()) * Math.sin(position.lng());
+				//var x1 = Math.cos(yaw) + x0;
+				//var y1 = Math.sin(yaw) + y0;
+				//var beamCoord = [ {lat: 
+				var x0 = dronePosition.lat / specCoeff;
+				var y0 = dronePosition.lng / specCoeff
+				angle = yaw * Math.PI  / 180;
+				var x1 = Math.cos(angle)*100 + x0;
+				var y1 = Math.sin(angle)*100 + y0;
+				var endLat = x1 * specCoeff;
+				var endLng = y1 * specCoeff;
+				var beamCoord = [ {lat: dronePosition.lat, lng: dronePosition.lng},
+									{lat: endLat, lng: endLng} ];
+				var beam = new google.maps.Polyline({
+					path: beamCoord,
+					strokeColor: '#FF0000',
+					strokeWeight: 2
+				});
+				beam.setMap(map);
+			}
+			
+			/* function updateDroneLocation(latitude, longitude, yaw) {
+				for (var i = 0; i < markers.length; i++) {
+					markers[i].setMap(null);
+				}
+				markers = [];
+				
+				var newPosition = { lat: latitude, lng: longitude };
+				var point = new google.maps.Marker({
+					position: newPosition,
+					map: map,
+					icon: {
+						path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+						scale: 6,
+						fillColor: "red",
+						fillOpacity: 0.8,
+						strokeWeight: 1.5,
+						rotation: yaw
+					}
+				});
+				markers.push(point);
+			} */
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+        </script>
+    </head>
+    <body ondragstart="return false">
+		<div id="map-canvas" />
+    </body>
+</html>
