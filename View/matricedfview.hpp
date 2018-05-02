@@ -8,13 +8,14 @@
 #include <Utils/amplitudespectrumplot.hpp>
 #include <Utils/phasespectrumplot.hpp>
 #include <Utils/polarplot.hpp>
+#include <Utils/MatriceTelemetry.pb.h>
 
 #include <Model/modelinterface.hpp>
 #include <Model/matricedfmodel.hpp>
 #include <Controller/controllerinterface.hpp>
 #include <Controller/matricedfcontroller.hpp>
 
-// FIXIT: Create composite object from webview
+// FIXME: Create composite object from webview
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QtWebEngineWidgets/QWebEnginePage>
 #include <QtWebEngineWidgets/QWebEngineSettings>
@@ -33,15 +34,14 @@ public:
                            ModelInterface *model = 0);
     ~MatriceDFView();
 
-    // FIXIT: Create composite object from webview
+    // FIXME: Create composite object from webview
     QWebEngineView  *webview;
 
 private slots:
-    void on_decrAngleButton_clicked();
+    void updateTelemetryData(const mtelemetry::Telemetry &telemetry);
 
-    void on_incrAngleButton_clicked();
-
-    void on_makeDirButton_clicked();
+    void on_makeDirectionButton_clicked();
+    void on_clearMapButton_clicked();
 
 private:
     Ui::MatriceDFView   *ui;

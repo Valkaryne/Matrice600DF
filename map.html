@@ -28,7 +28,9 @@
 			var longitude = 27.667157;
 			var dronePosition = { lat: latitude, lng: longitude };
 			
-			var specCoeff = 0.000009015629947718322;
+			//var specCoeff = 0.000009015629947718322;
+			var dLat = 0.000009031055490301464;
+			var dLng = 0.000008983152841195396 * 1.69;
 			var radius = 6371;
 			
             function initialize()
@@ -104,12 +106,14 @@
 			}
 			
 			function decrAngle() {
-				yaw--;
+				//yaw--;
+				yaw -= 15;
 				alphaUpdate(yaw);
 			}
 			
 			function incrAngle() {
-				yaw++;
+				//yaw++;
+				yaw += 15;
 				alphaUpdate(yaw);
 			}
 			
@@ -119,13 +123,13 @@
 				//var x1 = Math.cos(yaw) + x0;
 				//var y1 = Math.sin(yaw) + y0;
 				//var beamCoord = [ {lat: 
-				var x0 = dronePosition.lat / specCoeff;
-				var y0 = dronePosition.lng / specCoeff
+				var x0 = dronePosition.lat / dLat;
+				var y0 = dronePosition.lng / dLng
 				angle = yaw * Math.PI  / 180;
-				var x1 = Math.cos(angle)*100 + x0;
-				var y1 = Math.sin(angle)*100 + y0;
-				var endLat = x1 * specCoeff;
-				var endLng = y1 * specCoeff;
+				var x1 = Math.cos(angle)*3000 + x0;
+				var y1 = Math.sin(angle)*3000 + y0;
+				var endLat = x1 * dLat;
+				var endLng = y1 * dLng;
 				var beamCoord = [ {lat: dronePosition.lat, lng: dronePosition.lng},
 									{lat: endLat, lng: endLng} ];
 				var beam = new google.maps.Polyline({
@@ -136,7 +140,7 @@
 				beam.setMap(map);
 			}
 			
-			/* function updateDroneLocation(latitude, longitude, yaw) {
+			function updateDroneLocation(latitude, longitude, yaw) {
 				for (var i = 0; i < markers.length; i++) {
 					markers[i].setMap(null);
 				}
@@ -156,7 +160,7 @@
 					}
 				});
 				markers.push(point);
-			} */
+			}
 
             google.maps.event.addDomListener(window, 'load', initialize);
         </script>

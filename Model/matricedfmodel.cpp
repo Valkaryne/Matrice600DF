@@ -10,11 +10,17 @@ void MatriceDFModel::initializeModel()
 {
     udpChannel = new UdpChannel(QHostAddress(SERVER_IP), SERVER_PORT, QHostAddress(CLIENT_IP), CLIENT_PORT);
     qDebug() << "UDP Channel created";
+    tcpChannel = new TcpChannel();
 }
 
 UdpChannel* MatriceDFModel::getUDPChannel()
 {
-        return udpChannel;
+    return udpChannel;
+}
+
+TcpChannel* MatriceDFModel::getTCPChannel()
+{
+    return tcpChannel;
 }
 
 void MatriceDFModel::samplesHandler(const QVector<double> samplesAm1, const QVector<double> samplesAm2,

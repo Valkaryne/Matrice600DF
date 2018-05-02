@@ -33,7 +33,7 @@ MatriceDFView::MatriceDFView(QWidget *parent, ControllerInterface *controller, M
     polarPlot = new PolarPlot(this);
     ui->polarLayout->addWidget(polarPlot);
 
-    // FIXIT: Create composite object from webview
+    // FIXME: Create composite object from webview
     webview = new QWebEngineView();
     ui->mapLayout->addWidget(webview);
 
@@ -41,6 +41,7 @@ MatriceDFView::MatriceDFView(QWidget *parent, ControllerInterface *controller, M
     webChannel->registerObject("demoWindow", this);
     webview->page()->setWebChannel(webChannel);
     webview->page()->load(QUrl("qrc:/map.html"));
+    webview->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
 MatriceDFView::~MatriceDFView()
@@ -48,17 +49,35 @@ MatriceDFView::~MatriceDFView()
     delete ui;
 }
 
-void MatriceDFView::on_decrAngleButton_clicked()
+void MatriceDFView::updateTelemetryData(const mtelemetry::Telemetry &telemetry)
 {
-    webview->page()->runJavaScript("decrAngle();");
+    float latitude = telemetry.latitude();
+    float longitude = telemetry.longitude();
+    float altitude = telemetry.altitude();
+    float heading = telemetry.heading();
+
+    ui->mapLatitudeLine->setText(
+                QString::number(latitude,'f',6));
+    ui->mapLongitudeLine->setText(
+                QString::number(longitude,'f',6));
+    ui->mapAltitudeLine->setText(
+                QString::number(altitude,'f',2));
+    ui->mapYawLine->setText(
+                QString::number(heading,'f',2));
+
+    QString updateScript = QString("updateDroneLocation(%1, %2, %3);")
+            .arg(QString::number(latitude,'f',6))
+            .arg(QString::number(longitude,'f',6))
+            .arg(QString::number(heading,'f',2));
+    webview->page()->runJavaScript(updateScript);
 }
 
-void MatriceDFView::on_incrAngleButton_clicked()
-{
-    webview->page()->runJavaScript("incrAngle();");
-}
-
-void MatriceDFView::on_makeDirButton_clicked()
+void MatriceDFView::on_makeDirectionButton_clicked()
 {
     webview->page()->runJavaScript("makeBeam();");
+}
+
+void MatriceDFView::on_clearMapButton_clicked()
+{
+    webview->page()->runJavaScript("deleteMarkers();");
 }

@@ -6,6 +6,9 @@ MatriceDFController::MatriceDFController(ModelInterface *model)
     MatriceDFView *view = new MatriceDFView(0, this, model);
     view->show();
     model->initializeModel();
+
+    connect(model->getTCPChannel(), SIGNAL(telemetryReceived(mtelemetry::Telemetry)),
+            view, SLOT(updateTelemetryData(mtelemetry::Telemetry)));
 }
 
 void MatriceDFController::makeConnections()

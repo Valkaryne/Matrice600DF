@@ -12,6 +12,7 @@ public:
 
     void initializeModel();
     UdpChannel* getUDPChannel();
+    TcpChannel* getTCPChannel();
 
 private slots:
     void samplesHandler(const QVector<double> samplesAm1, const QVector<double> samplesAm2,

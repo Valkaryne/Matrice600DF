@@ -20,7 +20,7 @@
      <x>0</x>
      <y>0</y>
      <width>817</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -98,25 +98,74 @@
       <layout class="QVBoxLayout" name="mapLayout"/>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="mapControlLayout">
-       <item>
-        <widget class="QPushButton" name="decrAngleButton">
-         <property name="text">
-          <string>&lt;&lt;</string>
+      <layout class="QGridLayout" name="gridLayout_6">
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="mapAltitudeLine">
+         <property name="enabled">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QPushButton" name="incrAngleButton">
+       <item row="1" column="4">
+        <widget class="QPushButton" name="clearMapButton">
          <property name="text">
-          <string>&gt;&gt;</string>
+          <string>Clear Map</string>
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QPushButton" name="makeDirButton">
+       <item row="0" column="4">
+        <widget class="QPushButton" name="makeDirectionButton">
          <property name="text">
           <string>Direction</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="mapLongitudeLabel">
+         <property name="text">
+          <string>Longitude:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLineEdit" name="mapLongitudeLine">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="mapLatitudeLabel">
+         <property name="text">
+          <string>Latitude:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="mapLatitudeLine">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="mapAltitudeLabel">
+         <property name="text">
+          <string>Altitude:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLabel" name="mapYawLabel">
+         <property name="text">
+          <string>Yaw:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QLineEdit" name="mapYawLine">
+         <property name="enabled">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
