@@ -21,27 +21,32 @@
 			});
 			
             var map;
-			var markers = [];
-			var target = [];
+			var destination = [];
+			var beams = [];
+			
 			var yaw = 45;
 			var latitude = 53.952373;
 			var longitude = 27.667157;
 			var dronePosition = { lat: latitude, lng: longitude };
 			
-			//var specCoeff = 0.000009015629947718322;
 			var dLat = 0.000009031055490301464;
 			var dLng = 0.000008983152841195396 * 1.69;
-			var radius = 6371;
+			
+			var drone; 
+			var heading;
 			
             function initialize()
             {
 				var minsk = { lat: 53.931370, lng: 27.636620 };
-				
-				map = new google.maps.Map(document.getElementById('map-canvas'), {
-					zoom: 12,
+				// Add map
+				var mapOptions = 
+				{
 					center: minsk,
+					zoom: 12,
 					mapTypeId: 'terrain'
-				});
+				};
+				
+				map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 				
 				// This event listener will call addMarker() when the map is clicked.
 				map.addListener('click', function(event) {
@@ -53,44 +58,7 @@
 				// Adds a marker at the center of the map.
 				addMarker(minsk);
 				
-				alphaUpdate(yaw);
-			}
-			
-			function addMarker(location) {
-	
-				var marker = new google.maps.Marker({
-					position: location,
-					map: map
-				});
-				target.push(marker);
-			}
-			
-
-            function setMapOnAll(map) {
-				for (var i = 0; i < markers.length; i++) {
-					markers[i].setMap(map);
-				}
-				for (var i = 0; i < target.length; i++) {
-					target[i].setMap(map);
-				}
-			}
-			
-			function clearMarkers() {
-				setMapOnAll(null);
-			}
-			
-			function deleteMarkers() {
-				clearMarkers();
-				markers = [];
-				target = [];
-			}
-			
-			function alphaUpdate(yaw) {
-				for (var i = 0; i < markers.length; i++) {
-					markers[i].setMap(null);
-				}
-				markers = [];
-				var point = new google.maps.Marker({
+				drone = new google.maps.Marker({
 					position: dronePosition,
 					map: map,
 					icon: {
@@ -102,35 +70,71 @@
 						rotation: yaw
 					}
 				});
-				markers.push(point);
+				drone.setMap(map);
 			}
 			
-			function decrAngle() {
-				//yaw--;
-				yaw -= 15;
-				alphaUpdate(yaw);
+			function addMarker(location) {
+	
+				var marker = new google.maps.Marker({
+					position: location,
+					map: map
+				});
+				destination.push(marker);
 			}
 			
-			function incrAngle() {
-				//yaw++;
-				yaw += 15;
-				alphaUpdate(yaw);
+
+            function setMapOnAll(map) {
+				for (var i = 0; i < destination.length; i++) {
+					destination[i].setMap(map);
+				}
+			}
+			
+			function clearMarkers() {
+				setMapOnAll(null);
+			}
+			
+			function deleteMarkers() {
+				clearMarkers();
+				destination = [];
+			}
+			
+			function deleteBeams() {
+				for (var i = 0; i < beams.length; i++) {
+					beams[i].setMap(null);
+				}
+			}
+			
+			function clearMap() {
+				deleteMarkers();
+				deleteBeams();
+			}
+			
+			function updateHeading(yaw) {
+				var icon = { 
+					path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+					scale: 6,
+					fillColor: "red",
+					fillOpacity: 0.8,
+					strokeWeight: 1.5,
+					rotation: yaw
+				}
+				drone.setIcon(icon);
+			}
+			
+			function updateLatLng(latitude, longitude) {
+				var coordinates = { lat: latitude, lng: longitude };
+				drone.setPosition(coordinates);
 			}
 			
 			function makeBeam() {
-				//var x0 = radius * Math.cos(position.lat()) * Math.cos(position.lng());
-				//var y0 = radius * Math.cos(position.lat()) * Math.sin(position.lng());
-				//var x1 = Math.cos(yaw) + x0;
-				//var y1 = Math.sin(yaw) + y0;
-				//var beamCoord = [ {lat: 
-				var x0 = dronePosition.lat / dLat;
-				var y0 = dronePosition.lng / dLng
-				angle = yaw * Math.PI  / 180;
+				var x0 = drone.getPosition().lat() / dLat;
+				var y0 = drone.getPosition().lng() / dLng
+				angle = heading * Math.PI  / 180;
 				var x1 = Math.cos(angle)*3000 + x0;
 				var y1 = Math.sin(angle)*3000 + y0;
 				var endLat = x1 * dLat;
 				var endLng = y1 * dLng;
-				var beamCoord = [ {lat: dronePosition.lat, lng: dronePosition.lng},
+				var beamCoord = [ {lat: drone.getPosition().lat(), lng: drone.getPosition().lng()},
 									{lat: endLat, lng: endLng} ];
 				var beam = new google.maps.Polyline({
 					path: beamCoord,
@@ -138,28 +142,13 @@
 					strokeWeight: 2
 				});
 				beam.setMap(map);
+				beams.push(beam);
 			}
 			
 			function updateDroneLocation(latitude, longitude, yaw) {
-				for (var i = 0; i < markers.length; i++) {
-					markers[i].setMap(null);
-				}
-				markers = [];
-				
-				var newPosition = { lat: latitude, lng: longitude };
-				var point = new google.maps.Marker({
-					position: newPosition,
-					map: map,
-					icon: {
-						path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-						scale: 6,
-						fillColor: "red",
-						fillOpacity: 0.8,
-						strokeWeight: 1.5,
-						rotation: yaw
-					}
-				});
-				markers.push(point);
+				updateHeading(yaw);
+				updateLatLng(latitude, longitude);
+				heading = yaw;
 			}
 
             google.maps.event.addDomListener(window, 'load', initialize);

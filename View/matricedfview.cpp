@@ -79,5 +79,5 @@ void MatriceDFView::on_makeDirectionButton_clicked()
 
 void MatriceDFView::on_clearMapButton_clicked()
 {
-    webview->page()->runJavaScript("deleteMarkers();");
+    webview->page()->runJavaScript("clearMap();");
 }
