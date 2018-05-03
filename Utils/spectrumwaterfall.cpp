@@ -59,3 +59,26 @@ SpectrumWaterfall::SpectrumWaterfall(QWidget *parent) :
     plot->setData(plotData);
     plot->attach(this);
 }
+
+void SpectrumWaterfall::setCentralFrequency(double cntrFrequency)
+{
+    if (this->cntrFrequency != cntrFrequency)
+        this->cntrFrequency = cntrFrequency;
+
+    double xleft = cntrFrequency - LSHIFT;
+    double xright = cntrFrequency + RSHIFT;
+    setAxisScale(QwtPlot::xBottom, xleft, xright);
+}
+
+void SpectrumWaterfall::updateSpectrogram(const QVector<double> sampleAm1, const QVector<double> sampleAm2)
+{
+    vec->remove(0, sampleAm1.size() / 4);
+
+    for (int i = 0; i < sampleAm1.size(); i += 4)
+        vec->append(sampleAm1.at(i));
+
+    plotData->setInterval(Qt::XAxis, QwtInterval(cntrFrequency - LSHIFT, cntrFrequency + RSHIFT, QwtInterval::ExcludeMaximum));
+    plotData->setValueMatrix(*vec, 1024);
+    plot->setData(plotData);
+    replot();
+}

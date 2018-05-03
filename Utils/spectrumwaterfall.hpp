@@ -10,6 +10,8 @@
 #include <qwt_scale_widget.h>
 #include <qwt_color_map.h>
 
+#include "constset.hpp"
+
 class SpectrumWaterfall : public QwtPlot
 {
     Q_OBJECT
@@ -22,13 +24,17 @@ public:
     QSize minimumSizeHint() const { return QSize(600, 150); }
 
     /* Setters */
+    void setCentralFrequency(double cntrFrequency);
 
 public slots:
+    void updateSpectrogram(const QVector<double> sampleAm1, const QVector<double> sampleAm2);
 
 private:
     QwtPlotSpectrogram  *plot;
     QwtMatrixRasterData *plotData;
     QVector<double>     *vec;
+
+    double cntrFrequency;
 };
 
 #endif // SPECTRUMWATERFALL_HPP

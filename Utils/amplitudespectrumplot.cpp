@@ -108,6 +108,15 @@ AmplitudeSpectrumPlot::AmplitudeSpectrumPlot(QWidget *parent)
         setMarker(i);
 
     this->markPairNmr = 1;
+
+    connect(pickerMarkPr, SIGNAL(appended(const QPoint &)),
+            this, SLOT(movePrimeMarker(const QPoint &)));
+    connect(pickerMarkSec, SIGNAL(appended(const QPoint &)),
+            this, SLOT(moveSecondMarker(const QPoint &)));
+    connect(pickerThrPr, SIGNAL(appended(const QPoint &)),
+            this, SLOT(movePrimeThreshold(const QPoint &)));
+    connect(pickerThrSec, SIGNAL(appended(const QPoint &)),
+            this, SLOT(moveSecondThreshold(const QPoint &)));
 }
 
 void AmplitudeSpectrumPlot::setMarker(int number)
@@ -185,22 +194,6 @@ void AmplitudeSpectrumPlot::setExpCoefficient(double expCoeff)
         this->expCoeff = expCoeff;
 }
 
-QwtPlotPicker* AmplitudeSpectrumPlot::getMarkerPicker(bool prime)
-{
-    if (prime)
-        return pickerMarkPr;
-    else
-        return pickerMarkSec;
-}
-
-QwtPlotPicker* AmplitudeSpectrumPlot::getThreshPicker(bool prime)
-{
-    if (prime)
-        return pickerThrPr;
-    else
-        return pickerThrSec;
-}
-
 QwtPlotZoomer* AmplitudeSpectrumPlot::getZoomer()
 {
     return zoomer;
@@ -240,21 +233,28 @@ void AmplitudeSpectrumPlot::resetMarkers()
     }
 }
 
-void AmplitudeSpectrumPlot::moveMarker(double position, bool prime)
+void AmplitudeSpectrumPlot::movePrimeMarker(const QPoint &pos)
 {
-    if (prime)
-        markerVector.at(markPairNmr - 1)->setValue(position, 0);
-    else
-        markerVector.at(markPairNmr)->setValue(position, 0);
+    double position = invTransform(QwtPlot::xBottom, pos.x());
+    markerVector.at(markPairNmr - 1)->setValue(position, 0);
 }
 
-void AmplitudeSpectrumPlot::moveThreshold(double position, bool prime)
+void AmplitudeSpectrumPlot::moveSecondMarker(const QPoint &pos)
 {
+    double position = invTransform(QwtPlot::xBottom, pos.x());
+    markerVector.at(markPairNmr)->setValue(position, 0);
+}
 
-    if (prime)
-        thresholdPr->setValue(0, position);
-    else
-        thresholdSec->setValue(0, position);
+void AmplitudeSpectrumPlot::movePrimeThreshold(const QPoint &pos)
+{
+    double position = invTransform(QwtPlot::yLeft, pos.y());
+    thresholdPr->setValue(0, position);
+}
+
+void AmplitudeSpectrumPlot::moveSecondThreshold(const QPoint &pos)
+{
+    double position = invTransform(QwtPlot::yLeft, pos.y());
+    thresholdSec->setValue(0, position);
 }
 
 void AmplitudeSpectrumPlot::updateCurve(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2)

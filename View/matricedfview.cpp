@@ -49,6 +49,26 @@ MatriceDFView::~MatriceDFView()
     delete ui;
 }
 
+AmplitudeSpectrumPlot* MatriceDFView::getAmplitudeSpectrumPlot()
+{
+    return (AmplitudeSpectrumPlot*) amplitudeSpectrumPlot;
+}
+
+PhaseSpectrumPlot* MatriceDFView::getPhaseSpectrumPlot()
+{
+    return (PhaseSpectrumPlot*) phaseSpectrumPlot;
+}
+
+SpectrumWaterfall* MatriceDFView::getSpectrumWaterfall()
+{
+    return spectrumWaterfall;
+}
+
+PolarPlot* MatriceDFView::getPolarPlot()
+{
+    return polarPlot;
+}
+
 void MatriceDFView::updateTelemetryData(const mtelemetry::Telemetry &telemetry)
 {
     float latitude = telemetry.latitude();
@@ -80,14 +100,4 @@ void MatriceDFView::on_makeDirectionButton_clicked()
 void MatriceDFView::on_clearMapButton_clicked()
 {
     webview->page()->runJavaScript("clearMap();");
-}
-
-AmplitudeSpectrumPlot* MatriceDFView::getAmplitudeSpectrumPlot()
-{
-    return (AmplitudeSpectrumPlot*) amplitudeSpectrumPlot;
-}
-
-PhaseSpectrumPlot* MatriceDFView::getPhaseSpectrumPlot()
-{
-    return (PhaseSpectrumPlot*) phaseSpectrumPlot;
 }

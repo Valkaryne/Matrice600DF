@@ -10,7 +10,6 @@ public:
     explicit ControllerInterface(ModelInterface *model = 0) {}
 
 private:
-    virtual void makeConnections() = 0;
 };
 
 #endif // CONTROLLERINTERFACE_HPP

@@ -6,18 +6,23 @@
 #include <Model/matricedfmodel.hpp>
 #include <View/matricedfview.hpp>
 
+
 class MatriceDFController : public ControllerInterface
 {
 
 public:
     explicit MatriceDFController(ModelInterface *model = 0);
 
+private slots:
+
+
+signals:
 
 private:
-    void makeConnections();
 
     //MatriceDFView   *view;
     ModelInterface  *model;
+
 };
 
 #endif // MATRICEDFCONTROLLER_HPP
