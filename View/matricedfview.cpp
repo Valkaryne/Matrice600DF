@@ -81,3 +81,13 @@ void MatriceDFView::on_clearMapButton_clicked()
 {
     webview->page()->runJavaScript("clearMap();");
 }
+
+AmplitudeSpectrumPlot* MatriceDFView::getAmplitudeSpectrumPlot()
+{
+    return (AmplitudeSpectrumPlot*) amplitudeSpectrumPlot;
+}
+
+PhaseSpectrumPlot* MatriceDFView::getPhaseSpectrumPlot()
+{
+    return (PhaseSpectrumPlot*) phaseSpectrumPlot;
+}

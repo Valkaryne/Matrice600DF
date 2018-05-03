@@ -5,10 +5,10 @@ SpectrumPlot::SpectrumPlot(QWidget *parent)
       cntrFrequency(70)
 {
     /* Canvas */
-    QwtPlotCanvas *canvas = new QwtPlotCanvas;
+    canvas = new QwtPlotCanvas;
     canvas->setBorderRadius(10);
     setCanvas(canvas);
-    setCanvasBackground(Qt::darkBlue);
+    setCanvasBackground(QColor(29, 100, 141));
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     /* Grid */
@@ -21,4 +21,10 @@ SpectrumPlot::SpectrumPlot(QWidget *parent)
     setAxisScale(QwtPlot::xBottom, 54.55, 85.27, 3); // WARNING: magic constants
     setAxisAutoScale(QwtPlot::xBottom, false);
     setAxisAutoScale(QwtPlot::yLeft, false);
+}
+
+void SpectrumPlot::setCentralFrequency(double cntrFrequency)
+{
+    if (this->cntrFrequency != cntrFrequency)
+        this->cntrFrequency = cntrFrequency;
 }

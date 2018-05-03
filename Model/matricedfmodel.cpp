@@ -2,8 +2,21 @@
 #include <QDebug>
 
 MatriceDFModel::MatriceDFModel()
-    : gain(60)
 {
+    this->gain = 60;
+}
+
+void MatriceDFModel::setCalibrationMode(bool setCalibration)
+{
+    ModelInterface::setCalibrationMode(setCalibration);
+
+    if (!setCalibration) {
+        am1N = (*std::max_element(simpleAm1.begin(), simpleAm1.end())) * 1.2 / 360.0;
+        am2N = (*std::max_element(simpleAm2.begin(), simpleAm2.end())) * 1.2 / 360.0;
+        amSN = am1N + am2N;
+        simpleAm1.clear();
+        simpleAm2.clear();
+    }
 }
 
 void MatriceDFModel::initializeModel()
@@ -44,4 +57,10 @@ void MatriceDFModel::samplesHandler(const QVector<double> samplesAm1, const QVec
 
     emit(amplitudeSamplesReady(ampl1Mod, ampl2Mod));
     emit(phaseSamplesReady(phMod));
+}
+
+void MatriceDFModel::polarSamplesHandler(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
+                                         const QVector<double> samplesPh)
+{
+
 }
