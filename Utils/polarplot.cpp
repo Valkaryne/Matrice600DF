@@ -44,7 +44,7 @@ public:
 PolarPlot::PolarPlot(QWidget *parent)
     : QwtPolarPlot(parent)
 {
-    setPlotBackground(Qt::darkBlue);
+    setPlotBackground(QColor(29, 100, 141));
 
     /* Scales */
     setScale(QwtPolar::Azimuth,

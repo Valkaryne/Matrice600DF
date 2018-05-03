@@ -16,6 +16,11 @@ PhaseSpectrumPlot::PhaseSpectrumPlot(QWidget *parent)
     curve->attach(this);
 }
 
+void PhaseSpectrumPlot::setCentralFrequency(double cntrFrequency)
+{
+
+}
+
 void PhaseSpectrumPlot::updateCurve(const QVector<double> &samplesPh)
 {
     int size = samplesPh.size();
@@ -26,4 +31,9 @@ void PhaseSpectrumPlot::updateCurve(const QVector<double> &samplesPh)
 
     curve->setSamples(frequency, samplesPh);
     replot();
+}
+
+void PhaseSpectrumPlot::equalZoom(const QRectF &rect)
+{
+
 }

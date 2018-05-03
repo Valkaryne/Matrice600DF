@@ -26,9 +26,13 @@ public:
     /* Hints for resize QwtPlot */
     QSize minimumSizeHint() const { return QSize(600, 150); }
 
+    /* Setters */
+    virtual void setCentralFrequency(double cntrFrequency) = 0;
+
 public slots:
 
 protected:
+    QwtPlotCanvas *canvas;
     double cntrFrequency;
 };
 

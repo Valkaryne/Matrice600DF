@@ -9,9 +9,11 @@ class PhaseSpectrumPlot : public SpectrumPlot
 
 public:
     PhaseSpectrumPlot(QWidget *parent);
+    void setCentralFrequency(double cntrFrequency);
 
 public slots:
     void updateCurve(const QVector<double> &samplesPh);
+    void equalZoom(const QRectF &rect);
 
 private:
     QwtPlotCurve    *curve;
