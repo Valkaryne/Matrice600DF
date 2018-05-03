@@ -18,7 +18,11 @@ PhaseSpectrumPlot::PhaseSpectrumPlot(QWidget *parent)
 
 void PhaseSpectrumPlot::setCentralFrequency(double cntrFrequency)
 {
-
+    if (this->cntrFrequency != cntrFrequency)
+        this->cntrFrequency = cntrFrequency;
+    double xleft = cntrFrequency - LSHIFT;
+    double xright = cntrFrequency + RSHIFT;
+    setAxisScale(QwtPlot::xBottom, xleft, xright);
 }
 
 void PhaseSpectrumPlot::updateCurve(const QVector<double> &samplesPh)
@@ -35,5 +39,5 @@ void PhaseSpectrumPlot::updateCurve(const QVector<double> &samplesPh)
 
 void PhaseSpectrumPlot::equalZoom(const QRectF &rect)
 {
-
+    setAxisScale(QwtPlot::xBottom, rect.bottomLeft().x(), rect.bottomRight().x());
 }
