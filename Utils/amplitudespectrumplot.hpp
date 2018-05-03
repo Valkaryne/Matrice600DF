@@ -21,19 +21,19 @@ public:
     void setExpCoefficient(double expCoeff);
 
     /* Getters */
-    QwtPlotPicker* getMarkerPicker(bool prime);
-    QwtPlotPicker* getThreshPicker(bool prime);
     QwtPlotZoomer* getZoomer();
     QVector<int> getMarkerBounds();
     QVector<int> getThresholdBounds();
 
     /* Other */
     void resetMarkers();
-    void moveMarker(double position, bool prime);
-    void moveThreshold(double position, bool prime);
 
 public slots:
     void updateCurve(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2);
+    void movePrimeMarker(const QPoint &pos);
+    void moveSecondMarker(const QPoint &pos);
+    void movePrimeThreshold(const QPoint &pos);
+    void moveSecondThreshold(const QPoint &pos);
 
 private:
     QwtPlotCurve    *curve1;

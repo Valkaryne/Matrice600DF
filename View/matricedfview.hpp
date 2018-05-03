@@ -33,8 +33,12 @@ public:
     explicit MatriceDFView(QWidget *parent = 0, ControllerInterface *controller = 0,
                            ModelInterface *model = 0);
     ~MatriceDFView();
+
+    /* Getters */
     AmplitudeSpectrumPlot* getAmplitudeSpectrumPlot();
     PhaseSpectrumPlot* getPhaseSpectrumPlot();
+    SpectrumWaterfall* getSpectrumWaterfall();
+    PolarPlot* getPolarPlot();
 
     // FIXME: Create composite object from webview
     QWebEngineView  *webview;
