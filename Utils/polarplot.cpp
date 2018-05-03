@@ -79,6 +79,19 @@ PolarPlot::PolarPlot(QWidget *parent)
     grid->showGrid(QwtPolar::Radius, true);
     grid->attach(this);
 
+    /* Marker */
+    QVector<QwtPointPolar> polarVector;
+    for (int i = 0; i <= 360; i++)
+        polarVector.append(QwtPointPolar(i, azimuthInterval.maxValue() / 2));
+
+    PolarCurveData *dataMark = new PolarCurveData();
+    dataMark->setSamples(polarVector);
+
+    phaseMarker = new QwtPolarCurve();
+    phaseMarker->setPen(QPen(Qt::red, 2));
+    phaseMarker->setData(dataMark);
+    phaseMarker->attach(this);
+
     /* Rotate */
     const double interval = 90.0;
     double origin = azimuthOrigin() / M_PI * 180;
@@ -89,4 +102,62 @@ PolarPlot::PolarPlot(QWidget *parent)
     const double a1 = scaleDiv(QwtPolar::Azimuth)->upperBound();
     const double a2 = scaleDiv(QwtPolar::Azimuth)->lowerBound();
     setScale(QwtPolar::Azimuth, a1, a2, qAbs(a2 - a1) / 8.0);
+
+    /* Curves */
+    PolarCurveData *data1 = new PolarCurveData();
+    curve1 = new QwtPolarCurve();
+    curve1->setPen(QPen(Qt::yellow));
+    curve1->setStyle(QwtPolarCurve::NoCurve);
+    curve1->setSymbol(new QwtSymbol(QwtSymbol::Diamond,
+                                    QBrush(Qt::yellow), QPen(Qt::yellow), QSize(4, 4)));
+    curve1->setData(data1);
+    curve1->attach(this);
+
+    PolarCurveData *data2 = new PolarCurveData();
+    curve2 = new QwtPolarCurve();
+    curve2->setPen(QPen(Qt::cyan));
+    curve2->setStyle(QwtPolarCurve::NoCurve);
+    curve2->setSymbol(new QwtSymbol(QwtSymbol::Diamond,
+                                    QBrush(Qt::cyan), QPen(Qt::cyan), QSize(4, 4)));
+    curve2->setData(data2);
+    curve2->attach(this);
+
+    PolarCurveData *data3 = new PolarCurveData();
+    curve3 = new QwtPolarCurve();
+    curve3->setPen(QPen(Qt::magenta));
+    curve3->setSymbol(new QwtSymbol(QwtSymbol::Diamond,
+                                    QBrush(Qt::magenta), QPen(Qt::magenta), QSize(4, 4)));
+    curve3->setData(data3);
+    curve3->attach(this);
+}
+
+void PolarPlot::clearDiagram()
+{
+    PolarCurveData *data1 = (PolarCurveData*)(curve1->data());
+    data1->clear();
+    PolarCurveData *data2 = (PolarCurveData*)(curve2->data());
+    data2->clear();
+    PolarCurveData *data3 = (PolarCurveData*)(curve3->data());
+    data3->clear();
+    replot();
+}
+
+void PolarPlot::updateDiagram(const int az, const double rado, const double phase)
+{
+    PolarCurveData *data1 = (PolarCurveData*)(curve1->data());
+    data1->append(QwtPointPolar(az, rado));
+    PolarCurveData *data3 = (PolarCurveData*)(curve3->data());
+    data3->append(QwtPointPolar(az, phase));
+    replot();
+}
+
+void PolarPlot::updateDiagram(const int az, const double rado, const double radl, const double phase)
+{
+    PolarCurveData *data1 = (PolarCurveData*)(curve1->data());
+    data1->append(QwtPointPolar(az, rado));
+    PolarCurveData *data2 = (PolarCurveData*)(curve2->data());
+    data2->append(QwtPointPolar(az, radl));
+    PolarCurveData *data3 = (PolarCurveData*)(curve3->data());
+    data3->append(QwtPointPolar(az, phase));
+    replot();
 }
