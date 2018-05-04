@@ -8,8 +8,7 @@ MatriceDFController::MatriceDFController(ModelInterface *model)
     MatriceDFView *view = new MatriceDFView(0, this, model);
     view->show();
     model->initializeModel();
-    //model->moveToThread(model);
-    //model->start();
+
 
     connect(model->getUDPChannel(), SIGNAL(samplesReceived(QVector<double>,QVector<double>,QVector<double>)),
             model, SLOT(samplesHandler(QVector<double>,QVector<double>,QVector<double>)));
@@ -34,6 +33,9 @@ MatriceDFController::MatriceDFController(ModelInterface *model)
             view->getPhaseSpectrumPlot(), SLOT(equalZoom(const QRectF &)));
 
     connect(view, SIGNAL(settingsReady(QVector<double>)), model->getUDPChannel(), SLOT(sendDatagram(QVector<double>)));
+
+    model->moveToThread(model);
+    model->start();
 }
 
 void MatriceDFController::changeGainParameter(double gain)

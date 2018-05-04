@@ -7,6 +7,7 @@ MatriceDFModel::MatriceDFModel()
       amSN(16)
 {
     this->gain = 60;
+    qRegisterMetaType<QVector<double>>("QVector<double>");
 }
 
 void MatriceDFModel::setCalibrationMode(bool setCalibration)
