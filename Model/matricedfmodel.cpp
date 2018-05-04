@@ -123,3 +123,39 @@ void MatriceDFModel::polarSamplesHandler(const QVector<double> samplesAm1, const
         emit polarSamplesReady(angle, rads, phase);
     }
 }
+
+
+// TODO:
+/*QVector<int> Plot::getMarkerBounds()
+{
+    QVector<int> bounds;
+    for (int i = 1; i < markerVector.size();  i += 2) {
+        double bound = markerVector.at(i - 1)->xValue();
+        bounds.append(2060 + (bound - cntrFrequency) / INCR);
+
+        double tmp_bound = bounds.at(i-1);
+
+        if ((tmp_bound >= 0) && (tmp_bound < 2048))
+            bounds.replace(i-1, tmp_bound += 2048);
+        else if ((tmp_bound >= 2048) && (tmp_bound < 4096))
+            bounds.replace(i-1, tmp_bound -= 2048);
+
+        bound = markerVector.at(i)->xValue();
+        bounds.append(2060 + (bound - cntrFrequency) / INCR);
+
+        tmp_bound = bounds.at(i);
+
+        if ((tmp_bound >= 0) && (tmp_bound < 2048))
+            bounds.replace(i, tmp_bound += 2048);
+        else if ((tmp_bound >= 2048) && (tmp_bound < 4096))
+            bounds.replace(i, tmp_bound -= 2048);
+
+        qSort(bounds.end() - 2, bsounds.end());
+        if ((i > 1) && (bounds.at(i-1) < bounds.at(i-3)) && (bounds.at(i) > bounds.at(i-2))) {
+            bounds.replace(i-1, bounds.at(i-3));
+            bounds.replace(i, bounds.at(i-2));
+        }
+    }
+
+    return bounds;
+} */
