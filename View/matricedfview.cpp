@@ -124,7 +124,14 @@ void MatriceDFView::on_applyButton_clicked()
 
     QVector<int> bounds = getAmplitudeSpectrumPlot()->getMarkerBounds();
     for (int bnd : bounds)
+    {
+        if ((bnd >= 0) && (bnd < 2048))
+            bnd += 2048;
+        else if ((bnd >= 2048) && (bnd < 4096))
+            bnd -= 2048;
         settings.append(bnd);
+    }
+
 
     emit settingsReady(settings);
 }
