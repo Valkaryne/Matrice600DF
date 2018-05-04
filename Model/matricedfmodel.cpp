@@ -89,16 +89,25 @@ void MatriceDFModel::polarSamplesHandler(const QVector<double> samplesAm1, const
         angle += 360;
 
     // TODO: detect maximum on range
-    int maxxa = vectorAm1.indexOf(*std::max_element(vectorAm1.begin(), vectorAm1.end()));
+    //int maxxa = vectorAm1.indexOf(*std::max_element(vectorAm1.begin(), vectorAm1.end()));
 
     if (setCalibration) {
         simpleAm1.append(*std::max_element(vectorAm1.begin(), vectorAm1.end()));
         simpleAm2.append(*std::max_element(vectorAm2.begin(), vectorAm2.end()));
     }
 
-    double rado = *std::max_element(vectorAm1.begin(), vectorAm1.end()) / am1N;
-    double radl = *std::max_element(vectorAm2.begin(), vectorAm2.end()) / am2N;
-    double rads = *std::max_element(vectorAmS.begin(), vectorAmS.end()) / amSN;
+    QVector<double> ampl1range, ampl2range, amplsrange, phaserange;
+    for (int i = 1; i < rangeBounds.size(); i += 2) {
+        ampl1range.push_back(std::accumulate(vectorAm1.begin() + rangeBounds.at(i-1), vectorAm1.begin() + rangeBounds.at(i), .0) / (rangeBounds.at(i) - rangeBounds.at(i-1)));
+        ampl2range.push_back(std::accumulate(vectorAm2.begin() + rangeBounds.at(i-1), vectorAm2.begin() + rangeBounds.at(i), .0) / (rangeBounds.at(i) - rangeBounds.at(i-1)));
+        amplsrange.push_back(std::accumulate(vectorAmS.begin() + rangeBounds.at(i-1), vectorAmS.begin() + rangeBounds.at(i), .0) / (rangeBounds.at(i) - rangeBounds.at(i-1)));
+        phaserange.push_back(std::accumulate(vectorPh.begin() + rangeBounds.at(i-1) - 14, vectorPh.begin() + rangeBounds.at(i) - 14, .0) / (rangeBounds.at(i) - rangeBounds.at(i-1)));
+    }
+
+    double rado = *std::max_element(ampl1range.begin(), ampl1range.end()) / am1N;
+    double radl = *std::max_element(ampl2range.begin(), ampl2range.end()) / am2N;
+    double rads = *std::max_element(amplsrange.begin(), amplsrange.end()) / amSN;
+    double phase = std::accumulate(phaserange.begin(), phaserange.end(), .0) / phaserange.size();
 
     if (rado > 359)
         rado = 359;
@@ -108,8 +117,8 @@ void MatriceDFModel::polarSamplesHandler(const QVector<double> samplesAm1, const
         rads = 359;
 
     if (doubleChannel) {
-        emit polarSamplesReady(angle, rado, radl, vectorPh.at(maxxa - 14));
+        emit polarSamplesReady(angle, rado, radl, phase);
     } else {
-        emit polarSamplesReady(angle, rads, vectorPh.at(maxxa - 14));
+        emit polarSamplesReady(angle, rads, phase);
     }
 }
