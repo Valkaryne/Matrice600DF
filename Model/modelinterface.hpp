@@ -39,11 +39,16 @@ public:
             this->gain = gain;
     }
 
+
 public slots:
     virtual void samplesHandler(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
                                 const QVector<double> samplesPh) = 0;
     virtual void polarSamplesHandler(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
                                      const QVector<double> samplesPh) = 0;
+    virtual void updateHeading(const int heading) {
+        if (this->heading != heading)
+            this->heading = heading;
+    }
 
 signals:
     virtual void amplitudeSamplesReady(const QVector<double> amplitudeOne, const QVector<double> amplitudeTwo) = 0;
@@ -55,6 +60,7 @@ protected:
     UdpChannel  *udpChannel;
     TcpChannel  *tcpChannel;
 
+    int heading;
     double gain;
     bool setCalibration;
     bool doubleChannel;

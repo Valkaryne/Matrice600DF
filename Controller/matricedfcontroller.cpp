@@ -17,6 +17,7 @@ MatriceDFController::MatriceDFController(ModelInterface *model)
 
     connect(model->getTCPChannel(), SIGNAL(telemetryReceived(mtelemetry::Telemetry)),
             view, SLOT(updateTelemetryData(mtelemetry::Telemetry)));
+    connect(view, SIGNAL(headingChanged(int)), model, SLOT(updateHeading(int)));
 
     connect(model, SIGNAL(amplitudeSamplesReady(QVector<double>,QVector<double>)),
             view->getAmplitudeSpectrumPlot(), SLOT(updateCurve(QVector<double>,QVector<double>)));

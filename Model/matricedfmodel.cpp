@@ -6,6 +6,8 @@ MatriceDFModel::MatriceDFModel()
       am2N(8),
       amSN(16)
 {
+    this->setCalibration = false;
+    this->doubleChannel = true;
     this->gain = 60;
     qRegisterMetaType<QVector<double>>("QVector<double>");
 }
@@ -85,16 +87,15 @@ void MatriceDFModel::polarSamplesHandler(const QVector<double> samplesAm1, const
         vectorPh.append(samplesPh.at(i));
     }
 
-    int angle = 0; // TODO: getCurrentAngle()
-    if (angle < 0)
-        angle += 360;
+    if (heading < 0)
+        heading += 360;
 
     // TODO: detect maximum on range
     //int maxxa = vectorAm1.indexOf(*std::max_element(vectorAm1.begin(), vectorAm1.end()));
 
     if (setCalibration) {
-        simpleAm1.append(*std::max_element(vectorAm1.begin(), vectorAm1.end()));
-        simpleAm2.append(*std::max_element(vectorAm2.begin(), vectorAm2.end()));
+        simpleAm1.append(*std::max_element(vectorAm1.begin() + rangeBounds.at(0), vectorAm1.begin() + rangeBounds.at(1)));
+        simpleAm2.append(*std::max_element(vectorAm2.begin() + rangeBounds.at(0), vectorAm2.begin() + rangeBounds.at(1)));
     }
 
     QVector<double> ampl1range, ampl2range, amplsrange, phaserange;
@@ -108,7 +109,8 @@ void MatriceDFModel::polarSamplesHandler(const QVector<double> samplesAm1, const
     double rado = *std::max_element(ampl1range.begin(), ampl1range.end()) / am1N;
     double radl = *std::max_element(ampl2range.begin(), ampl2range.end()) / am2N;
     double rads = *std::max_element(amplsrange.begin(), amplsrange.end()) / amSN;
-    double phase = std::accumulate(phaserange.begin(), phaserange.end(), .0) / phaserange.size();
+    int maxxa = ampl1range.indexOf(*std::max_element(ampl1range.begin(), ampl1range.end()));
+    double phase = phaserange.at(maxxa);
 
     if (rado > 359)
         rado = 359;
@@ -118,8 +120,8 @@ void MatriceDFModel::polarSamplesHandler(const QVector<double> samplesAm1, const
         rads = 359;
 
     if (doubleChannel) {
-        emit polarSamplesReady(angle, rado, radl, phase);
+        emit polarSamplesReady(heading, rado, radl, phase);
     } else {
-        emit polarSamplesReady(angle, rads, phase);
+        emit polarSamplesReady(heading, rads, phase);
     }
 }

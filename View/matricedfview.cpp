@@ -93,6 +93,8 @@ void MatriceDFView::updateTelemetryData(const mtelemetry::Telemetry &telemetry)
             .arg(QString::number(longitude,'f',6))
             .arg(QString::number(heading,'f',2));
     webview->page()->runJavaScript(updateScript);
+
+    emit headingChanged((int)heading);
 }
 
 void MatriceDFView::on_makeDirectionButton_clicked()

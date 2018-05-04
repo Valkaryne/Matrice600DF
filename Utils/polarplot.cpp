@@ -125,6 +125,7 @@ PolarPlot::PolarPlot(QWidget *parent)
     PolarCurveData *data3 = new PolarCurveData();
     curve3 = new QwtPolarCurve();
     curve3->setPen(QPen(Qt::magenta));
+    curve3->setStyle(QwtPolarCurve::NoCurve);
     curve3->setSymbol(new QwtSymbol(QwtSymbol::Diamond,
                                     QBrush(Qt::magenta), QPen(Qt::magenta), QSize(4, 4)));
     curve3->setData(data3);

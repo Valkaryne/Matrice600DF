@@ -9,7 +9,7 @@ TcpChannel::TcpChannel(QObject *parent)
     connect(server, SIGNAL(newConnection()),
             this, SLOT(newConnection()));
 
-    if (!server->listen(QHostAddress::LocalHost, 8080))
+    if (!server->listen(QHostAddress::LocalHost, 8090))
     {
         qDebug() << "Server could not start";
     }

@@ -64,6 +64,7 @@ private slots:
 
 signals:
     void settingsReady(const QVector<double> settings);
+    void headingChanged(const int heading);
 
 private:
     Ui::MatriceDFView   *ui;
