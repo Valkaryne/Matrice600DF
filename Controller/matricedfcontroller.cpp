@@ -3,9 +3,13 @@
 MatriceDFController::MatriceDFController(ModelInterface *model)
     : model(model)
 {
+    connect(this, SIGNAL(destroyed()), model, SLOT(quit()));
+
     MatriceDFView *view = new MatriceDFView(0, this, model);
     view->show();
     model->initializeModel();
+    model->moveToThread(model);
+    model->start();
 
     connect(model->getUDPChannel(), SIGNAL(samplesReceived(QVector<double>,QVector<double>,QVector<double>)),
             model, SLOT(samplesHandler(QVector<double>,QVector<double>,QVector<double>)));
