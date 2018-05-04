@@ -28,5 +28,36 @@ MatriceDFController::MatriceDFController(ModelInterface *model)
 
     connect(view->getAmplitudeSpectrumPlot()->getZoomer(), SIGNAL(zoomed(const QRectF &)),
             view->getPhaseSpectrumPlot(), SLOT(equalZoom(const QRectF &)));
+
+    connect(view, SIGNAL(settingsReady(QVector<double>)), model->getUDPChannel(), SLOT(sendDatagram(QVector<double>)));
 }
 
+void MatriceDFController::changeGainParameter(double gain)
+{
+    model->setCurrentGain(gain);
+}
+
+void MatriceDFController::changeAnalysisRange(QVector<int> range)
+{
+    model->setRangeBounds(range);
+}
+
+void MatriceDFController::enableCalibrationMode()
+{
+    model->setCalibrationMode(true);
+}
+
+void MatriceDFController::disableCalibrationMode()
+{
+    model->setCalibrationMode(false);
+}
+
+void MatriceDFController::setDoubleDrawingMode()
+{
+    model->setDrawingMode(true);
+}
+
+void MatriceDFController::setSummDrawingMode()
+{
+    model->setDrawingMode(false);
+}

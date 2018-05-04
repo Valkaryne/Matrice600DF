@@ -23,6 +23,9 @@ MatriceDFView::MatriceDFView(QWidget *parent, ControllerInterface *controller, M
     spLayout->addSpacing(12);
     spLayout->addWidget(amplitudeSpectrumPlot);
     ui->analysisLayout->addLayout(spLayout);
+    getAmplitudeSpectrumPlot()->setPickers(false);
+    getAmplitudeSpectrumPlot()->setZoomer(true);
+    getAmplitudeSpectrumPlot()->setThresholdPickers(false);
 
     phaseSpectrumPlot = new PhaseSpectrumPlot(this);
     phLayout->addSpacing(12);
@@ -100,4 +103,96 @@ void MatriceDFView::on_makeDirectionButton_clicked()
 void MatriceDFView::on_clearMapButton_clicked()
 {
     webview->page()->runJavaScript("clearMap();");
+}
+
+void MatriceDFView::on_applyButton_clicked()
+{
+    amplitudeSpectrumPlot->setCentralFrequency(ui->frequencySpinBox->value());
+    phaseSpectrumPlot->setCentralFrequency(ui->frequencySpinBox->value());
+    spectrumWaterfall->setCentralFrequency(ui->frequencySpinBox->value());
+    controller->changeGainParameter(ui->gainSpinBox->value());
+
+    QVector<double> settings;
+    settings.append(ui->frequencySpinBox->value() * 1000000.0);
+    settings.append(ui->gainSpinBox->value());
+    settings.append(ui->productSpinBox->value());
+    settings.append(ui->addSpinxBox->value());
+
+    QVector<int> thresholds = getAmplitudeSpectrumPlot()->getThresholdBounds();
+    for (int thr : thresholds)
+        settings.append((thr + 97.0 + ui->gainSpinBox->value()) * 16.0);
+
+    QVector<int> bounds = getAmplitudeSpectrumPlot()->getMarkerBounds();
+    for (int bnd : bounds)
+        settings.append(bnd);
+
+    emit settingsReady(settings);
+}
+
+void MatriceDFView::on_calibrateButton_clicked(bool checked)
+{
+    if (checked) {
+        ui->calibrateButton->setText("Stop");
+        controller->enableCalibrationMode();
+    } else {
+        ui->calibrateButton->setText("Calibrate");
+        controller->disableCalibrationMode();
+    }
+}
+
+void MatriceDFView::on_clearDiagramButton_clicked()
+{
+    polarPlot->clearDiagram();
+}
+
+void MatriceDFView::on_setRangeButton_clicked()
+{
+    QVector<int> bounds = getAmplitudeSpectrumPlot()->getMarkerBounds();
+    controller->changeAnalysisRange(bounds);
+}
+
+void MatriceDFView::on_markersButtonGroup_buttonClicked(QAbstractButton *button)
+{
+    int number = button->text().toInt();
+    getAmplitudeSpectrumPlot()->setMarker(number);
+}
+
+void MatriceDFView::on_modeButtonGroup_buttonClicked(QAbstractButton *button)
+{
+    QString name = button->text();
+    if (name == "Markers") {
+        getAmplitudeSpectrumPlot()->setPickers(true);
+        getAmplitudeSpectrumPlot()->setZoomer(false);
+        getAmplitudeSpectrumPlot()->setThresholdPickers(false);
+    } else if (name == "Zoom") {
+        getAmplitudeSpectrumPlot()->setZoomer(true);
+        getAmplitudeSpectrumPlot()->setThresholdPickers(false);
+        getAmplitudeSpectrumPlot()->setPickers(false);
+    } else if (name == "Threshold") {
+        getAmplitudeSpectrumPlot()->setThresholdPickers(true);
+        getAmplitudeSpectrumPlot()->setPickers(false);
+        getAmplitudeSpectrumPlot()->setZoomer(false);
+    }
+}
+
+void MatriceDFView::on_maxHoldCheckBox_stateChanged(int arg1)
+{
+    if (arg1 != 0)
+        getAmplitudeSpectrumPlot()->setMaxHold(true);
+    else
+        getAmplitudeSpectrumPlot()->setMaxHold(false);
+}
+
+void MatriceDFView::on_expSpinBox_valueChanged(double arg1)
+{
+    getAmplitudeSpectrumPlot()->setExpCoefficient(arg1);
+}
+
+void MatriceDFView::on_amModeCheckBox_stateChanged(int arg1)
+{
+    polarPlot->clearDiagram();
+    if (arg1 == 0)
+        controller->setDoubleDrawingMode();
+    else
+        controller->setSummDrawingMode();
 }
