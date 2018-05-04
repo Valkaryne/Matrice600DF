@@ -2,6 +2,7 @@
 #define MATRICEDFVIEW_HPP
 
 #include <QMainWindow>
+#include <QAbstractButton>
 
 #include <Utils/spectrumwaterfall.hpp>
 #include <Utils/spectrumplot.hpp>
@@ -48,6 +49,21 @@ private slots:
 
     void on_makeDirectionButton_clicked();
     void on_clearMapButton_clicked();
+
+    void on_applyButton_clicked();
+    void on_calibrateButton_clicked(bool checked);
+    void on_clearDiagramButton_clicked();
+    void on_setRangeButton_clicked();
+
+    void on_markersButtonGroup_buttonClicked(QAbstractButton *button);
+    void on_modeButtonGroup_buttonClicked(QAbstractButton *button);
+
+    void on_maxHoldCheckBox_stateChanged(int arg1);
+    void on_expSpinBox_valueChanged(double arg1);
+    void on_amModeCheckBox_stateChanged(int arg1);
+
+signals:
+    void settingsReady(const QVector<double> settings);
 
 private:
     Ui::MatriceDFView   *ui;

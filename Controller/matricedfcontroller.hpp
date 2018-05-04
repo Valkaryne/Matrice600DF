@@ -13,6 +13,14 @@ class MatriceDFController : public ControllerInterface
 public:
     explicit MatriceDFController(ModelInterface *model = 0);
 
+    void changeGainParameter(double gain);
+    void changeAnalysisRange(QVector<int> range);
+    void enableCalibrationMode();
+    void disableCalibrationMode();
+
+    void setDoubleDrawingMode();
+    void setSummDrawingMode();
+
 private slots:
 
 
