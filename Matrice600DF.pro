@@ -62,6 +62,8 @@ CONFIG += \
 #QMAKE_CXXFLAGS_DEBUG += /MTd
 #QMAKE_CXXFLAGS_RELEASE += /MT
 
+include(DJI_API/dji_api.pri)
+
 win32:CONFIG(release, debug|release): LIBS += -LC:/Path/to/install/lib/ -llibprotobuf
 else:win32:CONFIG(debug, debug|release): LIBS += -LC:/Path/to/install/lib/ -llibprotobufd
 
