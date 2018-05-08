@@ -11,4 +11,7 @@ const double RANGE = 30.72;
 const double LSHIFT = INCR * CENTER;
 const double RSHIFT = RANGE - LSHIFT;
 
+const QString COMPORT = "COM8";
+const int BAUDRATE = 115200;
+
 #endif // CONSTSET_HPP
