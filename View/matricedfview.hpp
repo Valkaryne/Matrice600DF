@@ -46,6 +46,7 @@ public:
 
 private slots:
     void updateTelemetryData(const mtelemetry::Telemetry &telemetry);
+    void updateTelemetryData(const QVector<double> subscribeData);
 
     void on_makeDirectionButton_clicked();
     void on_clearMapButton_clicked();

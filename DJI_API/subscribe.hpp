@@ -49,7 +49,7 @@ private slots:
     void stopPkg4Requested();
 
 signals:
-    void subscribeDataReady(QVector<double> subscribeData);
+    void subscribeDataReady(const QVector<double> subscribeData);
 
 private:
     QVector<double> subscribeData;

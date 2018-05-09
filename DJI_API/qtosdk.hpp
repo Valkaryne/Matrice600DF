@@ -33,16 +33,20 @@ public:
                                    DJI::OSDK::RecvContainer recvFrame,
                                    DJI::OSDK::UserData      userData);
 
+    /* Getters */
+    Subscribe* getSubscribeModule();
 
 private:
     void initModules();
     void initVehicle();
     void activate();
     void obtainControl();
-    void controlStatusChanged(QString);
     //void initFinished(QString initStatus, bool initResult);
    // void activateFinished(QString activateStatus, bool activateResult);
-    static void activationSuccessful();
+
+private slots:
+    void controlStatusChanged(bool obtain);
+    void activationSuccessful();
 
 private:
     DJI::OSDK::Vehicle  *vehicle;
@@ -50,7 +54,12 @@ private:
 
     QString appID;
     QString appKey;
-    static bool    controlObtained;
+    bool    controlObtained;
+
+signals:
+    void changeControlStatus(bool obtain);
+    void changeActivateStatus();
+    void throwSubscribeData(const QVector<double>);
 };
 
 #endif // QTOSDK_HPP

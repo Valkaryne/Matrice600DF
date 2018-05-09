@@ -15,8 +15,8 @@ MatriceDFController::MatriceDFController(ModelInterface *model)
     connect(model->getUDPChannel(), SIGNAL(samplesReceived(QVector<double>,QVector<double>,QVector<double>)),
             model, SLOT(polarSamplesHandler(QVector<double>,QVector<double>,QVector<double>)));
 
-    connect(model->getTCPChannel(), SIGNAL(telemetryReceived(mtelemetry::Telemetry)),
-            view, SLOT(updateTelemetryData(mtelemetry::Telemetry)));
+    //connect(model->getTCPChannel(), SIGNAL(telemetryReceived(mtelemetry::Telemetry)),
+    //        view, SLOT(updateTelemetryData(mtelemetry::Telemetry)));
     connect(view, SIGNAL(headingChanged(int)), model, SLOT(updateHeading(int)));
 
     connect(model, SIGNAL(amplitudeSamplesReady(QVector<double>,QVector<double>)),
@@ -37,6 +37,10 @@ MatriceDFController::MatriceDFController(ModelInterface *model)
 
     model->moveToThread(model);
     model->start();
+
+    sdk = new QtOsdk();
+    connect(sdk,SIGNAL(throwSubscribeData(const QVector<double>)),
+            view,SLOT(updateTelemetryData(const QVector<double>)));
 }
 
 void MatriceDFController::changeGainParameter(double gain)

@@ -9,6 +9,9 @@ QtOsdk::QtOsdk(QObject *parent)
 {
     vehicle = 0;
 
+    connect(this, SIGNAL(changeControlStatus(bool)), SLOT(controlStatusChanged(bool)));
+    connect(this, SIGNAL(changeActivateStatus()), SLOT(activationSuccessful()));
+
     initVehicle();
     activate();
     obtainControl();
@@ -59,7 +62,7 @@ void QtOsdk::activateCallback(Vehicle *vehicle, RecvContainer recvFrame,
         else
         {
             qDebug() << "Activation Successful";
-            activationSuccessful();
+            emit sdk->changeActivateStatus();
         }
     }
     else
@@ -109,7 +112,7 @@ void QtOsdk::setControlCallback(Vehicle *vehicle, RecvContainer recvFrame,
         if (sdk)
         {
             qDebug() << "Obtained Control";
-            controlObtained = true;
+            emit sdk->changeControlStatus(true);
         }
         else
             DERROR("SDK not initialized.");
@@ -120,7 +123,7 @@ void QtOsdk::setControlCallback(Vehicle *vehicle, RecvContainer recvFrame,
         if (sdk)
         {
             qDebug() << "Released Control";
-            controlObtained = false;
+            emit sdk->changeControlStatus(false);
         }
         else
             DERROR("SDK not initialized.");
@@ -139,9 +142,15 @@ void QtOsdk::setControlCallback(Vehicle *vehicle, RecvContainer recvFrame,
     }
 }
 
+Subscribe* QtOsdk::getSubscribeModule()
+{
+    return subscribe;
+}
+
 void QtOsdk::initModules()
 {
     this->subscribe = new Subscribe(this->vehicle, 0);
+    connect(this->subscribe, SIGNAL(subscribeDataReady(const QVector<double>)), SIGNAL(throwSubscribeData(const QVector<double>)));
 }
 
 void QtOsdk::initVehicle()
@@ -181,9 +190,9 @@ void QtOsdk::obtainControl()
         vehicle->obtainCtrlAuthority(QtOsdk::setControlCallback, this);
 }
 
-void QtOsdk::controlStatusChanged(QString valueToDisplay)
+void QtOsdk::controlStatusChanged(bool obtain)
 {
-    qDebug() << valueToDisplay;
+    controlObtained = obtain;
 }
 
 void QtOsdk::activationSuccessful()
