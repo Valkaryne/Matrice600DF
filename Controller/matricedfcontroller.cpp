@@ -39,10 +39,18 @@ MatriceDFController::MatriceDFController(ModelInterface *model)
     model->start();
 
     sdk = new QtOsdk();
-    connect(sdk,SIGNAL(throwSubscribeData(const QVector<double>)),
-            view,SLOT(updateTelemetryData(const QVector<double>)));
+    connect(sdk, SIGNAL(throwSubscribeData(const QVector<double>)),
+            view, SLOT(updateTelemetryData(const QVector<double>)));
     connect(this, SIGNAL(runCommandRequest(int)),
             sdk, SIGNAL(runCommandRequest(int)));
+    connect(this, SIGNAL(initWaypointRequest(QHash<QString,int>)),
+            sdk, SIGNAL(initWaypointRequest(QHash<QString,int>)));
+    connect(this, SIGNAL(loadWaypointRequest(QHash<QString,int>)),
+            sdk, SIGNAL(loadWaypointRequest(QHash<QString,int>)));
+    connect(this, SIGNAL(startWaypointRequest()),
+            sdk, SIGNAL(startWaypointRequest()));
+    connect(this, SIGNAL(abortWaypointRequest()),
+            sdk, SIGNAL(abortWaypointRequest()));
 }
 
 void MatriceDFController::changeGainParameter(double gain)
@@ -78,4 +86,24 @@ void MatriceDFController::setSummDrawingMode()
 void MatriceDFController::sendRunCommandRequest(int commandIndex)
 {
     emit runCommandRequest(commandIndex);
+}
+
+void MatriceDFController::sendInitWaypointRequest(QHash<QString, int> settings)
+{
+    emit initWaypointRequest(settings);
+}
+
+void MatriceDFController::sendLoadWaypointRequest(QHash<QString, int> settings)
+{
+    emit loadWaypointRequest(settings);
+}
+
+void MatriceDFController::sendStartWaypointRequest()
+{
+    emit startWaypointRequest();
+}
+
+void MatriceDFController::sendAbortWaypointRequest()
+{
+    emit abortWaypointRequest();
 }

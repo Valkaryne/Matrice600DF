@@ -14,4 +14,6 @@ const double RSHIFT = RANGE - LSHIFT;
 const QString COMPORT = "COM8";
 const int BAUDRATE = 115200;
 
+#define DEG2RAD 0.01745329252;
+
 #endif // CONSTSET_HPP

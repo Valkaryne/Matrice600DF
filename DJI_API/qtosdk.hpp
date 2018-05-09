@@ -8,6 +8,7 @@
 
 #include "subscribe.hpp"
 #include "flightcontroller.hpp"
+#include "waypoint.hpp"
 #include "../Utils/constset.hpp"
 
 class QtOsdk : public QObject
@@ -53,6 +54,7 @@ private:
     DJI::OSDK::Vehicle  *vehicle;
     Subscribe           *subscribe;
     FlightController    *flightController;
+    Waypoint            *waypoint;
 
     QString appID;
     QString appKey;
@@ -63,6 +65,11 @@ signals:
     void changeActivateStatus();
     void throwSubscribeData(const QVector<double>);
     void runCommandRequest(int);
+
+    void initWaypointRequest(QHash<QString, int>);
+    void loadWaypointRequest(QHash<QString, int>);
+    void startWaypointRequest();
+    void abortWaypointRequest();
 };
 
 #endif // QTOSDK_HPP

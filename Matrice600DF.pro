@@ -33,8 +33,8 @@ SOURCES += main.cpp \
     Controller/matricedfcontroller.cpp \
     Model/matricedfmodel.cpp \
     Utils/udpchannel.cpp \
-    Utils/MatriceTelemetry.pb.cc \
-    Utils/tcpchannel.cpp
+    #Utils/MatriceTelemetry.pb.cc \
+    #Utils/tcpchannel.cpp
 
 HEADERS += \
     View/matricedfview.hpp \
@@ -49,8 +49,8 @@ HEADERS += \
     Controller/controllerinterface.hpp \
     Model/modelinterface.hpp \
     Utils/constset.hpp \
-    Utils/MatriceTelemetry.pb.h \
-    Utils/tcpchannel.hpp
+    #Utils/MatriceTelemetry.pb.h \
+    #Utils/tcpchannel.hpp
 
 FORMS += \
     View/matricedfview.ui
@@ -64,11 +64,11 @@ CONFIG += \
 
 include(DJI_API/dji_api.pri)
 
-win32:CONFIG(release, debug|release): LIBS += -LC:/Path/to/install/lib/ -llibprotobuf
-else:win32:CONFIG(debug, debug|release): LIBS += -LC:/Path/to/install/lib/ -llibprotobufd
+#win32:CONFIG(release, debug|release): LIBS += -LC:/Path/to/install/lib/ -llibprotobuf
+#else:win32:CONFIG(debug, debug|release): LIBS += -LC:/Path/to/install/lib/ -llibprotobufd
 
-INCLUDEPATH += C:/Path/to/install/include
-DEPENDPATH += C:/Path/to/install/include
+#INCLUDEPATH += C:/Path/to/install/include
+#DEPENDPATH += C:/Path/to/install/include
 
 RESOURCES += \
     resources.qrc

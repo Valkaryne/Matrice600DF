@@ -9,7 +9,7 @@
 #include <Utils/amplitudespectrumplot.hpp>
 #include <Utils/phasespectrumplot.hpp>
 #include <Utils/polarplot.hpp>
-#include <Utils/MatriceTelemetry.pb.h>
+//#include <Utils/MatriceTelemetry.pb.h>
 
 #include <Model/modelinterface.hpp>
 #include <Model/matricedfmodel.hpp>
@@ -43,9 +43,11 @@ public:
 
     // FIXME: Create composite object from webview
     QWebEngineView  *webview;
+    //Q_INVOKABLE void setPointOnMap(QString lat, QString lng);
+    double markerLatitude, markerLongitude;
 
 private slots:
-    void updateTelemetryData(const mtelemetry::Telemetry &telemetry);
+    //void updateTelemetryData(const mtelemetry::Telemetry &telemetry);
     void updateTelemetryData(const QVector<double> subscribeData);
 
     void on_makeDirectionButton_clicked();
@@ -64,6 +66,10 @@ private slots:
     void on_amModeCheckBox_stateChanged(int arg1);
 
     void on_runCommandButton_clicked();
+
+    void on_wpInitButton_clicked();
+    void on_wpLoadStartButton_clicked(bool checked);
+    void on_wpAbortButton_clicked();
 
 signals:
     void settingsReady(const QVector<double> settings);
