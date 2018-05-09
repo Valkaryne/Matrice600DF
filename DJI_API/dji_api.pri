@@ -66,3 +66,6 @@ INCLUDEPATH += \
     $$PWD/protocol/inc
 
 message("finish compile")
+
+RESOURCES += \
+    $$PWD/dji_resources.qrc

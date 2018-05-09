@@ -6,6 +6,10 @@
 #include <Model/matricedfmodel.hpp>
 #include <View/matricedfview.hpp>
 
+#include <qtosdk.hpp>
+#include <subscribe.hpp>
+#include <QObject>
+
 
 class MatriceDFController : public ControllerInterface
 {
@@ -30,6 +34,7 @@ private:
 
     //MatriceDFView   *view;
     ModelInterface  *model;
+    QtOsdk  *sdk;
 
 };
 

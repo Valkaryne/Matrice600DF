@@ -97,6 +97,34 @@ void MatriceDFView::updateTelemetryData(const mtelemetry::Telemetry &telemetry)
     emit headingChanged((int)heading);
 }
 
+void MatriceDFView::updateTelemetryData(const QVector<double> subscribeData)
+{
+    double latitude = subscribeData.at(3) / 10000000.0;
+    double longitude = subscribeData.at(2) / 10000000.0;
+    double altitude = subscribeData.at(1);
+    double heading = subscribeData.at(0);
+
+    //double latitude = 53.952373;
+    //double longitude = 27.667157;
+
+    ui->mapLatitudeLine->setText(
+                QString::number(latitude,'f',6));
+    ui->mapLongitudeLine->setText(
+                QString::number(longitude,'f',6));
+    ui->mapAltitudeLine->setText(
+                QString::number(altitude,'f',2));
+    ui->mapYawLine->setText(
+                QString::number(heading,'f',2));
+
+    QString updateScript = QString("updateDroneLocation(%1, %2, %3);")
+            .arg(QString::number(latitude,'f',6))
+            .arg(QString::number(longitude,'f',6))
+            .arg(QString::number(heading,'f',2));
+    webview->page()->runJavaScript(updateScript);
+
+    emit headingChanged((int)heading);
+}
+
 void MatriceDFView::on_makeDirectionButton_clicked()
 {
     webview->page()->runJavaScript("makeBeam();");

@@ -11,6 +11,12 @@ Subscribe::Subscribe(Vehicle *vehiclePtr, QObject *parent)
     int numTopics = 3;
     for (int i = 0; i < numTopics + 1; i++)
         subscribeData.append(0);
+
+    vehicle->subscribe->verify();
+
+    startPkg0Requested();
+    startPkg1Requested();
+    startPkg2Requested();
 }
 
 Subscribe::~Subscribe()
@@ -110,7 +116,8 @@ void Subscribe::startPkg0Requested()
     int freq = 0;
     bool enableTimestamp = false;
 
-    freq = freqEnum[3]; // 50 Hz
+    //freq = freqEnum[3]; // 50 Hz
+    freq = 200;
     Telemetry::TopicName topicList[Telemetry::TOTAL_TOPIC_NUMBER];
     topicList[0] = static_cast<Telemetry::TopicName>(0); // Quaternion index
 
