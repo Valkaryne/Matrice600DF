@@ -151,6 +151,9 @@ void QtOsdk::initModules()
 {
     this->subscribe = new Subscribe(this->vehicle, 0);
     connect(this->subscribe, SIGNAL(subscribeDataReady(const QVector<double>)), SIGNAL(throwSubscribeData(const QVector<double>)));
+
+    this->flightController = new FlightController(this->vehicle, 0);
+    connect(this, SIGNAL(runCommandRequest(int)), this->flightController, SLOT(flightRunCommand(int)));
 }
 
 void QtOsdk::initVehicle()

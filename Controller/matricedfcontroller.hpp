@@ -24,11 +24,9 @@ public:
 
     void setDoubleDrawingMode();
     void setSummDrawingMode();
+    void sendRunCommandRequest(int commandIndex);
 
-private slots:
 
-
-signals:
 
 private:
 
