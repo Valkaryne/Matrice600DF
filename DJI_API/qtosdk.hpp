@@ -7,6 +7,7 @@
 #include <dji_vehicle.hpp>
 
 #include "subscribe.hpp"
+#include "flightcontroller.hpp"
 #include "../Utils/constset.hpp"
 
 class QtOsdk : public QObject
@@ -51,6 +52,7 @@ private slots:
 private:
     DJI::OSDK::Vehicle  *vehicle;
     Subscribe           *subscribe;
+    FlightController    *flightController;
 
     QString appID;
     QString appKey;
@@ -60,6 +62,7 @@ signals:
     void changeControlStatus(bool obtain);
     void changeActivateStatus();
     void throwSubscribeData(const QVector<double>);
+    void runCommandRequest(int);
 };
 
 #endif // QTOSDK_HPP

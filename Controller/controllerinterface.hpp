@@ -16,6 +16,10 @@ public:
 
     virtual void setDoubleDrawingMode() = 0;
     virtual void setSummDrawingMode() = 0;
+    virtual void sendRunCommandRequest(int commandIndex) = 0;
+
+signals:
+    void runCommandRequest(int);
 
 private:
 };

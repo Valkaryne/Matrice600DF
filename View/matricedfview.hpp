@@ -63,6 +63,8 @@ private slots:
     void on_expSpinBox_valueChanged(double arg1);
     void on_amModeCheckBox_stateChanged(int arg1);
 
+    void on_runCommandButton_clicked();
+
 signals:
     void settingsReady(const QVector<double> settings);
     void headingChanged(const int heading);

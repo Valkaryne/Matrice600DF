@@ -233,3 +233,9 @@ void MatriceDFView::on_amModeCheckBox_stateChanged(int arg1)
     else
         controller->setSummDrawingMode();
 }
+
+void MatriceDFView::on_runCommandButton_clicked()
+{
+    int commandIndex = ui->commandComboBox->currentIndex();
+    controller->sendRunCommandRequest(commandIndex);
+}

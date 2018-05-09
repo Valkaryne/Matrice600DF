@@ -41,6 +41,8 @@ MatriceDFController::MatriceDFController(ModelInterface *model)
     sdk = new QtOsdk();
     connect(sdk,SIGNAL(throwSubscribeData(const QVector<double>)),
             view,SLOT(updateTelemetryData(const QVector<double>)));
+    connect(this, SIGNAL(runCommandRequest(int)),
+            sdk, SIGNAL(runCommandRequest(int)));
 }
 
 void MatriceDFController::changeGainParameter(double gain)
@@ -71,4 +73,9 @@ void MatriceDFController::setDoubleDrawingMode()
 void MatriceDFController::setSummDrawingMode()
 {
     model->setDrawingMode(false);
+}
+
+void MatriceDFController::sendRunCommandRequest(int commandIndex)
+{
+    emit runCommandRequest(commandIndex);
 }
