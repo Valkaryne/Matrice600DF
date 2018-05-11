@@ -6,7 +6,7 @@ AmplitudeSpectrumPlot::AmplitudeSpectrumPlot(QWidget *parent)
 {
     /* Axis */
     setAxisTitle(QwtPlot::yLeft, "Power");
-    setAxisScale(QwtPlot::yLeft, 0 - 157, 140 - 157, 20); // WARNING: magic constants
+    setAxisScale(QwtPlot::yLeft, 0 - calibrationI, 300 - calibrationI, 60); // WARNING: magic constants
 
     /* Curves */
     curve1 = new QwtPlotCurve();
@@ -76,13 +76,13 @@ AmplitudeSpectrumPlot::AmplitudeSpectrumPlot(QWidget *parent)
     thresholdPr = new QwtPlotMarker();
     thresholdPr->setLineStyle(QwtPlotMarker::HLine);
     thresholdPr->setLinePen(QColor(Qt::white), 2, Qt::DashLine);
-    thresholdPr->setValue(0, 0 - 157.0); // WARNING: magic constant
+    thresholdPr->setValue(0, 0 - calibrationI); // WARNING: magic constant
     thresholdPr->attach(this);
 
     thresholdSec = new QwtPlotMarker();
     thresholdSec->setLineStyle(QwtPlotMarker::HLine);
     thresholdSec->setLinePen(QColor(Qt::white), 2, Qt::DashLine);
-    thresholdSec->setValue(0, 188 - 157.0); // WARNING: magic constant
+    thresholdSec->setValue(0, 300 - calibrationI); // WARNING: magic constant
     thresholdSec->attach(this);
 
     /* Colors */
@@ -173,7 +173,7 @@ void AmplitudeSpectrumPlot::setZoomBase(double xleft, double xright)
 {
     QStack<QRectF> stack = zoomer->zoomStack();
     QRectF base;
-    base = QRectF(QPointF(xleft, 20 - 157), QPointF(xright, 140 - 157));
+    base = QRectF(QPointF(xleft, 20 - calibrationI), QPointF(xright, 140 - calibrationI));
     stack.clear();
     stack.append(base);
     zoomer->setZoomStack(stack);
@@ -220,7 +220,10 @@ QVector<int> AmplitudeSpectrumPlot::getThresholdBounds()
 {
     QVector<int> bounds;
     bounds.append(thresholdPr->yValue());
-    bounds.append(thresholdSec->yValue());
+    if (((2060 + (markerVector.at(0) - cntrFrequency) / INCR) == 0) && ((2060 + (markerVector.at(1) - cntrFrequency) / INCR) == 4095))
+        bounds.append(10000);
+    else
+        bounds.append(thresholdSec->yValue());
     qSort(bounds);
     return bounds;
 }

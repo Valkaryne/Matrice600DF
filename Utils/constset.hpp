@@ -11,9 +11,12 @@ const double RANGE = 30.72;
 const double LSHIFT = INCR * CENTER;
 const double RSHIFT = RANGE - LSHIFT;
 
-const QString COMPORT = "COM8";
+const QString COMPORT = "COM4";
 const int BAUDRATE = 115200;
 
 #define DEG2RAD 0.01745329252;
+
+const double calibrationR = 170.0;
+const double calibrationI = 170.0;
 
 #endif // CONSTSET_HPP

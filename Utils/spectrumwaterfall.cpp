@@ -23,7 +23,7 @@ SpectrumWaterfall::SpectrumWaterfall(QWidget *parent) :
     enableAxis(QwtPlot::yLeft, false);
     setAxisAutoScale(QwtPlot::yLeft, true);
     setAxisAutoScale(QwtPlot::xBottom, true);
-    setAxisScale(QwtPlot::yLeft, 100 - 157, 0 - 157, 20); //WARNING: magic constants
+    setAxisScale(QwtPlot::yLeft, 100 - calibrationI, 0 - calibrationI, 20); //WARNING: magic constants
     setAxisScale(QwtPlot::xBottom, 54.55, 85.27, 3); // WARNING: magic constants
 
     /* Plot */
@@ -35,17 +35,17 @@ SpectrumWaterfall::SpectrumWaterfall(QWidget *parent) :
     plotData = new QwtMatrixRasterData();
     plotData->setResampleMode(QwtMatrixRasterData::ResampleMode::BilinearInterpolation);
     plotData->setInterval(Qt::XAxis, QwtInterval(0, 4095, QwtInterval::ExcludeMaximum)); // WARNING: magic constants
-    plotData->setInterval( Qt::YAxis, QwtInterval(0 - 157, 100 - 157, QwtInterval::ExcludeMaximum)); // WARNING: magic constants
-    plotData->setInterval(Qt::ZAxis, QwtInterval(0 - 157, 100 - 157)); // WARNING: magic constants
+    plotData->setInterval( Qt::YAxis, QwtInterval(0 - calibrationI, 100 - calibrationI, QwtInterval::ExcludeMaximum)); // WARNING: magic constants
+    plotData->setInterval(Qt::ZAxis, QwtInterval(0 - calibrationI, 100 - calibrationI)); // WARNING: magic constants
 
-    const QwtInterval interval(0 - 157, 100 - 157); // WARNING: magic constants
+    const QwtInterval interval(0 - calibrationI, 100 - calibrationI); // WARNING: magic constants
 
     /* Color bar */
     QwtScaleWidget *leftAxis = axisWidget(QwtPlot::yLeft);
     leftAxis->setTitle("Power");
     leftAxis->setColorBarEnabled(true);
 
-    setAxisScale(QwtPlot::yLeft, 0 - 157, 100 - 157); // WARNING: magic constants
+    setAxisScale(QwtPlot::yLeft, 0 - calibrationI, 100 - calibrationI); // WARNING: magic constants
     enableAxis(QwtPlot::yLeft);
 
     leftAxis->setColorMap(interval, new ColorMap());

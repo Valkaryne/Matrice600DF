@@ -2,6 +2,7 @@
 #define MATRICEDFMODEL_HPP
 
 #include "modelinterface.hpp"
+#include <Utils/constset.hpp>
 
 class MatriceDFModel : public ModelInterface
 {

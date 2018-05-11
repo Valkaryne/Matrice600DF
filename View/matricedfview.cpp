@@ -150,7 +150,7 @@ void MatriceDFView::on_applyButton_clicked()
 
     QVector<int> thresholds = getAmplitudeSpectrumPlot()->getThresholdBounds();
     for (int thr : thresholds)
-        settings.append((thr + 97.0 + ui->gainSpinBox->value()) * 16.0);
+        settings.append((thr + calibrationI) /*ui->gainSpinBox->value())*/);
 
     QVector<int> bounds = getAmplitudeSpectrumPlot()->getMarkerBounds();
     for (int bnd : bounds)

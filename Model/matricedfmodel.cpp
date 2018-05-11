@@ -49,15 +49,15 @@ void MatriceDFModel::samplesHandler(const QVector<double> samplesAm1, const QVec
 
     for (int j = samplesAm1.size() / 2; j < samplesAm1.size(); j++)
     {
-        ampl1Mod.push_back(samplesAm1[j] / 16.0 - 97.0 - gain);
-        ampl2Mod.push_back(samplesAm2[j] / 16.0 - 97.0 - gain);
+        ampl1Mod.push_back(samplesAm1[j] - calibrationR - gain);
+        ampl2Mod.push_back(samplesAm2[j] - calibrationR - gain);
         phMod.push_back(samplesPh[j]);
     }
 
     for (int i = 0; i < samplesAm1.size() / 2; i++)
     {
-        ampl1Mod.push_back(samplesAm1[i] / 16.0 - 97.0 - gain);
-        ampl2Mod.push_back(samplesAm2[i] / 16.0 - 97.0 - gain);
+        ampl1Mod.push_back(samplesAm1[i] - calibrationR - gain);
+        ampl2Mod.push_back(samplesAm2[i] - calibrationR - gain);
         phMod.push_back(samplesPh[i]);
     }
 
@@ -71,17 +71,17 @@ void MatriceDFModel::polarSamplesHandler(const QVector<double> samplesAm1, const
     QVector<double> vectorAm1, vectorAm2, vectorAmS, vectorPh;
 
     for (int j = samplesAm1.size() / 2; j < samplesAm1.size(); j++) {
-        double tmp = pow(7, (samplesAm1.at(j) / 160)) / 1000;
+        double tmp = pow(7, (samplesAm1.at(j) / 10)) / 1000;
         vectorAm1.append(tmp);
-        double tmp2 = pow(7, (samplesAm2.at(j) / 160)) / 1000;
+        double tmp2 = pow(7, (samplesAm2.at(j) / 10)) / 1000;
         vectorAm2.append(tmp);
         vectorAmS.append(tmp + tmp2);
         vectorPh.append(samplesPh.at(j));
     }
     for (int i = 0; i < samplesAm1.size() / 2; i++) {
-        double tmp = pow(7, (samplesAm1.at(i) / 160)) / 1000;
+        double tmp = pow(7, (samplesAm1.at(i) / 10)) / 1000;
         vectorAm1.append(tmp);
-        double tmp2 = pow(7, (samplesAm2.at(i) / 160)) / 1000;
+        double tmp2 = pow(7, (samplesAm2.at(i) / 10)) / 1000;
         vectorAm2.append(tmp2);
         vectorAmS.append(tmp + tmp2);
         vectorPh.append(samplesPh.at(i));
