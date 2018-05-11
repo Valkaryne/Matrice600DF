@@ -173,7 +173,7 @@ void AmplitudeSpectrumPlot::setZoomBase(double xleft, double xright)
 {
     QStack<QRectF> stack = zoomer->zoomStack();
     QRectF base;
-    base = QRectF(QPointF(xleft, 20 - calibrationI), QPointF(xright, 140 - calibrationI));
+    base = QRectF(QPointF(xleft, 20 - calibrationI), QPointF(xright, 200 - calibrationI));
     stack.clear();
     stack.append(base);
     zoomer->setZoomStack(stack);
@@ -220,7 +220,9 @@ QVector<int> AmplitudeSpectrumPlot::getThresholdBounds()
 {
     QVector<int> bounds;
     bounds.append(thresholdPr->yValue());
-    if (((2060 + (markerVector.at(0)->xValue() - cntrFrequency) / INCR) == 0) && ((2060 + (markerVector.at(1)->xValue() - cntrFrequency) / INCR) == 4095))
+//    qDebug() << (int)(2060 + (markerVector.at(0)->xValue() - cntrFrequency) / INCR);
+//    qDebug() << (int)(2060 + (markerVector.at(1)->xValue() - cntrFrequency) / INCR);
+    if ((int)((2060 + (markerVector.at(0)->xValue() - cntrFrequency) / INCR)) == 0 && (int)((2060 + (markerVector.at(1)->xValue() - cntrFrequency) / INCR)) == 4095)
         bounds.append(10000);
     else
         bounds.append(thresholdSec->yValue());
