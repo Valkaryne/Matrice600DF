@@ -154,6 +154,12 @@ void QtOsdk::initModules()
 
     this->flightController = new FlightController(this->vehicle, 0);
     connect(this, SIGNAL(runCommandRequest(int)), this->flightController, SLOT(flightRunCommand(int)));
+
+    this->waypoint = new Waypoint(this->vehicle, 0);
+    connect(this, SIGNAL(initWaypointRequest(QHash<QString,int>)), this->waypoint, SLOT(initWaypoint(QHash<QString,int>)));
+    connect(this, SIGNAL(loadWaypointRequest(QHash<QString,int>)), this->waypoint, SLOT(loadWaypoint(QHash<QString,int>)));
+    connect(this, SIGNAL(startWaypointRequest()), this->waypoint, SLOT(startWaypoint()));
+    connect(this, SIGNAL(abortWaypointRequest()), this->waypoint, SLOT(abortWaypoint()));
 }
 
 void QtOsdk::initVehicle()

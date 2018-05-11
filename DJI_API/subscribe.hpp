@@ -53,7 +53,7 @@ signals:
 
 private:
     QVector<double> subscribeData;
-
+    QVector<int> pkg0Indices;
     DJI::OSDK::Vehicle  *vehicle;
 };
 

@@ -26,7 +26,10 @@ public:
     void setSummDrawingMode();
     void sendRunCommandRequest(int commandIndex);
 
-
+    void sendInitWaypointRequest(QHash<QString, int>);
+    void sendLoadWaypointRequest(QHash<QString, int>);
+    void sendStartWaypointRequest();
+    void sendAbortWaypointRequest();
 
 private:
 

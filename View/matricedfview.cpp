@@ -72,7 +72,7 @@ PolarPlot* MatriceDFView::getPolarPlot()
     return polarPlot;
 }
 
-void MatriceDFView::updateTelemetryData(const mtelemetry::Telemetry &telemetry)
+/*void MatriceDFView::updateTelemetryData(const mtelemetry::Telemetry &telemetry)
 {
     float latitude = telemetry.latitude();
     float longitude = telemetry.longitude();
@@ -95,7 +95,7 @@ void MatriceDFView::updateTelemetryData(const mtelemetry::Telemetry &telemetry)
     webview->page()->runJavaScript(updateScript);
 
     emit headingChanged((int)heading);
-}
+} */
 
 void MatriceDFView::updateTelemetryData(const QVector<double> subscribeData)
 {
@@ -239,3 +239,49 @@ void MatriceDFView::on_runCommandButton_clicked()
     int commandIndex = ui->commandComboBox->currentIndex();
     controller->sendRunCommandRequest(commandIndex);
 }
+
+void MatriceDFView::on_wpInitButton_clicked()
+{
+    QHash<QString, int> initSettings;
+    initSettings.insert("latitude", ui->mapLatitudeLine->text().toDouble() * 1000000);
+    initSettings.insert("longitude", ui->mapLongitudeLine->text().toDouble() * 1000000);
+    initSettings.insert("altitude", ui->mapAltitudeLine->text().toInt());
+    initSettings.insert("velocity", ui->wpVelocitySpinBox->value());
+    initSettings.insert("yaw logic", ui->wpYawComboBox->currentIndex());
+    initSettings.insert("on rc lost", ui->wpRCLostComboBox->currentIndex());
+
+    controller->sendInitWaypointRequest(initSettings);
+}
+
+void MatriceDFView::on_wpLoadStartButton_clicked(bool checked)
+{
+    if (!checked)
+    {
+        QHash<QString, int> loadSettings;
+        loadSettings.insert("latitude", markerLatitude * 1000000);
+        loadSettings.insert("longitude", markerLongitude * 1000000);
+        loadSettings.insert("altitude", ui->wpAltitudeSpinBox->value());
+
+        controller->sendLoadWaypointRequest(loadSettings);
+        ui->wpLoadStartButton->setText("Start");
+    }
+    else
+    {
+        controller->sendStartWaypointRequest();
+        ui->wpLoadStartButton->setText("Load");
+    }
+}
+
+void MatriceDFView::on_wpAbortButton_clicked()
+{
+    controller->sendAbortWaypointRequest();
+}
+
+void MatriceDFView::setPointOnMap(QString lat, QString lng)
+{
+    markerLatitude = lat.toDouble();
+    markerLongitude = lng.toDouble();
+    qDebug() << markerLatitude;
+    qDebug() << markerLongitude;
+}
+

@@ -18,8 +18,18 @@ public:
     virtual void setSummDrawingMode() = 0;
     virtual void sendRunCommandRequest(int commandIndex) = 0;
 
+    virtual void sendInitWaypointRequest(QHash<QString, int> settings) = 0;
+    virtual void sendLoadWaypointRequest(QHash<QString, int> settings) = 0;
+    virtual void sendStartWaypointRequest() = 0;
+    virtual void sendAbortWaypointRequest() = 0;
+
 signals:
     void runCommandRequest(int);
+
+    void initWaypointRequest(QHash<QString, int>);
+    void loadWaypointRequest(QHash<QString, int>);
+    void startWaypointRequest();
+    void abortWaypointRequest();
 
 private:
 };
