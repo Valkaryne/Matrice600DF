@@ -220,7 +220,7 @@ QVector<int> AmplitudeSpectrumPlot::getThresholdBounds()
 {
     QVector<int> bounds;
     bounds.append(thresholdPr->yValue());
-    if (((2060 + (markerVector.at(0) - cntrFrequency) / INCR) == 0) && ((2060 + (markerVector.at(1) - cntrFrequency) / INCR) == 4095))
+    if (((2060 + (markerVector.at(0)->xValue() - cntrFrequency) / INCR) == 0) && ((2060 + (markerVector.at(1)->xValue() - cntrFrequency) / INCR) == 4095))
         bounds.append(10000);
     else
         bounds.append(thresholdSec->yValue());
