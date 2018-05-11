@@ -39,8 +39,8 @@ void Waypoint::loadWaypoint(const QHash<QString, int> settings)
 {
     int index = 0;
     wayPointDataTmp.index = index;
-    wayPointDataTmp.latitude = (settings.value("latitude") / 1000000.0 + 0.000004) * DEG2RAD;
-    wayPointDataTmp.longitude = (settings.value("longitude") / 1000000.0 + 0.000004) * DEG2RAD;
+    wayPointDataTmp.latitude = (settings.value("latitude") / 1000000.0 + 0.00004) * DEG2RAD;
+    wayPointDataTmp.longitude = (settings.value("longitude") / 1000000.0 + 0.00004) * DEG2RAD;
     wayPointDataTmp.altitude = settings.value("altitude");
     wayPointDataTmp.damping = 0;
     wayPointDataTmp.yaw = 0;
@@ -50,7 +50,7 @@ void Waypoint::loadWaypoint(const QHash<QString, int> settings)
     wayPointDataTmp.actionTimeLimit = 0;
     wayPointDataTmp.actionNumber = 0;
     wayPointDataTmp.actionRepeat = 0;
-    for (int i = 0; i < 16; i++)
+    for (int i = 0; i < 16; ++i)
     {
         wayPointDataTmp.commandList[i] = 0;
         wayPointDataTmp.commandParameter[i] = 0;
@@ -72,7 +72,7 @@ void Waypoint::loadWaypoint(const QHash<QString, int> settings)
     wayPointDataTmp.actionTimeLimit = 0;
     wayPointDataTmp.actionNumber = 0;
     wayPointDataTmp.actionRepeat = 0;
-    for (int i = 0; i < 16; i++)
+    for (int i = 0; i < 16; ++i)
     {
         wayPointDataTmp.commandList[i] = 0;
         wayPointDataTmp.commandParameter[i] = 0;

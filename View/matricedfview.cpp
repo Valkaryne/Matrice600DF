@@ -242,7 +242,7 @@ void MatriceDFView::on_runCommandButton_clicked()
 
 void MatriceDFView::on_wpInitButton_clicked()
 {
-    /*QHash<QString, int> initSettings;
+    QHash<QString, int> initSettings;
     initSettings.insert("latitude", ui->mapLatitudeLine->text().toDouble() * 1000000);
     initSettings.insert("longitude", ui->mapLongitudeLine->text().toDouble() * 1000000);
     initSettings.insert("altitude", ui->mapAltitudeLine->text().toInt());
@@ -250,12 +250,12 @@ void MatriceDFView::on_wpInitButton_clicked()
     initSettings.insert("yaw logic", ui->wpYawComboBox->currentIndex());
     initSettings.insert("on rc lost", ui->wpRCLostComboBox->currentIndex());
 
-    controller->sendInitWaypointRequest(initSettings); */
+    controller->sendInitWaypointRequest(initSettings);
 }
 
 void MatriceDFView::on_wpLoadStartButton_clicked(bool checked)
 {
-    /*if (!checked)
+    if (!checked)
     {
         QHash<QString, int> loadSettings;
         loadSettings.insert("latitude", markerLatitude * 1000000);
@@ -263,21 +263,25 @@ void MatriceDFView::on_wpLoadStartButton_clicked(bool checked)
         loadSettings.insert("altitude", ui->wpAltitudeSpinBox->value());
 
         controller->sendLoadWaypointRequest(loadSettings);
+        ui->wpLoadStartButton->setText("Start");
     }
     else
-        controller->sendStartWaypointRequest(); */
+    {
+        controller->sendStartWaypointRequest();
+        ui->wpLoadStartButton->setText("Load");
+    }
 }
 
 void MatriceDFView::on_wpAbortButton_clicked()
 {
-    //controller->sendAbortWaypointRequest();
+    controller->sendAbortWaypointRequest();
 }
 
-/*void MatriceDFView::setPointOnMap(QString lat, QString lng)
+void MatriceDFView::setPointOnMap(QString lat, QString lng)
 {
     markerLatitude = lat.toDouble();
     markerLongitude = lng.toDouble();
     qDebug() << markerLatitude;
     qDebug() << markerLongitude;
 }
- */
+

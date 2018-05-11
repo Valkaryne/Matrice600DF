@@ -43,7 +43,7 @@ public:
 
     // FIXME: Create composite object from webview
     QWebEngineView  *webview;
-    //Q_INVOKABLE void setPointOnMap(QString lat, QString lng);
+    Q_INVOKABLE void setPointOnMap(QString lat, QString lng);
     double markerLatitude, markerLongitude;
 
 private slots:

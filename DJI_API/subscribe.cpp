@@ -15,8 +15,8 @@ Subscribe::Subscribe(Vehicle *vehiclePtr, QObject *parent)
     vehicle->subscribe->verify();
 
     startPkg0Requested();
-    startPkg1Requested();
-    startPkg2Requested();
+    //startPkg1Requested();
+    //startPkg2Requested();
 }
 
 Subscribe::~Subscribe()
@@ -59,11 +59,11 @@ void Subscribe::pkg0UnpackCallback(Vehicle *vehiclePtr,
 {
     // Receive Quaternion
     Subscribe *subscribe = (Subscribe*)userData;
-    int numTopics = 1;
+    int numTopics = subscribe->pkg0Indices.size();
     for (int i = 0; i < numTopics; i++)
     {
         subscribe->prepareSubscribeData(
-                    static_cast<Telemetry::TopicName>(0), 0);
+                    static_cast<Telemetry::TopicName>(subscribe->pkg0Indices[i]), 0);
     }
 }
 
@@ -117,12 +117,18 @@ void Subscribe::startPkg0Requested()
     bool enableTimestamp = false;
 
     //freq = freqEnum[3]; // 50 Hz
-    freq = 200;
+    freq = 50;
     Telemetry::TopicName topicList[Telemetry::TOTAL_TOPIC_NUMBER];
-    topicList[0] = static_cast<Telemetry::TopicName>(0); // Quaternion index
+    pkg0Indices.push_back(0); // Quaternion
+    pkg0Indices.push_back(10); // Height Fusion
+    pkg0Indices.push_back(14); // GPS Position
+    for (int i = 0; i < pkg0Indices.size(); i++)
+        topicList[i] = static_cast<Telemetry::TopicName>(pkg0Indices[i]);
+
+    //topicList[0] = static_cast<Telemetry::TopicName>(0); // Quaternion index
 
     bool pkgStatus = vehicle->subscribe->initPackageFromTopicList(
-                pkgIndex, 1, topicList, enableTimestamp, freq);
+                pkgIndex, pkg0Indices.size(), topicList, enableTimestamp, freq);
 
     if (pkgStatus)
         vehicle->subscribe->startPackage(pkgIndex);
@@ -161,7 +167,7 @@ void Subscribe::startPkg2Requested()
     int freq = 0;
     bool enableTimestamp = false;
 
-    freq = freqEnum[2]; // 10 Hz
+    freq = freqEnum[3]; // 50 Hz
     Telemetry::TopicName topicList[Telemetry::TOTAL_TOPIC_NUMBER];
     topicList[0] = static_cast<Telemetry::TopicName>(14); // GPS Position index
 
