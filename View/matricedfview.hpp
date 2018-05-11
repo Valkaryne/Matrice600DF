@@ -9,7 +9,7 @@
 #include <Utils/amplitudespectrumplot.hpp>
 #include <Utils/phasespectrumplot.hpp>
 #include <Utils/polarplot.hpp>
-//#include <Utils/MatriceTelemetry.pb.h>
+#include <Utils/MatriceTelemetry.pb.h>
 
 #include <Model/modelinterface.hpp>
 #include <Model/matricedfmodel.hpp>
