@@ -1,11 +1,10 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-04-24T14:24:51
+# Project created by QtCreator 2018-06-18T16:51:16
 #
 #-------------------------------------------------
 
-QT       += core gui network
-QT       += webengine webenginewidgets
+QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -23,52 +22,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += main.cpp \
-    View/matricedfview.cpp \
-    Utils/spectrumwaterfall.cpp \
-    Utils/spectrumplot.cpp \
-    Utils/amplitudespectrumplot.cpp \
-    Utils/phasespectrumplot.cpp \
-    Utils/polarplot.cpp \
-    Controller/matricedfcontroller.cpp \
-    Model/matricedfmodel.cpp \
-    Utils/udpchannel.cpp \
-    Utils/MatriceTelemetry.pb.cc \
-    Utils/tcpchannel.cpp
+
+SOURCES += \
+        main.cpp \
+        mainview.cpp
 
 HEADERS += \
-    View/matricedfview.hpp \
-    Utils/spectrumwaterfall.hpp \
-    Utils/spectrumplot.hpp \
-    Utils/amplitudespectrumplot.hpp \
-    Utils/phasespectrumplot.hpp \
-    Utils/polarplot.hpp \
-    Controller/matricedfcontroller.hpp \
-    Model/matricedfmodel.hpp \
-    Utils/udpchannel.hpp \
-    Controller/controllerinterface.hpp \
-    Model/modelinterface.hpp \
-    Utils/constset.hpp \
-    Utils/MatriceTelemetry.pb.h \
-    Utils/tcpchannel.hpp
+        mainview.hpp
 
 FORMS += \
-    View/matricedfview.ui
-
-CONFIG += \
-    qwt \
-    qwtpolar
-
-#QMAKE_CXXFLAGS_DEBUG += /MTd
-#QMAKE_CXXFLAGS_RELEASE += /MT
-
-win32:CONFIG(release, debug|release): LIBS += -LC:/Path/to/install/lib/ -llibprotobuf
-else:win32:CONFIG(debug, debug|release): LIBS += -LC:/Path/to/install/lib/ -llibprotobufd
-
-INCLUDEPATH += C:/Path/to/install/include
-DEPENDPATH += C:/Path/to/install/include
-
-RESOURCES += \
-    resources.qrc
-
-
+        mainview.ui
