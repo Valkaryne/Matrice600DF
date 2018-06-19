@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,10 +25,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainview.cpp
+        $$PWD\view\mainview.cpp \
+    #presenter/presenterinterface.cpp
+    presenter/matricedfpresenter.cpp \
+    model/matricedfmodel.cpp \
+    model/udpchannel.cpp
 
 HEADERS += \
-        mainview.hpp
+        $$PWD\view\mainview.hpp \
+    view/mainiview.hpp \
+    #presenter/presenterinterface.hpp
+    presenter/matricedfpresenter.hpp \
+    model/matricedfmodel.hpp \
+    model/udpchannel.hpp
 
 FORMS += \
-        mainview.ui
+        $$PWD\view\mainview.ui
+
+CONFIG += \
+    console

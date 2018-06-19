@@ -3,11 +3,13 @@
 
 #include <QMainWindow>
 
+#include "mainiview.hpp"
+
 namespace Ui {
 class MainView;
 }
 
-class MainView : public QMainWindow
+class MainView : public QMainWindow, public MainIView
 {
     Q_OBJECT
 

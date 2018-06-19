@@ -26,21 +26,36 @@
          <string>USRP Settings</string>
         </property>
         <layout class="QGridLayout" name="gridLayout">
-         <item row="3" column="0" colspan="2">
-          <widget class="QPushButton" name="btn_apply">
-           <property name="text">
-            <string>Apply</string>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="0">
-          <widget class="QLabel" name="lbl_frequency">
+          <widget class="QLabel" name="lbl_gain">
            <property name="text">
-            <string>Frequency:</string>
+            <string>Gain:</string>
            </property>
           </widget>
          </item>
          <item row="1" column="1">
+          <widget class="QDoubleSpinBox" name="sb_gain">
+           <property name="buttonSymbols">
+            <enum>QAbstractSpinBox::NoButtons</enum>
+           </property>
+           <property name="suffix">
+            <string> dB</string>
+           </property>
+           <property name="decimals">
+            <number>0</number>
+           </property>
+           <property name="minimum">
+            <double>1.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>70.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>60.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
           <widget class="QDoubleSpinBox" name="sb_frequency">
            <property name="buttonSymbols">
             <enum>QAbstractSpinBox::NoButtons</enum>
@@ -62,32 +77,17 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="lbl_gain">
+         <item row="0" column="0">
+          <widget class="QLabel" name="lbl_frequency">
            <property name="text">
-            <string>Gain:</string>
+            <string>Frequency:</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QDoubleSpinBox" name="sb_gain">
-           <property name="buttonSymbols">
-            <enum>QAbstractSpinBox::NoButtons</enum>
-           </property>
-           <property name="suffix">
-            <string> dB</string>
-           </property>
-           <property name="decimals">
-            <number>0</number>
-           </property>
-           <property name="minimum">
-            <double>1.000000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>70.000000000000000</double>
-           </property>
-           <property name="value">
-            <double>60.000000000000000</double>
+         <item row="2" column="0" colspan="2">
+          <widget class="QPushButton" name="btn_apply">
+           <property name="text">
+            <string>Apply</string>
            </property>
           </widget>
          </item>
