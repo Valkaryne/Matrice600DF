@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 
+#include <presenter/matricedfpresenter.hpp>
 #include "mainiview.hpp"
 
 namespace Ui {
@@ -17,8 +18,12 @@ public:
     explicit MainView(QWidget *parent = 0);
     ~MainView();
 
+private slots:
+    void on_btn_apply_clicked();
+
 private:
-    Ui::MainView *ui;
+    Ui::MainView        *ui;
+    MatriceDFPresenter  *presenter;
 };
 
 #endif // MAINVIEW_HPP

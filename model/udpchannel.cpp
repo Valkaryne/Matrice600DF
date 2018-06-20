@@ -45,9 +45,9 @@ void UdpChannel::readPendingDatagram()
             val_ph <<= 6;
             val_ph >>= 6;
 
-            samplesAm1.push_back(static_cast<double>(val_am1));
-            samplesAm2.push_back(static_cast<double>(val_am2));
-            samplesPh.push_back(static_cast<double>(val_ph));
+            samplesAm1.append(static_cast<double>(val_am1));
+            samplesAm2.append(static_cast<double>(val_am2));
+            samplesPh.append(static_cast<double>(val_ph));
         }
         emit samplesReceived(samplesAm1, samplesAm2, samplesPh);
     }

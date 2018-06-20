@@ -29,7 +29,10 @@ SOURCES += \
     #presenter/presenterinterface.cpp
     presenter/matricedfpresenter.cpp \
     model/matricedfmodel.cpp \
-    model/udpchannel.cpp
+    model/udpchannel.cpp \
+    widgets/spectrumplot.cpp \
+    widgets/amplitudespectrumplot.cpp \
+    widgets/phasespectrumplot.cpp
 
 HEADERS += \
         $$PWD\view\mainview.hpp \
@@ -37,10 +40,16 @@ HEADERS += \
     #presenter/presenterinterface.hpp
     presenter/matricedfpresenter.hpp \
     model/matricedfmodel.hpp \
-    model/udpchannel.hpp
+    model/udpchannel.hpp \
+    utils/constset.hpp \
+    widgets/spectrumplot.hpp \
+    widgets/amplitudespectrumplot.hpp \
+    widgets/phasespectrumplot.hpp
 
 FORMS += \
         $$PWD\view\mainview.ui
 
 CONFIG += \
-    console
+    console \
+    qwt \
+    qwtpolar

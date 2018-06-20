@@ -12,6 +12,7 @@ public:
     explicit UdpChannel(const QHostAddress &addressSrv, quint16 portSrv,
                         const QHostAddress &addressClt, quint16 portClt,
                         QObject *parent = nullptr);
+    void sendDatagram(const QVector<double> settings);
 
 signals:
     void samplesReceived(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
@@ -19,7 +20,6 @@ signals:
 
 public slots:
     void readPendingDatagram();
-    void sendDatagram(const QVector<double> settings);
 
 private:
     QUdpSocket      *socket;
