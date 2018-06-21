@@ -13,7 +13,6 @@ public:
                 const QVector<double> &samplesAmS);
 
 private:
-    QwtPlotCurve    *curve;
 };
 
 #endif // SUMMARYSTRATEGY_HPP

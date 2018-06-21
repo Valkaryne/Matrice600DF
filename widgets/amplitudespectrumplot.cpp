@@ -9,22 +9,27 @@ AmplitudeSpectrumPlot::AmplitudeSpectrumPlot(QWidget *parent) :
     setAxisTitle(QwtPlot::yLeft, "Power");
     setAxisScale(QwtPlot::yLeft, 40 - CALIBRATION, 120 - CALIBRATION, 20);
 
-    //strategy = new TwoChannelStrategy(this);
-
     /* Curves */
-    curve1 = new QwtPlotCurve;
-    curve1->setStyle(QwtPlotCurve::Lines);
-    curve1->setPen(Qt::yellow);
-    curve1->setRenderHint(QwtPlotItem::RenderAntialiased, true);
-    curve1->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
-    //curve1->attach(this);
+    curveAm1 = new QwtPlotCurve;
+    curveAm1->setStyle(QwtPlotCurve::Lines);
+    curveAm1->setPen(Qt::yellow);
+    curveAm1->setRenderHint(QwtPlotItem::RenderAntialiased, true);
+    curveAm1->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
+    curveAm1->attach(this);
 
-    curve2 = new QwtPlotCurve;
-    curve2->setStyle(QwtPlotCurve::Lines);
-    curve2->setPen(Qt::cyan);
-    curve2->setRenderHint(QwtPlotItem::RenderAntialiased, true);
-    curve2->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
-    //curve2->attach(this);
+    curveAm2 = new QwtPlotCurve;
+    curveAm2->setStyle(QwtPlotCurve::Lines);
+    curveAm2->setPen(Qt::cyan);
+    curveAm2->setRenderHint(QwtPlotItem::RenderAntialiased, true);
+    curveAm2->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
+    curveAm2->attach(this);
+
+    curveAmS = new QwtPlotCurve;
+    curveAmS->setStyle(QwtPlotCurve::Lines);
+    curveAmS->setPen(Qt::green);
+    curveAmS->setRenderHint(QwtPlotItem::RenderAntialiased, true);
+    curveAmS->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
+    curveAmS->attach(this);
 
     curveMax = new QwtPlotCurve;
     curveMax->setStyle(QwtPlotCurve::NoCurve);
@@ -172,10 +177,6 @@ void AmplitudeSpectrumPlot::setExpCoefficient(double expCoeff)
 void AmplitudeSpectrumPlot::setDisplayStrategy(AmplitudeDisplayStrategy *strategy)
 {
     this->strategy = strategy;
-    //if (displayStrategy == "Summary")
-        //strategy = new SummaryStrategy(this);
-    //else if (displayStrategy == "Two-Channel")
-        //strategy = new TwoChannelStrategy(this);
 }
 
 QwtPlotZoomer* AmplitudeSpectrumPlot::getZoomer()
@@ -204,17 +205,6 @@ void AmplitudeSpectrumPlot::updateCurve(const QVector<double> &samplesAm1, const
                                         const QVector<double> &samplesAmS)
 {
     strategy->update(samplesAm1, samplesAm2, samplesAmS);
-
-    /*int size = samplesAm1.size();
-    QVector<double> frequency;
-
-    for (double i = cntrFrequency - LSHIFT; i < size * INCR + (cntrFrequency - LSHIFT); i += INCR)
-        frequency.append(i);
-
-    curve1->setSamples(frequency, samplesAm1);
-    curve2->setSamples(frequency, samplesAm2);
-
-    replot(); */
 }
 
 void AmplitudeSpectrumPlot::moveMarkers(const QPoint &pos)

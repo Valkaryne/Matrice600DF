@@ -29,6 +29,7 @@ private slots:
 private:
     Ui::MainView        *ui;
     MatriceDFPresenter  *presenter;
+
 };
 
 #endif // MAINVIEW_HPP

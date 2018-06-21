@@ -13,8 +13,6 @@ public:
                 const QVector<double> &samplesAmS);
 
 private:
-    QwtPlotCurve    *curve1;
-    QwtPlotCurve    *curve2;
 };
 
 #endif // TWOCHANNELSTRATEGY_HPP

@@ -9,6 +9,7 @@ MainView::MainView(QWidget *parent) :
     presenter = new MatriceDFPresenter(this);
 
     amplitudeSpectrumPlot = new AmplitudeSpectrumPlot(this);
+    getAmplitudeSpectrumPlot()->setDisplayStrategy(new TwoChannelStrategy(getAmplitudeSpectrumPlot()));
     ui->spectrumPlotLayout->addWidget(amplitudeSpectrumPlot);
 
     phaseSpectrumPlot = new PhaseSpectrumPlot(this);

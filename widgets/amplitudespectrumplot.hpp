@@ -38,6 +38,8 @@ public:
     void updateCurve(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
                      const QVector<double> &samplesAmS);
 
+    QwtPlotCurve    *curveAm1, *curveAm2, *curveAmS;
+
 private slots:
     void moveMarkers(const QPoint &pos);
     void movePrimeThreshold(const QPoint &pos);
@@ -45,8 +47,6 @@ private slots:
     void scrollLeftAxis(double);
 
 private:
-    QwtPlotCurve    *curve1;
-    QwtPlotCurve    *curve2;
     QwtPlotCurve    *curveMax;
     QwtPlotPicker   *markerPicker;
     QwtPlotPicker   *pickerThrPr;
