@@ -28,6 +28,11 @@ public:
     /* Setters */
     virtual void setCentralFrequency(double cntrFrequency) = 0;
 
+    /* Getters */
+    virtual double getCentralFrequency() {
+        return cntrFrequency;
+    }
+
 protected:
     QwtPlotCanvas *canvas;
     double cntrFrequency;

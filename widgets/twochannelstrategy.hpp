@@ -1,11 +1,20 @@
 #ifndef TWOCHANNELSTRATEGY_HPP
 #define TWOCHANNELSTRATEGY_HPP
 
+#include "amplitudedisplaystrategy.hpp"
 
-class TwoChannelStrategy
+class TwoChannelStrategy : public AmplitudeDisplayStrategy
 {
 public:
-    TwoChannelStrategy();
+    TwoChannelStrategy(AmplitudeSpectrumPlot *plot);
+    ~TwoChannelStrategy() {}
+
+    void update(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
+                const QVector<double> &samplesAmS);
+
+private:
+    QwtPlotCurve    *curve1;
+    QwtPlotCurve    *curve2;
 };
 
 #endif // TWOCHANNELSTRATEGY_HPP

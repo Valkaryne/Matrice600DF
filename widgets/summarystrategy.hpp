@@ -1,11 +1,19 @@
 #ifndef SUMMARYSTRATEGY_HPP
 #define SUMMARYSTRATEGY_HPP
 
+#include "amplitudedisplaystrategy.hpp"
 
-class SummaryStrategy
+class SummaryStrategy : public AmplitudeDisplayStrategy
 {
 public:
-    SummaryStrategy();
+    SummaryStrategy(AmplitudeSpectrumPlot *plot = nullptr);
+    ~SummaryStrategy() {}
+
+    void update(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
+                const QVector<double> &samplesAmS);
+
+private:
+    QwtPlotCurve    *curve;
 };
 
 #endif // SUMMARYSTRATEGY_HPP

@@ -9,20 +9,22 @@ AmplitudeSpectrumPlot::AmplitudeSpectrumPlot(QWidget *parent) :
     setAxisTitle(QwtPlot::yLeft, "Power");
     setAxisScale(QwtPlot::yLeft, 40 - CALIBRATION, 120 - CALIBRATION, 20);
 
+    //strategy = new TwoChannelStrategy(this);
+
     /* Curves */
     curve1 = new QwtPlotCurve;
     curve1->setStyle(QwtPlotCurve::Lines);
     curve1->setPen(Qt::yellow);
     curve1->setRenderHint(QwtPlotItem::RenderAntialiased, true);
     curve1->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
-    curve1->attach(this);
+    //curve1->attach(this);
 
     curve2 = new QwtPlotCurve;
     curve2->setStyle(QwtPlotCurve::Lines);
     curve2->setPen(Qt::cyan);
     curve2->setRenderHint(QwtPlotItem::RenderAntialiased, true);
     curve2->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
-    curve2->attach(this);
+    //curve2->attach(this);
 
     curveMax = new QwtPlotCurve;
     curveMax->setStyle(QwtPlotCurve::NoCurve);
@@ -167,6 +169,15 @@ void AmplitudeSpectrumPlot::setExpCoefficient(double expCoeff)
 
 }
 
+void AmplitudeSpectrumPlot::setDisplayStrategy(AmplitudeDisplayStrategy *strategy)
+{
+    this->strategy = strategy;
+    //if (displayStrategy == "Summary")
+        //strategy = new SummaryStrategy(this);
+    //else if (displayStrategy == "Two-Channel")
+        //strategy = new TwoChannelStrategy(this);
+}
+
 QwtPlotZoomer* AmplitudeSpectrumPlot::getZoomer()
 {
     return zoomer;
@@ -192,7 +203,9 @@ void AmplitudeSpectrumPlot::resetMarkers()
 void AmplitudeSpectrumPlot::updateCurve(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
                                         const QVector<double> &samplesAmS)
 {
-    int size = samplesAm1.size();
+    strategy->update(samplesAm1, samplesAm2, samplesAmS);
+
+    /*int size = samplesAm1.size();
     QVector<double> frequency;
 
     for (double i = cntrFrequency - LSHIFT; i < size * INCR + (cntrFrequency - LSHIFT); i += INCR)
@@ -201,7 +214,7 @@ void AmplitudeSpectrumPlot::updateCurve(const QVector<double> &samplesAm1, const
     curve1->setSamples(frequency, samplesAm1);
     curve2->setSamples(frequency, samplesAm2);
 
-    replot();
+    replot(); */
 }
 
 void AmplitudeSpectrumPlot::moveMarkers(const QPoint &pos)

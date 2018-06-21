@@ -23,6 +23,22 @@ MainView::~MainView()
 void MainView::on_btn_apply_clicked()
 {
     QVector<double> settings;
+    settings.append(ui->sb_frequency->value() * 1000000.0);
+    settings.append(ui->sb_gain->value());
+    settings.append(140); // Temp value: product
+    settings.append(50); // temp value: add
 
     presenter->applyUsrpSettings(settings);
+}
+
+void MainView::on_btn_amMode_clicked(bool checked)
+{
+    QString displayStrategy = ui->btn_amMode->text();
+    if (checked){
+        getAmplitudeSpectrumPlot()->setDisplayStrategy(new SummaryStrategy(getAmplitudeSpectrumPlot()));
+        ui->btn_amMode->setText("Two-Channel");
+    } else {
+        getAmplitudeSpectrumPlot()->setDisplayStrategy(new TwoChannelStrategy(getAmplitudeSpectrumPlot()));
+        ui->btn_amMode->setText("Summary");
+    }
 }

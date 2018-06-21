@@ -2,7 +2,11 @@
 #define AMPLITUDESPECTRUMPLOT_HPP
 
 #include "spectrumplot.hpp"
+#include "amplitudespectrumplot.hpp"
+#include "amplitudedisplaystrategy.hpp"
 #include <qwt_wheel.h>
+
+class AmplitudeDisplayStrategy;
 
 class AmplitudeSpectrumPlot : public SpectrumPlot
 {
@@ -19,6 +23,8 @@ public:
     void setZoomBase(double xleft, double xright);
     void setMaxHold(bool holdOn);
     void setExpCoefficient(double expCoeff);
+
+    void setDisplayStrategy(AmplitudeDisplayStrategy *strategy);
 
     void setDroneClass(int droneClass);
 
@@ -49,6 +55,8 @@ private:
     QwtPlotMarker   *thresholdSec;
     QwtPlotZoomer   *zoomer;
     QwtWheel        *wheel;
+
+    AmplitudeDisplayStrategy *strategy;
 
     QVector<QwtPlotMarker*> markerVector;
     QVector<QColor> colors;

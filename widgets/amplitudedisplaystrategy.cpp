@@ -1,6 +1,7 @@
 #include "amplitudedisplaystrategy.hpp"
 
-AmplitudeDisplayStrategy::AmplitudeDisplayStrategy()
+AmplitudeDisplayStrategy::AmplitudeDisplayStrategy(AmplitudeSpectrumPlot *plot) :
+    plot(plot)
 {
 
 }

@@ -32,7 +32,9 @@ SOURCES += \
     model/udpchannel.cpp \
     widgets/spectrumplot.cpp \
     widgets/amplitudespectrumplot.cpp \
-    widgets/phasespectrumplot.cpp
+    widgets/phasespectrumplot.cpp \
+    widgets/twochannelstrategy.cpp \
+    widgets/summarystrategy.cpp \
 
 HEADERS += \
         $$PWD\view\mainview.hpp \
@@ -44,7 +46,10 @@ HEADERS += \
     utils/constset.hpp \
     widgets/spectrumplot.hpp \
     widgets/amplitudespectrumplot.hpp \
-    widgets/phasespectrumplot.hpp
+    widgets/phasespectrumplot.hpp \
+    widgets/amplitudedisplaystrategy.hpp \
+    widgets/twochannelstrategy.hpp \
+    widgets/summarystrategy.hpp \
 
 FORMS += \
         $$PWD\view\mainview.ui
