@@ -21,10 +21,22 @@ public:
     explicit MainView(QWidget *parent = 0);
     ~MainView();
 
+    void ctrlDjiStatusChanged(QString);
+    void initDjiVehicleFinished(QString initStatus, bool initResult);
+    void activateDjiVehicleFinished(QString activateStatus, bool activateResult);
+
 private slots:
     void on_btn_apply_clicked();
 
     void on_btn_amMode_clicked(bool checked);
+
+    void on_btn_testInit_clicked();
+
+    void on_btn_testActivate_clicked();
+
+    void on_btn_testControl_clicked();
+
+    void on_btn_testReset_clicked();
 
 private:
     Ui::MainView        *ui;

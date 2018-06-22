@@ -393,20 +393,36 @@ QRadioButton::indicator::checked {
      </layout>
     </item>
     <item>
-     <spacer name="horizontalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item>
-     <layout class="QVBoxLayout" name="aircraftLayout"/>
+     <layout class="QVBoxLayout" name="aircraftLayout">
+      <item>
+       <widget class="QPushButton" name="btn_testInit">
+        <property name="text">
+         <string>Initialize</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_testActivate">
+        <property name="text">
+         <string>Activate</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_testReset">
+        <property name="text">
+         <string>Reset Connection</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_testControl">
+        <property name="text">
+         <string>Obtain Control</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>

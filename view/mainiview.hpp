@@ -17,6 +17,10 @@ public:
         return (PhaseSpectrumPlot*) phaseSpectrumPlot;
     }
 
+    virtual void ctrlDjiStatusChanged(QString) = 0;
+    virtual void initDjiVehicleFinished(QString initStatus, bool initResult) = 0;
+    virtual void activateDjiVehicleFinished(QString activateStatus, bool activateResult) = 0;
+
 protected:
     SpectrumPlot        *amplitudeSpectrumPlot;
     SpectrumPlot        *phaseSpectrumPlot;

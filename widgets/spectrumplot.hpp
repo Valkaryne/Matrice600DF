@@ -27,6 +27,7 @@ public:
 
     /* Setters */
     virtual void setCentralFrequency(double cntrFrequency) = 0;
+    virtual void setZoomBase(double xleft, double xright) = 0;
 
     /* Getters */
     virtual double getCentralFrequency() {

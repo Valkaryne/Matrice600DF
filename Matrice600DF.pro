@@ -58,3 +58,5 @@ CONFIG += \
     console \
     qwt \
     qwtpolar
+
+include(dji_api/dji_api.pri)
