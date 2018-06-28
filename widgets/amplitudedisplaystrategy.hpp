@@ -5,7 +5,6 @@
 #include "amplitudespectrumplot.hpp"
 
 class AmplitudeSpectrumPlot;
-class AmplitudeDisplayStrategy;
 
 class AmplitudeDisplayStrategy
 {

@@ -2,15 +2,18 @@
 #define AMPLITUDESPECTRUMPLOT_HPP
 
 #include "spectrumplot.hpp"
-#include "amplitudespectrumplot.hpp"
 #include "amplitudedisplaystrategy.hpp"
+#include "markermovingstrategy.hpp"
 #include <qwt_wheel.h>
 
+//class AmplitudeSpectrumPlot;
 class AmplitudeDisplayStrategy;
+class MarkerMovingStrategy;
 
 class AmplitudeSpectrumPlot : public SpectrumPlot
 {
     Q_OBJECT
+
 public:
     AmplitudeSpectrumPlot(QWidget *parent);
 
@@ -25,6 +28,7 @@ public:
     void setExpCoefficient(double expCoeff);
 
     void setDisplayStrategy(AmplitudeDisplayStrategy *strategy);
+    void setMarkerStrategy(MarkerMovingStrategy *strategy);
 
     void setDroneClass(int droneClass);
 
@@ -39,6 +43,7 @@ public:
                      const QVector<double> &samplesAmS);
 
     QwtPlotCurve    *curveAm1, *curveAm2, *curveAmS;
+    QVector<QwtPlotMarker*> markerVector;
 
 private slots:
     void moveMarkers(const QPoint &pos);
@@ -54,11 +59,11 @@ private:
     QwtPlotMarker   *thresholdPr;
     QwtPlotMarker   *thresholdSec;
     QwtPlotZoomer   *zoomer;
-    QwtWheel        *wheel;
+    //QwtWheel        *wheel;
 
     AmplitudeDisplayStrategy *strategy;
+    MarkerMovingStrategy *markerStrategy;
 
-    QVector<QwtPlotMarker*> markerVector;
     QVector<QColor> colors;
     QVector<double> maxSamples;
 

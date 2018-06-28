@@ -8,6 +8,8 @@
 
 #include <widgets/summarystrategy.hpp>
 #include <widgets/twochannelstrategy.hpp>
+#include <widgets/frequencyhoppingstrategy.hpp>
+#include <widgets/spreadspectrumstrategy.hpp>
 
 namespace Ui {
 class MainView;
@@ -37,6 +39,8 @@ private slots:
     void on_btn_testControl_clicked();
 
     void on_btn_testReset_clicked();
+
+    void on_cb_droneClassSelect_activated(const QString &arg1);
 
 private:
     Ui::MainView        *ui;

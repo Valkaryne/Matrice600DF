@@ -35,6 +35,8 @@ SOURCES += \
     widgets/phasespectrumplot.cpp \
     widgets/twochannelstrategy.cpp \
     widgets/summarystrategy.cpp \
+    widgets/frequencyhoppingstrategy.cpp \
+    widgets/spreadspectrumstrategy.cpp
 
 HEADERS += \
         $$PWD\view\mainview.hpp \
@@ -50,6 +52,9 @@ HEADERS += \
     widgets/amplitudedisplaystrategy.hpp \
     widgets/twochannelstrategy.hpp \
     widgets/summarystrategy.hpp \
+    widgets/markermovingstrategy.hpp \
+    widgets/frequencyhoppingstrategy.hpp \
+    widgets/spreadspectrumstrategy.hpp
 
 FORMS += \
         $$PWD\view\mainview.ui

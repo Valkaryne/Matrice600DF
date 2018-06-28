@@ -10,6 +10,7 @@ MainView::MainView(QWidget *parent) :
 
     amplitudeSpectrumPlot = new AmplitudeSpectrumPlot(this);
     getAmplitudeSpectrumPlot()->setDisplayStrategy(new TwoChannelStrategy(getAmplitudeSpectrumPlot()));
+    getAmplitudeSpectrumPlot()->setMarkerStrategy(new FrequencyHoppingStrategy(getAmplitudeSpectrumPlot()));
     ui->spectrumPlotLayout->addWidget(amplitudeSpectrumPlot);
 
     phaseSpectrumPlot = new PhaseSpectrumPlot(this);
@@ -34,12 +35,12 @@ void MainView::on_btn_apply_clicked()
 
 void MainView::on_btn_amMode_clicked(bool checked)
 {
-    QString displayStrategy = ui->btn_amMode->text();
+    AmplitudeSpectrumPlot *plot = getAmplitudeSpectrumPlot();
     if (checked){
-        getAmplitudeSpectrumPlot()->setDisplayStrategy(new SummaryStrategy(getAmplitudeSpectrumPlot()));
+        plot->setDisplayStrategy(new SummaryStrategy(plot));
         ui->btn_amMode->setText("Two-Channel");
     } else {
-        getAmplitudeSpectrumPlot()->setDisplayStrategy(new TwoChannelStrategy(getAmplitudeSpectrumPlot()));
+        plot->setDisplayStrategy(new TwoChannelStrategy(plot));
         ui->btn_amMode->setText("Summary");
     }
 }
@@ -103,4 +104,13 @@ void MainView::activateDjiVehicleFinished(QString activateStatus, bool activateR
         // display versions
         // init components
     }
+}
+
+void MainView::on_cb_droneClassSelect_activated(const QString &arg1)
+{
+    AmplitudeSpectrumPlot *plot = getAmplitudeSpectrumPlot();
+    if (arg1 == "Matrice/Phantom")
+        plot->setMarkerStrategy(new FrequencyHoppingStrategy(plot));
+    else if (arg1 == "Mavic/Spark")
+        plot->setMarkerStrategy(new SpreadSpectrumStrategy(plot));
 }

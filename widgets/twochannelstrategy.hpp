@@ -11,8 +11,6 @@ public:
 
     void update(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
                 const QVector<double> &samplesAmS);
-
-private:
 };
 
 #endif // TWOCHANNELSTRATEGY_HPP

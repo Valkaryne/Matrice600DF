@@ -99,7 +99,7 @@ AmplitudeSpectrumPlot::AmplitudeSpectrumPlot(QWidget *parent) :
                             Qt::RightButton, Qt::ControlModifier);
 
     /* Wheel */
-    wheel = new QwtWheel(canvas);
+    /*wheel = new QwtWheel(canvas);
     wheel->setVisible(true);
     wheel->setOrientation(Qt::Vertical);
     wheel->setRange(-10 - CALIBRATION, 90 - CALIBRATION);
@@ -110,7 +110,7 @@ AmplitudeSpectrumPlot::AmplitudeSpectrumPlot(QWidget *parent) :
     wheel->setGeometry(0, 30, 14, 44);
     wheel->setEnabled(true);
 
-    connect(wheel,SIGNAL(valueChanged(double)),SLOT(scrollLeftAxis(double)));
+    connect(wheel,SIGNAL(valueChanged(double)),SLOT(scrollLeftAxis(double))); */
 
     /* Other settings */
     for (int i = 0; i < 4096; i++)
@@ -179,6 +179,11 @@ void AmplitudeSpectrumPlot::setDisplayStrategy(AmplitudeDisplayStrategy *strateg
     this->strategy = strategy;
 }
 
+void AmplitudeSpectrumPlot::setMarkerStrategy(MarkerMovingStrategy *strategy)
+{
+    this->markerStrategy = strategy;
+}
+
 QwtPlotZoomer* AmplitudeSpectrumPlot::getZoomer()
 {
     return zoomer;
@@ -209,7 +214,8 @@ void AmplitudeSpectrumPlot::updateCurve(const QVector<double> &samplesAm1, const
 
 void AmplitudeSpectrumPlot::moveMarkers(const QPoint &pos)
 {
-
+    double position = pos.x();
+    markerStrategy->moveMarker(position, markPairNum);
 }
 
 void AmplitudeSpectrumPlot::movePrimeThreshold(const QPoint &pos)
