@@ -15,6 +15,10 @@ MainView::MainView(QWidget *parent) :
 
     phaseSpectrumPlot = new PhaseSpectrumPlot(this);
     ui->spectrumPlotLayout->addWidget(phaseSpectrumPlot);
+
+    polarPlot = new PolarPlot(this);
+    polarPlot->setDisplayStrategy(new TwoChannelStrategy(polarPlot));
+    ui->polarPlotLayout->addWidget(polarPlot);
 }
 
 MainView::~MainView()
@@ -38,9 +42,11 @@ void MainView::on_btn_amMode_clicked(bool checked)
     AmplitudeSpectrumPlot *plot = getAmplitudeSpectrumPlot();
     if (checked){
         plot->setDisplayStrategy(new SummaryStrategy(plot));
+        polarPlot->setDisplayStrategy(new SummaryStrategy(polarPlot));
         ui->btn_amMode->setText("Two-Channel");
     } else {
         plot->setDisplayStrategy(new TwoChannelStrategy(plot));
+        polarPlot->setDisplayStrategy(new TwoChannelStrategy(polarPlot));
         ui->btn_amMode->setText("Summary");
     }
 }

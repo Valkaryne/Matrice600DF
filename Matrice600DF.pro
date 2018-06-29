@@ -36,7 +36,8 @@ SOURCES += \
     widgets/twochannelstrategy.cpp \
     widgets/summarystrategy.cpp \
     widgets/frequencyhoppingstrategy.cpp \
-    widgets/spreadspectrumstrategy.cpp
+    widgets/spreadspectrumstrategy.cpp \
+    widgets/polarplot.cpp
 
 HEADERS += \
         $$PWD\view\mainview.hpp \
@@ -54,7 +55,8 @@ HEADERS += \
     widgets/summarystrategy.hpp \
     widgets/markermovingstrategy.hpp \
     widgets/frequencyhoppingstrategy.hpp \
-    widgets/spreadspectrumstrategy.hpp
+    widgets/spreadspectrumstrategy.hpp \
+    widgets/polarplot.hpp
 
 FORMS += \
         $$PWD\view\mainview.ui

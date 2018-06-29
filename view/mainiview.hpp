@@ -4,6 +4,7 @@
 #include <widgets/spectrumplot.hpp>
 #include <widgets/amplitudespectrumplot.hpp>
 #include <widgets/phasespectrumplot.hpp>
+#include <widgets/polarplot.hpp>
 
 class MainIView
 {
@@ -24,6 +25,7 @@ public:
 protected:
     SpectrumPlot        *amplitudeSpectrumPlot;
     SpectrumPlot        *phaseSpectrumPlot;
+    PolarPlot           *polarPlot;
 };
 
 #endif // MAINIVIEW_HPP
