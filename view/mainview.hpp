@@ -2,14 +2,17 @@
 #define MAINVIEW_HPP
 
 #include <QMainWindow>
+#include <QAbstractButton>
 
 #include <presenter/matricedfpresenter.hpp>
 #include "mainiview.hpp"
 
 #include <widgets/summarystrategy.hpp>
 #include <widgets/twochannelstrategy.hpp>
+
 #include <widgets/frequencyhoppingstrategy.hpp>
 #include <widgets/spreadspectrumstrategy.hpp>
+#include <widgets/densehoppingstrategy.hpp>
 
 namespace Ui {
 class MainView;
@@ -41,6 +44,9 @@ private slots:
     void on_btn_testReset_clicked();
 
     void on_cb_droneClassSelect_activated(const QString &arg1);
+
+    void on_bgr_markers_buttonClicked(QAbstractButton *button);
+    void on_bgr_modes_buttonClicked(QAbstractButton *button);
 
 private:
     Ui::MainView        *ui;

@@ -37,7 +37,8 @@ SOURCES += \
     widgets/summarystrategy.cpp \
     widgets/frequencyhoppingstrategy.cpp \
     widgets/spreadspectrumstrategy.cpp \
-    widgets/polarplot.cpp
+    widgets/polarplot.cpp \
+    widgets/densehoppingstrategy.cpp
 
 HEADERS += \
         $$PWD\view\mainview.hpp \
@@ -56,7 +57,8 @@ HEADERS += \
     widgets/markermovingstrategy.hpp \
     widgets/frequencyhoppingstrategy.hpp \
     widgets/spreadspectrumstrategy.hpp \
-    widgets/polarplot.hpp
+    widgets/polarplot.hpp \
+    widgets/densehoppingstrategy.hpp
 
 FORMS += \
         $$PWD\view\mainview.ui

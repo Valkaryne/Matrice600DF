@@ -47,7 +47,7 @@ AmplitudeSpectrumPlot::AmplitudeSpectrumPlot(QWidget *parent) :
                 canvas);
     markerPicker->setRubberBandPen(QColor(Qt::red));
     markerPicker->setTrackerPen(QColor(Qt::white));
-    markerPicker->setStateMachine(new QwtPickerDragPointMachine);
+    markerPicker->setStateMachine(new QwtPickerDragPointMachine());
     markerPicker->setMousePattern(QwtPlotPicker::MouseSelect1, Qt::LeftButton);
 
     pickerThrPr = new QwtPlotPicker(
@@ -131,32 +131,61 @@ AmplitudeSpectrumPlot::AmplitudeSpectrumPlot(QWidget *parent) :
 
 void AmplitudeSpectrumPlot::setMarker(int number)
 {
+    if (markerVector.size() < number * 2) {
+        QwtPlotMarker *markerPr = new QwtPlotMarker();
+        markerPr->setLineStyle(QwtPlotMarker::VLine);
+        markerPr->setLinePen(colors.at((number - 1) % colors.size()), 2, Qt::SolidLine);
+        markerPr->setValue(cntrFrequency - LSHIFT, 0);
+        markerPr->attach(this);
 
+        QwtPlotMarker *markerSec = new QwtPlotMarker();
+        markerSec->setLineStyle(QwtPlotMarker::VLine);
+        markerSec->setLinePen(colors.at((number - 1) % colors.size()), 2, Qt::SolidLine);
+        markerSec->setValue(cntrFrequency + RSHIFT, 0);
+        markerSec->attach(this);
+
+        markerVector.append(markerPr);
+        markerVector.append(markerSec);
+    }
+    markPairNum = number * 2 - 1;
 }
 
 void AmplitudeSpectrumPlot::setPickers(bool enable)
 {
-
+    markerPicker->setEnabled(enable);
 }
 
 void AmplitudeSpectrumPlot::setThresholdPickers(bool enable)
 {
-
+    pickerThrPr->setEnabled(enable);
+    pickerThrSec->setEnabled(enable);
 }
 
 void AmplitudeSpectrumPlot::setZoomer(bool enable)
 {
-
+    zoomer->setEnabled(enable);
 }
 
 void AmplitudeSpectrumPlot::setCentralFrequency(double cntrFrequency)
 {
-
+    if (this->cntrFrequency != cntrFrequency) {
+        this->cntrFrequency = cntrFrequency;
+        resetMarkers();
+    }
+    double xleft = cntrFrequency - LSHIFT;
+    double xright = cntrFrequency + RSHIFT;
+    setAxisScale(QwtPlot::xBottom, xleft, xright);
+    setZoomBase(xleft, xright);
 }
 
 void AmplitudeSpectrumPlot::setZoomBase(double xleft, double xright)
 {
-
+    QStack<QRectF> stack = zoomer->zoomStack();
+    QRectF base = QRectF(QPointF(xleft, 40 - CALIBRATION), QPointF(xright, 120 - CALIBRATION));
+    stack.clear();
+    stack.append(base);
+    zoomer->setZoomStack(stack);
+    zoomer->setZoomBase(base);
 }
 
 void AmplitudeSpectrumPlot::setMaxHold(bool holdOn)
@@ -203,7 +232,10 @@ QVector<int> AmplitudeSpectrumPlot::getThresholdBounds()
 
 void AmplitudeSpectrumPlot::resetMarkers()
 {
-
+    for (int i = 1; i < markerVector.size(); i += 2) {
+        markerVector.at(i - 1)->setValue(cntrFrequency - LSHIFT, 0);
+        markerVector.at(i)->setValue(cntrFrequency + RSHIFT, 0);
+    }
 }
 
 void AmplitudeSpectrumPlot::updateCurve(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
@@ -215,17 +247,20 @@ void AmplitudeSpectrumPlot::updateCurve(const QVector<double> &samplesAm1, const
 void AmplitudeSpectrumPlot::moveMarkers(const QPoint &pos)
 {
     double position = pos.x();
+    qDebug() << "Position: " << pos;
     markerStrategy->moveMarker(position, markPairNum);
 }
 
 void AmplitudeSpectrumPlot::movePrimeThreshold(const QPoint &pos)
 {
-
+    double position = pos.y();
+    qDebug() << "Position: " << pos;
 }
 
 void AmplitudeSpectrumPlot::moveSecondThreshold(const QPoint &pos)
 {
-
+    double position = pos.y();
+    qDebug() << "Position: " << pos;
 }
 
 void AmplitudeSpectrumPlot::scrollLeftAxis(double value)

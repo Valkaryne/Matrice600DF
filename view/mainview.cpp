@@ -11,6 +11,10 @@ MainView::MainView(QWidget *parent) :
     amplitudeSpectrumPlot = new AmplitudeSpectrumPlot(this);
     getAmplitudeSpectrumPlot()->setDisplayStrategy(new TwoChannelStrategy(getAmplitudeSpectrumPlot()));
     getAmplitudeSpectrumPlot()->setMarkerStrategy(new FrequencyHoppingStrategy(getAmplitudeSpectrumPlot()));
+    getAmplitudeSpectrumPlot()->setPickers(false);
+    getAmplitudeSpectrumPlot()->setZoomer(true);
+    getAmplitudeSpectrumPlot()->setThresholdPickers(false);
+    getAmplitudeSpectrumPlot()->setCentralFrequency(70);
     ui->spectrumPlotLayout->addWidget(amplitudeSpectrumPlot);
 
     phaseSpectrumPlot = new PhaseSpectrumPlot(this);
@@ -35,6 +39,8 @@ void MainView::on_btn_apply_clicked()
     settings.append(50); // temp value: add
 
     presenter->applyUsrpSettings(settings);
+
+    getAmplitudeSpectrumPlot()->setCentralFrequency(ui->sb_frequency->value());
 }
 
 void MainView::on_btn_amMode_clicked(bool checked)
@@ -119,4 +125,31 @@ void MainView::on_cb_droneClassSelect_activated(const QString &arg1)
         plot->setMarkerStrategy(new FrequencyHoppingStrategy(plot));
     else if (arg1 == "Mavic/Spark")
         plot->setMarkerStrategy(new SpreadSpectrumStrategy(plot));
+    else if (arg1 == "Planer")
+        plot->setMarkerStrategy(new DenseHoppingStrategy(plot));
+}
+
+void MainView::on_bgr_markers_buttonClicked(QAbstractButton *button)
+{
+    int number = button->text().toInt();
+    getAmplitudeSpectrumPlot()->setMarker(number);
+}
+
+void MainView::on_bgr_modes_buttonClicked(QAbstractButton *button)
+{
+    AmplitudeSpectrumPlot *plot = getAmplitudeSpectrumPlot();
+    QString name = button->text();
+    if (name == "Markers") {
+        plot->setPickers(true);
+        plot->setZoomer(false);
+        plot->setThresholdPickers(false);
+    } else if (name == "Zoom") {
+        plot->setZoomer(true);
+        plot->setThresholdPickers(false);
+        plot->setPickers(false);
+    } else if (name == "Thresholds") {
+        plot->setThresholdPickers(true);
+        plot->setPickers(false);
+        plot->setZoomer(false);
+    }
 }
