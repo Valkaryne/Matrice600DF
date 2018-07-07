@@ -30,8 +30,6 @@ public:
     void setDisplayStrategy(AmplitudeDisplayStrategy *strategy);
     void setMarkerStrategy(MarkerMovingStrategy *strategy);
 
-    void setDroneClass(int droneClass);
-
     /* Getters */
     QwtPlotZoomer* getZoomer();
     QVector<int> getMarkerBounds();
@@ -43,7 +41,9 @@ public:
                      const QVector<double> &samplesAmS);
 
     QwtPlotCurve    *curveAm1, *curveAm2, *curveAmS;
+    QwtPlotCurve    *curveMax;
     QVector<QwtPlotMarker*> markerVector;
+    QVector<double> maxSamples;
 
 private slots:
     void moveMarkers(const QPoint &pos);
@@ -52,22 +52,19 @@ private slots:
     void scrollLeftAxis(double);
 
 private:
-    QwtPlotCurve    *curveMax;
     QwtPlotPicker   *markerPicker;
     QwtPlotPicker   *pickerThrPr;
     QwtPlotPicker   *pickerThrSec;
     QwtPlotMarker   *thresholdPr;
     QwtPlotMarker   *thresholdSec;
     QwtPlotZoomer   *zoomer;
-    //QwtWheel        *wheel;
+    QwtWheel        *wheel;
 
     AmplitudeDisplayStrategy *strategy;
     MarkerMovingStrategy *markerStrategy;
 
     QVector<QColor> colors;
-    QVector<double> maxSamples;
 
-    int droneClass;
     int markPairNum;
     double expCoeff;
 };

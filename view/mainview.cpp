@@ -3,7 +3,9 @@
 
 MainView::MainView(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainView)
+    ui(new Ui::MainView),
+    slider_add_prev(40),
+    slider_product_prev(1)
 {
     ui->setupUi(this);
     presenter = new MatriceDFPresenter(this);
@@ -14,7 +16,6 @@ MainView::MainView(QWidget *parent) :
     getAmplitudeSpectrumPlot()->setPickers(false);
     getAmplitudeSpectrumPlot()->setZoomer(true);
     getAmplitudeSpectrumPlot()->setThresholdPickers(false);
-    getAmplitudeSpectrumPlot()->setCentralFrequency(70);
     ui->spectrumPlotLayout->addWidget(amplitudeSpectrumPlot);
 
     phaseSpectrumPlot = new PhaseSpectrumPlot(this);
@@ -22,7 +23,9 @@ MainView::MainView(QWidget *parent) :
 
     polarPlot = new PolarPlot(this);
     polarPlot->setDisplayStrategy(new TwoChannelStrategy(polarPlot));
-    ui->polarPlotLayout->addWidget(polarPlot);
+    ui->polarPlotLayout->addWidget(polarPlot, 0, 0, 2, 2);
+    ui->polarPlotLayout->addWidget(ui->slider_add, 2, 0, 1, 1);
+    ui->polarPlotLayout->addWidget(ui->slider_product, 0, 3, 1, 1);
 }
 
 MainView::~MainView()
@@ -152,4 +155,35 @@ void MainView::on_bgr_modes_buttonClicked(QAbstractButton *button)
         plot->setPickers(false);
         plot->setZoomer(false);
     }
+}
+
+void MainView::on_btn_maxHold_clicked(bool checked)
+{
+    AmplitudeSpectrumPlot *plot = getAmplitudeSpectrumPlot();
+    plot->setMaxHold(checked);
+    if (ui->btn_maxHold->text() == "Disable MaxHold") {
+        plot->setExpCoefficient(0);
+        ui->btn_maxHold->setText("Enable MaxHold");
+    }
+    else if (ui->btn_maxHold->text() == "Enable MaxHold") {
+        plot->setExpCoefficient(ui->sb_expCoeff->value());
+        ui->btn_maxHold->setText("Disable MaxHold");
+    }
+}
+
+void MainView::on_sb_expCoeff_valueChanged(double arg1)
+{
+    getAmplitudeSpectrumPlot()->setExpCoefficient(arg1);
+}
+
+void MainView::on_slider_add_valueChanged(int position)
+{
+    polarPlot->changeAddCoefficient(position - slider_add_prev);
+    slider_add_prev = position;
+}
+
+void MainView::on_slider_product_valueChanged(int position)
+{
+    polarPlot->changeProductCoefficient(position / slider_product_prev);
+    slider_product_prev = position;
 }

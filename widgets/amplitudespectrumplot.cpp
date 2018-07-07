@@ -2,7 +2,6 @@
 
 AmplitudeSpectrumPlot::AmplitudeSpectrumPlot(QWidget *parent) :
     SpectrumPlot(parent),
-    droneClass(0),
     expCoeff(0.999)
 {
     /* Axis */
@@ -34,7 +33,7 @@ AmplitudeSpectrumPlot::AmplitudeSpectrumPlot(QWidget *parent) :
     curveMax = new QwtPlotCurve;
     curveMax->setStyle(QwtPlotCurve::NoCurve);
     curveMax->setSymbol(new QwtSymbol(QwtSymbol::Ellipse,
-                                      QBrush(Qt::gray), QPen(Qt::gray), QSize(2, 2)));
+                                      QBrush(Qt::gray), QPen(Qt::gray), QSize(1, 1)));
     curveMax->setRenderHint(QwtPlotItem::RenderAntialiased, true);
     curveMax->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
     curveMax->attach(this);
@@ -99,7 +98,7 @@ AmplitudeSpectrumPlot::AmplitudeSpectrumPlot(QWidget *parent) :
                             Qt::RightButton, Qt::ControlModifier);
 
     /* Wheel */
-    /*wheel = new QwtWheel(canvas);
+    wheel = new QwtWheel(canvas);
     wheel->setVisible(true);
     wheel->setOrientation(Qt::Vertical);
     wheel->setRange(-10 - CALIBRATION, 90 - CALIBRATION);
@@ -110,7 +109,7 @@ AmplitudeSpectrumPlot::AmplitudeSpectrumPlot(QWidget *parent) :
     wheel->setGeometry(0, 30, 14, 44);
     wheel->setEnabled(true);
 
-    connect(wheel,SIGNAL(valueChanged(double)),SLOT(scrollLeftAxis(double))); */
+    connect(wheel,SIGNAL(valueChanged(double)),SLOT(scrollLeftAxis(double)));
 
     /* Other settings */
     for (int i = 0; i < 4096; i++)
@@ -190,17 +189,12 @@ void AmplitudeSpectrumPlot::setZoomBase(double xleft, double xright)
 
 void AmplitudeSpectrumPlot::setMaxHold(bool holdOn)
 {
-
-}
-
-void AmplitudeSpectrumPlot::setDroneClass(int droneClass)
-{
-
+    strategy->setMaxHoldEnabled(holdOn);
 }
 
 void AmplitudeSpectrumPlot::setExpCoefficient(double expCoeff)
 {
-
+    strategy->setExpCoefficient(0.99 + 0.01*expCoeff);
 }
 
 void AmplitudeSpectrumPlot::setDisplayStrategy(AmplitudeDisplayStrategy *strategy)
@@ -246,21 +240,22 @@ void AmplitudeSpectrumPlot::updateCurve(const QVector<double> &samplesAm1, const
 
 void AmplitudeSpectrumPlot::moveMarkers(const QPoint &pos)
 {
-    double position = pos.x();
-    qDebug() << "Position: " << pos;
+    double position = invTransform(QwtPlot::xBottom, pos.x());
     markerStrategy->moveMarker(position, markPairNum);
 }
 
 void AmplitudeSpectrumPlot::movePrimeThreshold(const QPoint &pos)
 {
-    double position = pos.y();
-    qDebug() << "Position: " << pos;
+    double position = invTransform(QwtPlot::yLeft, pos.y());
+    thresholdPr->setValue(0, position);
+    replot();
 }
 
 void AmplitudeSpectrumPlot::moveSecondThreshold(const QPoint &pos)
 {
-    double position = pos.y();
-    qDebug() << "Position: " << pos;
+    double position = invTransform(QwtPlot::yLeft, pos.y());
+    thresholdSec->setValue(0, position);
+    replot();
 }
 
 void AmplitudeSpectrumPlot::scrollLeftAxis(double value)

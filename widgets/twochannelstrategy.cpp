@@ -3,9 +3,11 @@
 TwoChannelStrategy::TwoChannelStrategy(AmplitudeSpectrumPlot *plot)
 {
     this->plot = plot;
+    this->expCoeff = 0.999;
     plot->curveAm1->attach(plot);
     plot->curveAm2->attach(plot);
     plot->curveAmS->detach();
+    plot->replot();
 }
 
 TwoChannelStrategy::TwoChannelStrategy(PolarPlot *polarPlot)
@@ -14,6 +16,7 @@ TwoChannelStrategy::TwoChannelStrategy(PolarPlot *polarPlot)
     polarPlot->curveAm1->attach(polarPlot);
     polarPlot->curveAm2->attach(polarPlot);
     polarPlot->curveAmS->detach();
+    polarPlot->replot();
 }
 
 void TwoChannelStrategy::update(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
@@ -27,8 +30,16 @@ void TwoChannelStrategy::update(const QVector<double> &samplesAm1, const QVector
     for (double i = cntrFrequency - LSHIFT; i < size * INCR + (cntrFrequency - LSHIFT); i += INCR)
         frequency.append(i);
 
+    for (int j = 0; j < samplesAm1.size(); j++) {
+        if (samplesAm1.at(j) > plot->maxSamples.at(j))
+            plot->maxSamples.replace(j, expCoeff * samplesAm1.at(j) + (1 - expCoeff) * plot->maxSamples.at(j) + 5);
+        else
+            plot->maxSamples.replace(j, (1 - expCoeff) * samplesAm1.at(j) + expCoeff * plot->maxSamples.at(j));
+    }
+
     plot->curveAm1->setSamples(frequency, samplesAm1);
     plot->curveAm2->setSamples(frequency, samplesAm2);
+    plot->curveMax->setSamples(frequency, plot->maxSamples);
 
     plot->replot();
 }

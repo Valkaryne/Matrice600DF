@@ -17,9 +17,18 @@ public:
     virtual void update(const int &azHeading, const double &radAm1, const double &radAm2,
                         const double &radAmS, const double &radPh) = 0;
 
+    virtual void setMaxHoldEnabled(bool enable) = 0;
+
+    void setExpCoefficient(double expCoeff) {
+        if (this->expCoeff != expCoeff)
+            this->expCoeff = expCoeff;
+    }
+
 protected:
     AmplitudeSpectrumPlot *plot;
     PolarPlot *polarPlot;
+
+    double expCoeff;
 };
 
 #endif // AMPLITUDEDISPLAYSTRATEGY_HPP

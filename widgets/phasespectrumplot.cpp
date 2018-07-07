@@ -27,7 +27,6 @@ void PhaseSpectrumPlot::setCentralFrequency(double cntrFrequency)
 
 void PhaseSpectrumPlot::updateCurve(const QVector<double> &samplesPh)
 {
-    //int size = samplesPh.size();
     QVector<double> frequency;
 
     for (double i = cntrFrequency - LSHIFT; i < cntrFrequency + RSHIFT; i += INCR)

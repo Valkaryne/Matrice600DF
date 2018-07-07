@@ -10,5 +10,4 @@ void FrequencyHoppingStrategy::moveMarker(const double &position, const int numb
     plot->markerVector.at(number - 1)->setValue(position - 31 * INCR, 0);
     plot->markerVector.at(number)->setValue(position + 32 * INCR, 0);
     plot->replot();
-    qDebug() << plot->markerVector.at(number - 1)->value().x() - plot->markerVector.at(number)->value().x();
 }

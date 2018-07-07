@@ -3,9 +3,11 @@
 SummaryStrategy::SummaryStrategy(AmplitudeSpectrumPlot *plot)
 {
     this->plot = plot;
+    this->expCoeff = 0.999;
     plot->curveAm1->detach();
     plot->curveAm2->detach();
     plot->curveAmS->attach(plot);
+    plot->replot();
 }
 
 SummaryStrategy::SummaryStrategy(PolarPlot *polarPlot)
@@ -14,6 +16,7 @@ SummaryStrategy::SummaryStrategy(PolarPlot *polarPlot)
     polarPlot->curveAm1->detach();
     polarPlot->curveAm2->detach();
     polarPlot->curveAmS->attach(polarPlot);
+    polarPlot->replot();
 }
 
 void SummaryStrategy::update(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
@@ -28,7 +31,15 @@ void SummaryStrategy::update(const QVector<double> &samplesAm1, const QVector<do
     for (double i = cntrFrequency - LSHIFT; i < size * INCR + (cntrFrequency - LSHIFT); i += INCR)
         frequency.append(i);
 
+    for (int j = 0; j < samplesAmS.size(); j++) {
+        if (samplesAmS.at(j) > plot->maxSamples.at(j))
+            plot->maxSamples.replace(j, expCoeff * samplesAmS.at(j) + (1 - expCoeff) * plot->maxSamples.at(j) + 5);
+        else
+            plot->maxSamples.replace(j, (1 - expCoeff) * samplesAmS.at(j) + expCoeff * plot->maxSamples.at(j));
+    }
+
     plot->curveAmS->setSamples(frequency, samplesAmS);
+    plot->curveMax->setSamples(frequency, plot->maxSamples);
     plot->replot();
 }
 

@@ -12,6 +12,7 @@
 #include "amplitudedisplaystrategy.hpp"
 
 class AmplitudeDisplayStrategy;
+class PolarCurveData;
 
 class PolarPlot : public QwtPolarPlot
 {
@@ -28,13 +29,21 @@ public:
                        const double &radAmS, const double &radPh);
     void updateAllyDirection(const int az);
 
-    QwtPolarCurve *curveAm1, *curveAm2, *curveAmS, *curvePh;
+    void changeAddCoefficient(int x);
+    void changeProductCoefficient(double x);
+
+private:
+    void setAddScale(PolarCurveData *data, const double &x);
+    void setProductScale(PolarCurveData *data, const double &x);
 
 public slots:
     void getDirection(const QwtPointPolar &point);
 
 signals:
     void setDirectionRequest(double direction);
+
+public:
+    QwtPolarCurve *curveAm1, *curveAm2, *curveAmS, *curvePh;
 
 private:
     QwtPolarCurve *phaseMarker;
@@ -48,11 +57,16 @@ private:
 class PolarCurveData : public QwtArraySeriesData<QwtPointPolar>
 {
 public:
-    PolarCurveData() {}
+    PolarCurveData() {
+        add = 0;
+        prod = 1;
+    }
 
     void append(const QwtPointPolar &point)
     {
-        d_samples << point;
+        QwtPointPolar& p = (QwtPointPolar&)point;
+        p.setRadius((p.radius() + add) * prod);
+        d_samples << p;
     }
 
     void setSamples(QVector<QwtPointPolar> samples)
@@ -63,7 +77,8 @@ public:
             QwtInterval xInterval = QwtInterval(samples.at(0).azimuth(), samples.at(0).azimuth());
             QwtInterval yInterval = QwtInterval(samples.at(0).radius(), samples.at(0).radius());
             foreach (QwtPointPolar sample, samples) {
-                d_samples << sample;
+                append(sample);
+                //d_samples << sample;
                 xInterval |= sample.azimuth();
                 yInterval |= sample.radius();
             }
@@ -81,6 +96,15 @@ public:
     {
         return d_boundingRect;
     }
+
+public:
+    int add;
+    double prod = 1;
 };
 
+/*class PolarPhaseData : public QwtArraySeriesData<QwtPointPolar>
+{
+public:
+    PolarPhaseData() {}
+} */
 #endif // POLARPLOT_HPP

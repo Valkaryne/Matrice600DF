@@ -48,9 +48,20 @@ private slots:
     void on_bgr_markers_buttonClicked(QAbstractButton *button);
     void on_bgr_modes_buttonClicked(QAbstractButton *button);
 
+    void on_btn_maxHold_clicked(bool checked);
+
+    void on_sb_expCoeff_valueChanged(double arg1);
+
+    void on_slider_add_valueChanged(int position);
+
+    void on_slider_product_valueChanged(int position);
+
 private:
     Ui::MainView        *ui;
     MatriceDFPresenter  *presenter;
+
+    int slider_add_prev;
+    double slider_product_prev;
 
 };
 
