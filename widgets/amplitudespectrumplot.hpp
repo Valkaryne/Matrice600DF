@@ -36,7 +36,7 @@ public:
     QVector<int> getThresholdBounds();
 
     /* Other */
-    void resetMarkers();
+    void resetMarkers(double dF);
     void updateCurve(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
                      const QVector<double> &samplesAmS);
 
@@ -47,12 +47,14 @@ public:
 
 private slots:
     void moveMarkers(const QPoint &pos);
+    void clearMarkers(const QPoint &pos);
     void movePrimeThreshold(const QPoint &pos);
     void moveSecondThreshold(const QPoint &pos);
     void scrollLeftAxis(double);
 
 private:
     QwtPlotPicker   *markerPicker;
+    QwtPlotPicker   *clearPicker;
     QwtPlotPicker   *pickerThrPr;
     QwtPlotPicker   *pickerThrSec;
     QwtPlotMarker   *thresholdPr;

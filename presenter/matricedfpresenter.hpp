@@ -14,6 +14,10 @@ public:
 
     void applyUsrpSettings(QVector<double> &settings);
 
+    void changeGainParameter(double gain);
+    void changeBandParameter(int band);
+    void changeBoundsParameters(QVector<int> bounds);
+
     void initDjiVehicle();
     void activateDjiVehicle();
     void obtainDjiControl(QString ctrlOperation);

@@ -25,10 +25,13 @@
         <item row="0" column="1">
          <widget class="QSlider" name="slider_add">
           <property name="minimum">
-           <number>40</number>
+           <number>0</number>
           </property>
           <property name="maximum">
            <number>500</number>
+          </property>
+          <property name="sliderPosition">
+           <number>0</number>
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -76,10 +79,43 @@
          <string>USRP Settings</string>
         </property>
         <layout class="QGridLayout" name="gridLayout">
+         <item row="2" column="1">
+          <widget class="QDoubleSpinBox" name="sb_temp_prod">
+           <property name="buttonSymbols">
+            <enum>QAbstractSpinBox::NoButtons</enum>
+           </property>
+           <property name="decimals">
+            <number>0</number>
+           </property>
+           <property name="minimum">
+            <double>0.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>32000.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>70.000000000000000</double>
+           </property>
+          </widget>
+         </item>
          <item row="1" column="0">
           <widget class="QLabel" name="lbl_gain">
            <property name="text">
             <string>Gain:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="lbl_frequency">
+           <property name="text">
+            <string>Frequency:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0" colspan="2">
+          <widget class="QPushButton" name="btn_apply">
+           <property name="text">
+            <string>Apply</string>
            </property>
           </widget>
          </item>
@@ -127,17 +163,30 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="lbl_frequency">
-           <property name="text">
-            <string>Frequency:</string>
+         <item row="3" column="1">
+          <widget class="QDoubleSpinBox" name="sb_temp_add">
+           <property name="decimals">
+            <number>0</number>
+           </property>
+           <property name="maximum">
+            <double>32000.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>50.000000000000000</double>
            </property>
           </widget>
          </item>
-         <item row="2" column="0" colspan="2">
-          <widget class="QPushButton" name="btn_apply">
+         <item row="2" column="0">
+          <widget class="QLabel" name="lbl_temp_prod">
            <property name="text">
-            <string>Apply</string>
+            <string>Product:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="lbl_temp_add">
+           <property name="text">
+            <string>Add:</string>
            </property>
           </widget>
          </item>
@@ -150,85 +199,6 @@
          <string>DF Control Panel</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_2">
-         <item row="0" column="1">
-          <widget class="QComboBox" name="cb_droneClassSelect">
-           <item>
-            <property name="text">
-             <string>Matrice/Phantom</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Mavic/Spark</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Planer</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="lbl_droneClassSelect">
-           <property name="text">
-            <string>Drone Class:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QRadioButton" name="rb_markersMode">
-           <property name="text">
-            <string>Markers</string>
-           </property>
-           <property name="checked">
-            <bool>false</bool>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">bgr_modes</string>
-           </attribute>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QPushButton" name="btn_maxHold">
-           <property name="text">
-            <string>Disable MaxHold</string>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QPushButton" name="btn_btnSetRange">
-           <property name="text">
-            <string>Set Range</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QRadioButton" name="rb_zoomMode">
-           <property name="text">
-            <string>Zoom</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">bgr_modes</string>
-           </attribute>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QPushButton" name="btn_refresh">
-           <property name="text">
-            <string>Refresh</string>
-           </property>
-          </widget>
-         </item>
          <item row="6" column="0" colspan="2">
           <widget class="QFrame" name="markersFrame">
            <property name="frameShape">
@@ -422,24 +392,56 @@ QRadioButton::indicator::checked {
            </layout>
           </widget>
          </item>
-         <item row="3" column="1">
-          <widget class="QPushButton" name="btn_amMode">
-           <property name="text">
-            <string>Summary</string>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="cb_droneClassSelect">
+           <item>
+            <property name="text">
+             <string>Matrice/Phantom</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Mavic/Spark</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Planer</string>
+            </property>
+           </item>
           </widget>
          </item>
-         <item row="3" column="0">
-          <widget class="QRadioButton" name="rb_thresholdMode">
+         <item row="1" column="0">
+          <widget class="QRadioButton" name="rb_markersMode">
            <property name="text">
-            <string>Thresholds</string>
+            <string>Markers</string>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
            </property>
            <attribute name="buttonGroup">
             <string notr="true">bgr_modes</string>
            </attribute>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QPushButton" name="btn_maxHold">
+           <property name="text">
+            <string>Disable MaxHold</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="lbl_droneClassSelect">
+           <property name="text">
+            <string>Drone Class:</string>
+           </property>
           </widget>
          </item>
          <item row="4" column="0">
@@ -461,6 +463,53 @@ QRadioButton::indicator::checked {
            </property>
            <property name="value">
             <double>0.900000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QRadioButton" name="rb_zoomMode">
+           <property name="text">
+            <string>Zoom</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">bgr_modes</string>
+           </attribute>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QPushButton" name="btn_amMode">
+           <property name="text">
+            <string>Summary</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="btn_refresh">
+           <property name="text">
+            <string>Refresh</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QRadioButton" name="rb_thresholdMode">
+           <property name="text">
+            <string>Thresholds</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">bgr_modes</string>
+           </attribute>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QPushButton" name="btn_resetScales">
+           <property name="text">
+            <string>Reset Scales</string>
            </property>
           </widget>
          </item>
@@ -553,7 +602,7 @@ QRadioButton::indicator::checked {
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="bgr_markers"/>
   <buttongroup name="bgr_modes"/>
+  <buttongroup name="bgr_markers"/>
  </buttongroups>
 </ui>

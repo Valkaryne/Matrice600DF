@@ -49,6 +49,16 @@ AmplitudeSpectrumPlot::AmplitudeSpectrumPlot(QWidget *parent) :
     markerPicker->setStateMachine(new QwtPickerDragPointMachine());
     markerPicker->setMousePattern(QwtPlotPicker::MouseSelect1, Qt::LeftButton);
 
+    clearPicker = new QwtPlotPicker(
+                QwtPlot::xBottom, QwtPlot::yLeft,
+                QwtPlotPicker::VLineRubberBand,
+                QwtPicker::AlwaysOn,
+                canvas);
+    clearPicker->setRubberBandPen(QColor(Qt::red));
+    clearPicker->setTrackerPen(QColor(Qt::white));
+    clearPicker->setStateMachine(new QwtPickerDragPointMachine);
+    clearPicker->setMousePattern(QwtPlotPicker::MouseSelect1, Qt::RightButton);
+
     pickerThrPr = new QwtPlotPicker(
                 QwtPlot::xBottom, QwtPlot::yLeft,
                 QwtPlotPicker::VLineRubberBand,
@@ -120,11 +130,13 @@ AmplitudeSpectrumPlot::AmplitudeSpectrumPlot(QWidget *parent) :
 
     this->markPairNum = 1;
 
-    connect(markerPicker,SIGNAL(appended(const QPoint &)),
+    connect(markerPicker, SIGNAL(appended(const QPoint &)),
             SLOT(moveMarkers(const QPoint &)));
-    connect(pickerThrPr,SIGNAL(appended(const QPoint &)),
+    connect(clearPicker, SIGNAL(appended(const QPoint &)),
+            SLOT(clearMarkers(const QPoint &)));
+    connect(pickerThrPr, SIGNAL(appended(const QPoint &)),
             SLOT(movePrimeThreshold(const QPoint &)));
-    connect(pickerThrSec,SIGNAL(appended(const QPoint &)),
+    connect(pickerThrSec, SIGNAL(appended(const QPoint &)),
             SLOT(moveSecondThreshold(const QPoint &)));
 }
 
@@ -152,6 +164,7 @@ void AmplitudeSpectrumPlot::setMarker(int number)
 void AmplitudeSpectrumPlot::setPickers(bool enable)
 {
     markerPicker->setEnabled(enable);
+    clearPicker->setEnabled(enable);
 }
 
 void AmplitudeSpectrumPlot::setThresholdPickers(bool enable)
@@ -168,8 +181,8 @@ void AmplitudeSpectrumPlot::setZoomer(bool enable)
 void AmplitudeSpectrumPlot::setCentralFrequency(double cntrFrequency)
 {
     if (this->cntrFrequency != cntrFrequency) {
+        resetMarkers(cntrFrequency - this->cntrFrequency);
         this->cntrFrequency = cntrFrequency;
-        resetMarkers();
     }
     double xleft = cntrFrequency - LSHIFT;
     double xright = cntrFrequency + RSHIFT;
@@ -215,21 +228,44 @@ QwtPlotZoomer* AmplitudeSpectrumPlot::getZoomer()
 QVector<int> AmplitudeSpectrumPlot::getMarkerBounds()
 {
     QVector<int> bounds;
+    for (int i = 1; i < markerVector.size(); i += 2) {
+        double bound = markerVector.at(i - 1)->xValue();
+        bounds.append(CENTER + (bound - cntrFrequency) / INCR);
+        bound = markerVector.at(i)->xValue();
+        bounds.append(CENTER + (bound - cntrFrequency) / INCR);
+        qSort(bounds.end() - 2, bounds.end());
+        if ((i > 1) &&
+                (bounds.at(i - 1) < bounds.at(i - 3)) &&
+                (bounds.at(i) > bounds.at(i - 2))) {
+            bounds.replace(i - 1, bounds.at(i - 3));
+            bounds.replace(i, bounds.at(i - 2));
+        }
+    }
     return bounds;
 }
 
 QVector<int> AmplitudeSpectrumPlot::getThresholdBounds()
 {
     QVector<int> bounds;
+    bounds.append(thresholdPr->yValue());
+
+    if ((int)((CENTER + (markerVector.at(0)->xValue() - cntrFrequency) / INCR)) <= 0 &&
+            (int)((CENTER + (markerVector.at(1)->xValue() - cntrFrequency) / INCR)) >= 4095)
+        bounds.append(10000);
+    else
+        bounds.append(thresholdSec->yValue());
+
+    qSort(bounds);
     return bounds;
 }
 
-void AmplitudeSpectrumPlot::resetMarkers()
+void AmplitudeSpectrumPlot::resetMarkers(double dF)
 {
-    for (int i = 1; i < markerVector.size(); i += 2) {
-        markerVector.at(i - 1)->setValue(cntrFrequency - LSHIFT, 0);
-        markerVector.at(i)->setValue(cntrFrequency + RSHIFT, 0);
+    for (int i = 0; i < markerVector.size(); i++) {
+        QwtPlotMarker *marker = markerVector.at(i);
+        marker->setValue(marker->xValue() + dF, 0);
     }
+    replot();
 }
 
 void AmplitudeSpectrumPlot::updateCurve(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
@@ -242,6 +278,14 @@ void AmplitudeSpectrumPlot::moveMarkers(const QPoint &pos)
 {
     double position = invTransform(QwtPlot::xBottom, pos.x());
     markerStrategy->moveMarker(position, markPairNum);
+}
+
+void AmplitudeSpectrumPlot::clearMarkers(const QPoint &pos)
+{
+    Q_UNUSED(pos)
+    markerVector.at(markPairNum - 1)->setValue(cntrFrequency - LSHIFT, 0);
+    markerVector.at(markPairNum)->setValue(cntrFrequency + RSHIFT, 0);
+    replot();
 }
 
 void AmplitudeSpectrumPlot::movePrimeThreshold(const QPoint &pos)

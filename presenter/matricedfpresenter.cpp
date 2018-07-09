@@ -7,6 +7,9 @@ MatriceDFPresenter::MatriceDFPresenter(MainIView *view, QObject *parent) :
     this->model = new MatriceDFModel();
     this->dji = new QtOsdk();
 
+    model->moveToThread(model);
+    model->start();
+
     connect(model,SIGNAL(amplitudeSamplesReady(const QVector<double>,const QVector<double>,const QVector<double>)),
             SLOT(amplitudeSamplesPresenter(const QVector<double>,const QVector<double>,const QVector<double>)));
     connect(model,SIGNAL(phaseSamplesReady(const QVector<double>)),
@@ -29,6 +32,21 @@ MatriceDFPresenter::~MatriceDFPresenter()
 void MatriceDFPresenter::applyUsrpSettings(QVector<double> &settings)
 {
     model->getUdpChannel()->sendDatagram(settings);
+}
+
+void MatriceDFPresenter::changeGainParameter(double gain)
+{
+    model->setCurrentGain(gain);
+}
+
+void MatriceDFPresenter::changeBandParameter(int band)
+{
+    model->setBand(band);
+}
+
+void MatriceDFPresenter::changeBoundsParameters(QVector<int> bounds)
+{
+    model->setRangeBounds(bounds);
 }
 
 void MatriceDFPresenter::initDjiVehicle()
@@ -66,7 +84,7 @@ void MatriceDFPresenter::phaseSamplesPresenter(const QVector<double> samplesPh)
 void MatriceDFPresenter::polarSamplesPresenter(const int az, const double rado, const double radl, const double rads,
                                           const double phase)
 {
-
+    view->getPolarPlot()->updateDiagram(az,rado,radl,rads,phase);
 }
 
 void MatriceDFPresenter::changeControlAuthorityStatus(QString textToDisplay)

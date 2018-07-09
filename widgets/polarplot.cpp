@@ -26,7 +26,7 @@ PolarPlot::PolarPlot(QWidget *parent) :
         grid->showMinorGrid(scaleId);
         QPen minorPen(Qt::gray);
 #if 0
-        minorPen.setStle(Qt::DotLine);
+        minorPen.setStyle(Qt::DotLine);
 #endif
         grid->setMinorGridPen(scaleId, minorPen);
     }
@@ -83,25 +83,6 @@ PolarPlot::PolarPlot(QWidget *parent) :
     curveAm1->setData(dataAm1);
     curveAm1->attach(this);
 
-    //WARNING: DELETE AFTER TEST
-    QVector<QwtPointPolar> am1Vector;
-    double fi0 = 30;
-    double d = 45;
-    double kd = 2.7831 / d;
-    double h = 360./359;
-    for (int k = 0; k < 360; k++) {
-        double fi = k*h;
-        double x = fi - fi0;
-        while (x >= 180) x -= 360;
-        double a = 0;
-        //a = (qrand() % int (qPow(10, 2) + 1))/qPow(10, 2);
-        double y = 180;
-        if (x != 0) y = 180 * qAbs(sin(kd*x)/(kd*x));
-        y = 10 * qLn(y) * M_LOG10E - 100;
-        am1Vector.append(QwtPointPolar(fi,y));
-    }
-    dataAm1->setSamples(am1Vector);
-
     PolarCurveData *dataAm2 = new PolarCurveData;
     curveAm2 = new QwtPolarCurve;
     curveAm2->setPen(QPen(Qt::cyan));
@@ -111,25 +92,6 @@ PolarPlot::PolarPlot(QWidget *parent) :
     curveAm2->setData(dataAm2);
     curveAm2->attach(this);
 
-    //WARNING: DELETE AFTER TEST
-    QVector<QwtPointPolar> am2Vector;
-    fi0 = 60;
-    d = 45;
-    kd = 2.7831 / d;
-    h = 360./359;
-    for (int k = 0; k < 360; k++) {
-        double fi = k*h;
-        double x = fi - fi0;
-        while (x >= 180) x -= 360;
-        double a = 0;
-        //a = (qrand() % int (qPow(10, 2) + 1))/qPow(10, 2);
-        double y = 180;
-        if (x != 0) y = 180 * qAbs(sin(kd*x)/(kd*x));
-        y = 10 * qLn(y) * M_LOG10E - 100;
-        am2Vector.append(QwtPointPolar(fi,y));
-    }
-    dataAm2->setSamples(am2Vector);
-
     PolarCurveData *dataAmS = new PolarCurveData;
     curveAmS = new QwtPolarCurve;
     curveAmS->setPen(QPen(Qt::green));
@@ -138,25 +100,6 @@ PolarPlot::PolarPlot(QWidget *parent) :
                                       QBrush(Qt::green), QPen(Qt::green), QSize(3, 3)));
     curveAmS->setData(dataAmS);
     curveAmS->attach(this);
-
-    //WARNING: DELETE AFTER TEST
-    QVector<QwtPointPolar> amSVector;
-    fi0 = 90;
-    d = 45;
-    kd = 2.7831 / d;
-    h = 360./359;
-    for (int k = 0; k < 360; k++) {
-        double fi = k*h;
-        double x = fi - fi0;
-        while (x >= 180) x -= 360;
-        double a = 0;
-        //a = (qrand() % int (qPow(10, 2) + 1))/qPow(10, 2);
-        double y = 180;
-        if (x != 0) y = 180 * qAbs(sin(kd*x)/(kd*x));
-        y = 10 * qLn(y) * M_LOG10E - 100;
-        amSVector.append(QwtPointPolar(fi,y));
-    }
-    dataAmS->setSamples(amSVector);
 
     PolarCurveData *dataPh = new PolarCurveData;
     curvePh = new QwtPolarCurve;
@@ -172,8 +115,6 @@ PolarPlot::PolarPlot(QWidget *parent) :
     allyDirection->setPen(QPen(Qt::white));
     allyDirection->setData(dataAlly);
     allyDirection->attach(this);
-
-    //replot();
 }
 
 void PolarPlot::setDisplayStrategy(AmplitudeDisplayStrategy *strategy)
@@ -234,6 +175,26 @@ void PolarPlot::changeProductCoefficient(double x)
     replot();
 }
 
+void PolarPlot::resetScales()
+{
+    PolarCurveData *dataAm1 = (PolarCurveData*)(curveAm1->data());
+    PolarCurveData *dataAm2 = (PolarCurveData*)(curveAm2->data());
+    PolarCurveData *dataAmS = (PolarCurveData*)(curveAmS->data());
+
+    int x_add = -dataAm1->add;
+    double x_product = 1 / (dataAm1->prod - 1);
+
+    setAddScale(dataAm1, x_add);
+    setAddScale(dataAm2, x_add);
+    setAddScale(dataAmS, x_add);
+
+    setProductScale(dataAm1, x_product);
+    setProductScale(dataAm2, x_product);
+    setProductScale(dataAmS, x_product);
+
+    replot();
+}
+
 void PolarPlot::setAddScale(PolarCurveData *data, const double &x)
 {
     for (int i = 0; i < data->size(); i++) {
@@ -252,9 +213,9 @@ void PolarPlot::setProductScale(PolarCurveData *data, const double &x)
     }
 
     if (x > 1)
-        data->prod += x;
+        data->prod += 1/x;
     else if (x < 1)
-        data->prod -= x;
+        data->prod -= 1/x;
 }
 
 void PolarPlot::getDirection(const QwtPointPolar &point)

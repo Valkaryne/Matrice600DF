@@ -31,6 +31,7 @@ public:
 
     void changeAddCoefficient(int x);
     void changeProductCoefficient(double x);
+    void resetScales();
 
 private:
     void setAddScale(PolarCurveData *data, const double &x);

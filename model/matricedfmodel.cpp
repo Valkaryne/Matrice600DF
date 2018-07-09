@@ -6,6 +6,8 @@ MatriceDFModel::MatriceDFModel()
     qRegisterMetaType<QVector<double>>("QVector<double>");
     connect(udpChannel,SIGNAL(samplesReceived(QVector<double>,QVector<double>,QVector<double>)),SLOT(samplesHandler(QVector<double>,QVector<double>,QVector<double>)));
     connect(udpChannel,SIGNAL(samplesReceived(QVector<double>,QVector<double>,QVector<double>)),SLOT(polarSamplesHandler(QVector<double>,QVector<double>,QVector<double>)));
+
+    this->gain = 60;
 }
 
 void MatriceDFModel::samplesHandler(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
@@ -26,6 +28,9 @@ void MatriceDFModel::samplesHandler(const QVector<double> samplesAm1, const QVec
             if (tmp3 > 360) tmp3 -= 360;
         } else if (band == 5) {
             tmp3 += PH5;
+            if (tmp3 > 360) tmp3 -= 360;
+        } else {
+            tmp += PH0;
             if (tmp3 > 360) tmp3 -= 360;
         }
         phMod.append(tmp3);
@@ -75,6 +80,9 @@ void MatriceDFModel::polarSamplesHandler(const QVector<double> samplesAm1, const
         } else if (band == 5) {
             tmp3 += PH5;
             if (tmp3 > 360) tmp3 -= 360;
+        } else {
+            tmp3 += PH0;
+            if (tmp3 > 360) tmp3 -= 360;
         }
         phMod.append(tmp3);
     }
@@ -92,6 +100,9 @@ void MatriceDFModel::polarSamplesHandler(const QVector<double> samplesAm1, const
             if (tmp3 > 360) tmp3 -= 360;
         } else if (band == 5) {
             tmp3 += PH5;
+            if (tmp3 > 360) tmp3 -= 360;
+        } else {
+            tmp3 += PH0;
             if (tmp3 > 360) tmp3 -= 360;
         }
         phMod.append(tmp3);

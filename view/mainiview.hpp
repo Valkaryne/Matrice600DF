@@ -18,6 +18,10 @@ public:
         return (PhaseSpectrumPlot*) phaseSpectrumPlot;
     }
 
+    PolarPlot *getPolarPlot() {
+        return polarPlot;
+    }
+
     virtual void ctrlDjiStatusChanged(QString) = 0;
     virtual void initDjiVehicleFinished(QString initStatus, bool initResult) = 0;
     virtual void activateDjiVehicleFinished(QString activateStatus, bool activateResult) = 0;

@@ -56,6 +56,10 @@ private slots:
 
     void on_slider_product_valueChanged(int position);
 
+    void on_btn_resetScales_clicked();
+
+    void on_btn_refresh_clicked();
+
 private:
     Ui::MainView        *ui;
     MatriceDFPresenter  *presenter;

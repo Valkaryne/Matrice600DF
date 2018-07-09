@@ -25,6 +25,10 @@ public:
             this->gain = gain;
     }
 
+    void setRangeBounds(QVector<int> rangeBounds) {
+        this->rangeBounds = rangeBounds;
+    }
+
     /* Getters */
     UdpChannel* getUdpChannel() {
         return udpChannel;

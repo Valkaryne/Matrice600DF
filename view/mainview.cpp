@@ -4,7 +4,7 @@
 MainView::MainView(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainView),
-    slider_add_prev(40),
+    slider_add_prev(0),
     slider_product_prev(1)
 {
     ui->setupUi(this);
@@ -38,12 +38,32 @@ void MainView::on_btn_apply_clicked()
     QVector<double> settings;
     settings.append(ui->sb_frequency->value() * 1000000.0);
     settings.append(ui->sb_gain->value());
-    settings.append(140); // Temp value: product
-    settings.append(50); // temp value: add
+    settings.append(ui->sb_temp_prod->value()); // Temp value: product
+    settings.append(ui->sb_temp_add->value()); // temp value: add
+
+    QVector<int> thresholds = getAmplitudeSpectrumPlot()->getThresholdBounds();
+    for (int thr : thresholds)
+        settings.append(thr + ui->sb_gain->value() + CALIBRATION); // WARNING: magic constant
+
+    QVector<int> bounds = getAmplitudeSpectrumPlot()->getMarkerBounds();
+    if (thresholds.at(1) > 9999) {
+        for (int bnd : bounds)
+            settings.append(bnd);
+    } else {
+        for (int bnd : bounds) {
+            if ((bnd >= 0) && (bnd < 2048)) bnd += 2048;
+            else if ((bnd >= 2048) && (bnd < 4096)) bnd -= 2048;
+            settings.append(bnd);
+        }
+    }
 
     presenter->applyUsrpSettings(settings);
 
     getAmplitudeSpectrumPlot()->setCentralFrequency(ui->sb_frequency->value());
+    getPhaseSpectrumPlot()->setCentralFrequency(ui->sb_frequency->value());
+    presenter->changeGainParameter(ui->sb_gain->value());
+    presenter->changeBandParameter((int)ui->sb_frequency->value() / 1000);
+    presenter->changeBoundsParameters(bounds);
 }
 
 void MainView::on_btn_amMode_clicked(bool checked)
@@ -186,4 +206,19 @@ void MainView::on_slider_product_valueChanged(int position)
 {
     polarPlot->changeProductCoefficient(position / slider_product_prev);
     slider_product_prev = position;
+}
+
+void MainView::on_btn_resetScales_clicked()
+{
+    int minimumAdd = ui->slider_add->minimum();
+    int minimumProduct = ui->slider_product->minimum();
+
+    ui->slider_add->setValue(minimumAdd);
+    ui->slider_product->setValue(minimumProduct);
+    polarPlot->resetScales();
+}
+
+void MainView::on_btn_refresh_clicked()
+{
+    polarPlot->clearDiagram();
 }
