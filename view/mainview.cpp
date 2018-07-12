@@ -10,6 +10,7 @@ MainView::MainView(QWidget *parent) :
     ui->setupUi(this);
     presenter = new MatriceDFPresenter(this);
 
+    /* spectrum plots */
     amplitudeSpectrumPlot = new AmplitudeSpectrumPlot(this);
     getAmplitudeSpectrumPlot()->setDisplayStrategy(new TwoChannelStrategy(getAmplitudeSpectrumPlot()));
     getAmplitudeSpectrumPlot()->setMarkerStrategy(new FrequencyHoppingStrategy(getAmplitudeSpectrumPlot()));
@@ -21,11 +22,32 @@ MainView::MainView(QWidget *parent) :
     phaseSpectrumPlot = new PhaseSpectrumPlot(this);
     ui->spectrumPlotLayout->addWidget(phaseSpectrumPlot);
 
+    /* polar plot */
     polarPlot = new PolarPlot(this);
     polarPlot->setDisplayStrategy(new TwoChannelStrategy(polarPlot));
     ui->polarPlotLayout->addWidget(polarPlot, 0, 0, 2, 2);
     ui->polarPlotLayout->addWidget(ui->slider_add, 2, 0, 1, 1);
     ui->polarPlotLayout->addWidget(ui->slider_product, 0, 3, 1, 1);
+    connect(polarPlot, SIGNAL(setDirectionRequest(const double &)), SLOT(makeDirection(const double &)));
+
+    /* map */
+    map = new QQuickView;
+    map->setSource(QUrl(QStringLiteral("qrc:/mapview.qml")));
+
+    QWidget *map_wrapper = QWidget::createWindowContainer(map, this);
+    ui->mapLayout->addWidget(map_wrapper);
+    QObject *object = map->rootObject();
+    QMetaObject::invokeMethod(object, "initializeMapItems");
+
+    QQmlContext *ctx = map->rootContext();
+    ctx->setContextProperty("mainview", this);
+
+    /* menus and actions */
+    switchProviderAct = new QAction(tr("&Switch Provider"), this);
+    connect(switchProviderAct, &QAction::triggered, this, &MainView::switchMapProvider);
+
+    mapMenu = menuBar()->addMenu(tr("&Map"));
+    mapMenu->addAction(switchProviderAct);
 }
 
 MainView::~MainView()
@@ -141,15 +163,66 @@ void MainView::activateDjiVehicleFinished(QString activateStatus, bool activateR
     }
 }
 
+void MainView::connectionDjiVehicleResetted()
+{
+    ui->btn_testInit->setText("Initialize");
+    ui->btn_testInit->setStyleSheet("standard");
+
+    ui->btn_testActivate->setText("Activate");
+    ui->btn_testActivate->setStyleSheet("standard");
+}
+
+void MainView::updateTelemetryData(const QVector<double> &subscribeData){
+    double latitude = subscribeData.at(3) / 10000000.0;
+    double longitude = subscribeData.at(2) / 10000000.0;
+    double altitude = subscribeData.at(1);
+    double heading = subscribeData.at(0);
+
+    ui->le_latitude->setText(QString::number(latitude,'f',6));
+    ui->le_longitude->setText(QString::number(longitude,'f',6));
+    ui->le_altitude->setText(QString::number(altitude,'f',2));
+    ui->le_heading->setText(QString::number(heading,'f',2));
+
+    QObject *object = map->rootObject();
+    QMetaObject::invokeMethod(object, "updateDroneLocation",
+                              Q_ARG(QVariant, latitude),
+                              Q_ARG(QVariant, longitude),
+                              Q_ARG(QVariant, heading));
+
+    presenter->updateCurrentHeading(heading);
+}
+
+void MainView::setHomePoint(QString azimuth) {
+    polarPlot->updateAllyDirection(azimuth.toDouble());
+}
+
+void MainView::setPointOnMap(QString lat, QString lng)
+{
+    markerLatitude = lat.toDouble();
+    markerLongitude = lng.toDouble();
+    //qDebug() << "( " << markerLatitude * 1000000 << ", " << markerLongitude * 1000000 << ")";
+}
+
+void MainView::makeDirection(const double &direction)
+{
+    QObject *object = map->rootObject();
+    QMetaObject::invokeMethod(object, "makeBeam",
+                              Q_ARG(QVariant, direction));
+}
+
 void MainView::on_cb_droneClassSelect_activated(const QString &arg1)
 {
     AmplitudeSpectrumPlot *plot = getAmplitudeSpectrumPlot();
-    if (arg1 == "Matrice/Phantom")
+    if (arg1 == "Matrice/Phantom") {
+        ui->sb_temp_prod->setValue(70);
         plot->setMarkerStrategy(new FrequencyHoppingStrategy(plot));
-    else if (arg1 == "Mavic/Spark")
+    } else if (arg1 == "Mavic/Spark") {
+        ui->sb_temp_prod->setValue(70);
         plot->setMarkerStrategy(new SpreadSpectrumStrategy(plot));
-    else if (arg1 == "Planer")
+    } else if (arg1 == "Planer") {
+        ui->sb_temp_prod->setValue(35);
         plot->setMarkerStrategy(new DenseHoppingStrategy(plot));
+    }
 }
 
 void MainView::on_bgr_markers_buttonClicked(QAbstractButton *button)
@@ -221,4 +294,69 @@ void MainView::on_btn_resetScales_clicked()
 void MainView::on_btn_refresh_clicked()
 {
     polarPlot->clearDiagram();
+    QObject *object = map->rootObject();
+    QMetaObject::invokeMethod(object, "updateHomeDirection");
+}
+
+void MainView::switchMapProvider()
+{
+    QObject *object = map->rootObject();
+    QMetaObject::invokeMethod(object, "switchProvider");
+}
+
+void MainView::on_btn_clearMap_clicked()
+{
+    QObject *object = map->rootObject();
+    QMetaObject::invokeMethod(object, "clearMap");
+}
+
+void MainView::on_btn_wp_init_clicked()
+{
+    QHash<QString, int> initSettings;
+    initSettings.insert("latitude", ui->le_latitude->text().toDouble() * 1000000);
+    initSettings.insert("longitude", ui->le_longitude->text().toDouble() * 1000000);
+    initSettings.insert("altitude", ui->le_altitude->text().toInt());
+    initSettings.insert("velocity", ui->sb_wp_velocity->value());
+    initSettings.insert("yaw logic", ui->cb_wp_yawLogic->currentIndex());
+    initSettings.insert("on rc lost", ui->cb_wp_rcLost->currentIndex());
+
+    presenter->sendInitWaypointRequest(initSettings);
+}
+
+void MainView::on_btn_wp_load_clicked()
+{
+    QHash<QString, int> loadSettings;
+    loadSettings.insert("latitude", markerLatitude * 1000000);
+    loadSettings.insert("longitude", markerLongitude * 1000000);
+    loadSettings.insert("altitude", ui->sb_wp_altitude->value());
+
+    presenter->sendLoadWaypointRequest(loadSettings);
+}
+
+void MainView::on_btn_wp_start_clicked()
+{
+    presenter->sendStartWaypointRequest();
+}
+
+void MainView::on_btn_wp_abort_clicked()
+{
+    presenter->sendAbortWaypointRequest();
+}
+
+void MainView::on_btn_runCommand_clicked()
+{
+    int commandIndex = ui->cb_command->currentIndex();
+    presenter->sendFlightRunCommandRequest(commandIndex);
+}
+
+void MainView::on_btn_startYaw_clicked(bool checked)
+{
+    if (checked) {
+        int yawRate = ui->sb_yawRate->value();
+        presenter->sendStartRotationRequest(yawRate);
+        ui->btn_startYaw->setText("Stop");
+    } else {
+        presenter->sendStopRotationRequest();
+        ui->btn_startYaw->setText("Rotate");
+    }
 }

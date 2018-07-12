@@ -2,10 +2,16 @@ INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
 HEADERS += \
-    $$PWD/qtosdk.hpp
+    $$PWD/qtosdk.hpp \
+    $$PWD/subscribe.hpp \
+    $$PWD/waypoint.hpp \
+    $$PWD/flightcontroller.hpp
 
 SOURCES += \
-    $$PWD/qtosdk.cpp
+    $$PWD/qtosdk.cpp \
+    $$PWD/subscribe.cpp \
+    $$PWD/waypoint.cpp \
+    $$PWD/flightcontroller.cpp
 
 QT += serialport
 

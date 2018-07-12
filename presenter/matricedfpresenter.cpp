@@ -10,19 +10,26 @@ MatriceDFPresenter::MatriceDFPresenter(MainIView *view, QObject *parent) :
     model->moveToThread(model);
     model->start();
 
-    connect(model,SIGNAL(amplitudeSamplesReady(const QVector<double>,const QVector<double>,const QVector<double>)),
+    //dji->moveToThread(dji);
+    //dji->start();
+
+    connect(model, SIGNAL(amplitudeSamplesReady(const QVector<double>,const QVector<double>,const QVector<double>)),
             SLOT(amplitudeSamplesPresenter(const QVector<double>,const QVector<double>,const QVector<double>)));
-    connect(model,SIGNAL(phaseSamplesReady(const QVector<double>)),
+    connect(model, SIGNAL(phaseSamplesReady(const QVector<double>)),
             SLOT(phaseSamplesPresenter(const QVector<double>)));
-    connect(model,SIGNAL(polarSamplesReady(const int,const double,const double,const double,const double)),
+    connect(model, SIGNAL(polarSamplesReady(const int,const double,const double,const double,const double)),
             SLOT(polarSamplesPresenter(const int,const double,const double, const double,const double)));
 
-    connect(dji,SIGNAL(changeControlAuthorityStatus(QString)),
+    connect(dji, SIGNAL(changeControlAuthorityStatus(QString)),
             SLOT(changeControlAuthorityStatus(QString)));
-    connect(dji,SIGNAL(changeInitButton(QString,bool)),
+    connect(dji, SIGNAL(changeInitButton(QString,bool)),
             SLOT(changeInitButton(QString,bool)));
-    connect(dji,SIGNAL(changeActivateButton(QString,bool)),
+    connect(dji, SIGNAL(changeActivateButton(QString,bool)),
             SLOT(changeActivateButton(QString,bool)));
+    connect(dji, SIGNAL(changeConnectionButtons()),
+            SLOT(changeConnectionButtons()));
+    connect(dji, SIGNAL(receiveTelemetryData(const QVector<double> &)),
+            SLOT(receiveTelemetryData(const QVector<double> &)));
 }
 
 MatriceDFPresenter::~MatriceDFPresenter()
@@ -69,6 +76,41 @@ void MatriceDFPresenter::resetDjiConnection()
     dji->resetConnection();
 }
 
+void MatriceDFPresenter::sendFlightRunCommandRequest(int &commandIndex)
+{
+    dji->flightRunCommandRequest(commandIndex);
+}
+
+void MatriceDFPresenter::sendStartRotationRequest(int &yawRate)
+{
+    dji->startRotationRequest(yawRate);
+}
+
+void MatriceDFPresenter::sendStopRotationRequest()
+{
+    dji->stopRotationRequest();
+}
+
+void MatriceDFPresenter::sendInitWaypointRequest(const QHash<QString, int> &settings)
+{
+    dji->initWaypointRequest(settings);
+}
+
+void MatriceDFPresenter::sendLoadWaypointRequest(const QHash<QString, int> &settings)
+{
+    dji->loadWaypointRequest(settings);
+}
+
+void MatriceDFPresenter::sendStartWaypointRequest()
+{
+    dji->startWaypointRequest();
+}
+
+void MatriceDFPresenter::sendAbortWaypointRequest()
+{
+    dji->abortWaypointRequest();
+}
+
 /* Slots */
 void MatriceDFPresenter::amplitudeSamplesPresenter(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
                                               const QVector<double> samplesAmS)
@@ -100,4 +142,19 @@ void MatriceDFPresenter::changeInitButton(QString textToDisplay, bool success)
 void MatriceDFPresenter::changeActivateButton(QString textToDisplay, bool success)
 {
     view->activateDjiVehicleFinished(textToDisplay, success);
+}
+
+void MatriceDFPresenter::changeConnectionButtons()
+{
+    view->connectionDjiVehicleResetted();
+}
+
+void MatriceDFPresenter::receiveTelemetryData(const QVector<double> &subscribeData)
+{
+    view->updateTelemetryData(subscribeData);
+}
+
+void MatriceDFPresenter::updateCurrentHeading(const int &heading)
+{
+    model->updateCurrentHeading(heading);
 }

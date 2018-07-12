@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Drone.qml</file>
+        <file>MapComponent.qml</file>
+        <file>mapview.qml</file>
+        <file>Marker.qml</file>
+        <file>resources/drone.png</file>
+        <file>resources/marker.png</file>
+        <file>Home.qml</file>
+        <file>resources/home.png</file>
+    </qresource>
+</RCC>

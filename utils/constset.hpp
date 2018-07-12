@@ -11,7 +11,7 @@ const quint16 CLIENT_PORT = 25000;
 
 const QString DATALINK = "COM6";
 const QString SILICON = "COM5";
-const QString NETWORK = "COM13";
+const QString NETWORK = "COM16";
 const QString COMPORT = NETWORK;
 const int BAUDRATE = 115200;
 

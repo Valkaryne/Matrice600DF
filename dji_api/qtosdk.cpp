@@ -8,6 +8,7 @@ QtOsdk::QtOsdk(QObject *parent)
     : QObject(parent)
 {
     vehicle = nullptr;
+    //qRegisterMetaType<QHash<QString, int>>("QHash<QString, int>");
 }
 
 QtOsdk::~QtOsdk()
@@ -79,10 +80,14 @@ void QtOsdk::activateCallback(Vehicle *vehicle, RecvContainer recvFrame,
             ACK::getErrorCodeMessage(ack_data, __func__);
         } else {
             emit sdk->changeActivateButton(QString("Activation Successful"), true);
+            //QThread::msleep(100);
+            sdk->initComponents();
         }
     } else {
         emit sdk->changeActivateButton(QString("ACK Decode Error"), false);
     }
+
+
 
     // Do the stuff the OSDK callback does, since it is private and we cannot call
     // it here
@@ -102,7 +107,45 @@ void QtOsdk::obtainCtrl(QString ctrlOperation)
 
 void QtOsdk::resetConnection()
 {
+    subscribe->stopPkgRequested();
+    QThread::msleep(100);
+    //vehicle->closePort();
+    emit changeConnectionButtons();
+}
 
+void QtOsdk::flightRunCommandRequest(int &commandIndex)
+{
+    flightController->flightRunCommand(commandIndex);
+}
+
+void QtOsdk::startRotationRequest(int &yawRate)
+{
+    flightController->startRotation(yawRate);
+}
+
+void QtOsdk::stopRotationRequest()
+{
+    flightController->stopRotation();
+}
+
+void QtOsdk::initWaypointRequest(const QHash<QString, int> &settings)
+{
+    waypoint->initWaypoint(settings);
+}
+
+void QtOsdk::loadWaypointRequest(const QHash<QString, int> &settings)
+{
+    waypoint->loadWaypoint(settings);
+}
+
+void QtOsdk::startWaypointRequest()
+{
+    waypoint->startWaypoint();
+}
+
+void QtOsdk::abortWaypointRequest()
+{
+    waypoint->abortWaypoint();
 }
 
 void QtOsdk::setControlCallback(Vehicle *vehicle, RecvContainer recvFrame,
@@ -154,5 +197,11 @@ void QtOsdk::setControlCallback(Vehicle *vehicle, RecvContainer recvFrame,
 
 void QtOsdk::initComponents()
 {
+    this->subscribe = new Subscribe(this->vehicle, 0);
+    connect(this->subscribe, SIGNAL(subscribeDataReady(const QVector<double> &)),
+            SIGNAL(receiveTelemetryData(const QVector<double> &)));
 
+    this->flightController = new FlightController(this->vehicle, 0);
+
+    this->waypoint = new Waypoint(this->vehicle, 0);
 }

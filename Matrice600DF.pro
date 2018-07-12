@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui network
+QT       += qml quick positioning location
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,7 +27,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         $$PWD\view\mainview.cpp \
-    #presenter/presenterinterface.cpp
     presenter/matricedfpresenter.cpp \
     model/matricedfmodel.cpp \
     model/udpchannel.cpp \
@@ -43,7 +43,6 @@ SOURCES += \
 HEADERS += \
         $$PWD\view\mainview.hpp \
     view/mainiview.hpp \
-    #presenter/presenterinterface.hpp
     presenter/matricedfpresenter.hpp \
     model/matricedfmodel.hpp \
     model/udpchannel.hpp \
@@ -69,3 +68,14 @@ CONFIG += \
     qwtpolar
 
 include(dji_api/dji_api.pri)
+
+DISTFILES += \
+    widgets/map/mapview.qml \
+    widgets/map/Marker.qml \
+    widgets/map/Drone.qml \
+    widgets/map/Home.qml \
+    widgets/map/MapComponent.qml
+
+RESOURCES += \
+    widgets/map/map_resources.qrc
+

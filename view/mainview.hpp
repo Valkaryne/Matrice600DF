@@ -14,9 +14,18 @@
 #include <widgets/spreadspectrumstrategy.hpp>
 #include <widgets/densehoppingstrategy.hpp>
 
+#include <QQuickView>
+#include <QQuickItem>
+#include <QQmlContext>
+#include <QtPositioning>
+#include <QVariant>
+
 namespace Ui {
 class MainView;
 }
+
+class QAction;
+class QMenu;
 
 class MainView : public QMainWindow, public MainIView
 {
@@ -29,6 +38,11 @@ public:
     void ctrlDjiStatusChanged(QString);
     void initDjiVehicleFinished(QString initStatus, bool initResult);
     void activateDjiVehicleFinished(QString activateStatus, bool activateResult);
+    void connectionDjiVehicleResetted();
+    void updateTelemetryData(const QVector<double> &subscribeData);
+
+    Q_INVOKABLE void setHomePoint(QString azimuth);
+    Q_INVOKABLE void setPointOnMap(QString lat, QString lng);
 
 private slots:
     void on_btn_apply_clicked();
@@ -60,12 +74,35 @@ private slots:
 
     void on_btn_refresh_clicked();
 
+    void switchMapProvider();
+    void makeDirection(const double &direction);
+
+    void on_btn_clearMap_clicked();
+
+    void on_btn_wp_init_clicked();
+
+    void on_btn_wp_load_clicked();
+
+    void on_btn_wp_start_clicked();
+
+    void on_btn_wp_abort_clicked();
+
+    void on_btn_runCommand_clicked();
+
+    void on_btn_startYaw_clicked(bool checked);
+
 private:
     Ui::MainView        *ui;
     MatriceDFPresenter  *presenter;
 
+    QQuickView          *map;
+
+    QMenu   *mapMenu;
+    QAction *switchProviderAct;
+
     int slider_add_prev;
     double slider_product_prev;
+    double markerLatitude, markerLongitude;
 
 };
 

@@ -108,9 +108,6 @@ void MatriceDFModel::polarSamplesHandler(const QVector<double> samplesAm1, const
         phMod.append(tmp3);
     }
 
-    //NOTE: Heading
-    int heading;
-
     QVector<double> ampl1range, ampl2range, amplsrange, phaserange;
     for (int i = 1; i < rangeBounds.size(); i += 2) {
         ampl1range.append(std::accumulate(ampl1Mod.begin() + rangeBounds.at(i-1),

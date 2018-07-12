@@ -112,7 +112,7 @@ PolarPlot::PolarPlot(QWidget *parent) :
 
     PolarCurveData *dataAlly = new PolarCurveData;
     allyDirection = new QwtPolarCurve;
-    allyDirection->setPen(QPen(Qt::white));
+    allyDirection->setPen(QPen(QBrush(Qt::white), 3));
     allyDirection->setData(dataAlly);
     allyDirection->attach(this);
 }
@@ -184,13 +184,13 @@ void PolarPlot::resetScales()
     int x_add = -dataAm1->add;
     double x_product = 1 / (dataAm1->prod - 1);
 
-    setAddScale(dataAm1, x_add);
-    setAddScale(dataAm2, x_add);
-    setAddScale(dataAmS, x_add);
-
     setProductScale(dataAm1, x_product);
     setProductScale(dataAm2, x_product);
     setProductScale(dataAmS, x_product);
+
+    setAddScale(dataAm1, x_add);
+    setAddScale(dataAm2, x_add);
+    setAddScale(dataAmS, x_add);
 
     replot();
 }
@@ -220,5 +220,6 @@ void PolarPlot::setProductScale(PolarCurveData *data, const double &x)
 
 void PolarPlot::getDirection(const QwtPointPolar &point)
 {
-    emit setDirectionRequest(point.azimuth());
+    double direction = point.azimuth();
+    emit setDirectionRequest(direction);
 }

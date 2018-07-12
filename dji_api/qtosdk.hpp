@@ -6,6 +6,10 @@
 #include <QSerialPortInfo>
 #include <dji_vehicle.hpp>
 
+#include <subscribe.hpp>
+#include <flightcontroller.hpp>
+#include <waypoint.hpp>
+
 class QtOsdk : public QObject
 {
     Q_OBJECT
@@ -39,13 +43,27 @@ public:
     void obtainCtrl(QString ctrlOperation);
     void resetConnection();
 
+    void flightRunCommandRequest(int &commandIndex);
+    void startRotationRequest(int &yawRate);
+    void stopRotationRequest();
+
+    void initWaypointRequest(const QHash<QString, int> &settings);
+    void loadWaypointRequest(const QHash<QString, int> &settings);
+    void startWaypointRequest();
+    void abortWaypointRequest();
+
 signals:
     void changeControlAuthorityStatus(QString textToDisplay);
     void changeInitButton(QString textToDisplay, bool success);
     void changeActivateButton(QString textToDisplay, bool success);
+    void changeConnectionButtons();
+    void receiveTelemetryData(const QVector<double> &subscribeData);
 
 private:
-    DJI::OSDK::Vehicle* vehicle;
+    DJI::OSDK::Vehicle  *vehicle;
+    Subscribe           *subscribe;
+    FlightController    *flightController;
+    Waypoint            *waypoint;
 
     QString appIDInput;
     QString keyInput;

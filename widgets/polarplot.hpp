@@ -41,7 +41,7 @@ public slots:
     void getDirection(const QwtPointPolar &point);
 
 signals:
-    void setDirectionRequest(double direction);
+    void setDirectionRequest(const double &direction);
 
 public:
     QwtPolarCurve *curveAm1, *curveAm2, *curveAmS, *curvePh;

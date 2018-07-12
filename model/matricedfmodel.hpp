@@ -29,6 +29,10 @@ public:
         this->rangeBounds = rangeBounds;
     }
 
+    void updateCurrentHeading(const int &heading) {
+        this->heading = heading;
+    }
+
     /* Getters */
     UdpChannel* getUdpChannel() {
         return udpChannel;
@@ -48,6 +52,8 @@ private:
     int band;
     double gain;
     QVector<int> rangeBounds;
+
+    int heading;
 
     UdpChannel *udpChannel;
 };

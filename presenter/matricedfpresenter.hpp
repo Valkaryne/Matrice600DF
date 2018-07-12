@@ -5,6 +5,8 @@
 #include "../view/mainiview.hpp"
 #include "../dji_api/qtosdk.hpp"
 
+#include <QHash>
+
 class MatriceDFPresenter : public QObject
 {
     Q_OBJECT
@@ -17,11 +19,21 @@ public:
     void changeGainParameter(double gain);
     void changeBandParameter(int band);
     void changeBoundsParameters(QVector<int> bounds);
+    void updateCurrentHeading(const int &heading);
 
     void initDjiVehicle();
     void activateDjiVehicle();
     void obtainDjiControl(QString ctrlOperation);
     void resetDjiConnection();
+
+    void sendFlightRunCommandRequest(int &commandIndex);
+    void sendStartRotationRequest(int &yawRate);
+    void sendStopRotationRequest();
+
+    void sendInitWaypointRequest(const QHash<QString, int> &settings);
+    void sendLoadWaypointRequest(const QHash<QString, int> &settings);
+    void sendStartWaypointRequest();
+    void sendAbortWaypointRequest();
 
 private slots:
     void amplitudeSamplesPresenter(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
@@ -33,6 +45,8 @@ private slots:
     void changeControlAuthorityStatus(QString textToDisplay);
     void changeInitButton(QString textToDisplay, bool success);
     void changeActivateButton(QString textToDisplay, bool success);
+    void changeConnectionButtons();
+    void receiveTelemetryData(const QVector<double> &subscribeData);
 
 private:
     MainIView       *view;

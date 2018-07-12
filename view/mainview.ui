@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>805</width>
-    <height>556</height>
+    <width>921</width>
+    <height>655</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -56,25 +56,18 @@
         </item>
        </layout>
       </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
      </layout>
     </item>
     <item>
      <layout class="QVBoxLayout" name="configLayout">
       <item>
        <widget class="QGroupBox" name="usrpBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="title">
          <string>USRP Settings</string>
         </property>
@@ -195,6 +188,12 @@
       </item>
       <item>
        <widget class="QGroupBox" name="dfControlBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="title">
          <string>DF Control Panel</string>
         </property>
@@ -426,6 +425,12 @@ QRadioButton::indicator::checked {
          </item>
          <item row="4" column="1">
           <widget class="QPushButton" name="btn_maxHold">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Disable MaxHold</string>
            </property>
@@ -446,6 +451,18 @@ QRadioButton::indicator::checked {
          </item>
          <item row="4" column="0">
           <widget class="QDoubleSpinBox" name="sb_expCoeff">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>80</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
@@ -481,6 +498,12 @@ QRadioButton::indicator::checked {
          </item>
          <item row="3" column="1">
           <widget class="QPushButton" name="btn_amMode">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Summary</string>
            </property>
@@ -491,6 +514,12 @@ QRadioButton::indicator::checked {
          </item>
          <item row="1" column="1">
           <widget class="QPushButton" name="btn_refresh">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Refresh</string>
            </property>
@@ -508,8 +537,118 @@ QRadioButton::indicator::checked {
          </item>
          <item row="2" column="1">
           <widget class="QPushButton" name="btn_resetScales">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Reset Scales</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="connectionBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="title">
+         <string>Connection</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="2" column="1">
+          <widget class="QComboBox" name="comboBox"/>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="lbl_usrp">
+           <property name="text">
+            <string>USRP:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="lbl_com">
+           <property name="text">
+            <string>COM:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="le_usrpIP">
+           <property name="text">
+            <string>192.168.3.2</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLineEdit" name="le_usrpPort">
+           <property name="text">
+            <string>25000</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="lbl_pc">
+           <property name="text">
+            <string>PC:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="le_pcIP">
+           <property name="text">
+            <string>192.168.3.1</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLineEdit" name="le_pcPort">
+           <property name="text">
+            <string>8995</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="initAircraftBox">
+        <property name="title">
+         <string>Initialize Aircraft</string>
+        </property>
+        <layout class="QFormLayout" name="formLayout">
+         <item row="0" column="0">
+          <widget class="QPushButton" name="btn_testInit">
+           <property name="text">
+            <string>Initialize</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QPushButton" name="btn_testActivate">
+           <property name="text">
+            <string>Activate</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="btn_testReset">
+           <property name="text">
+            <string>Reset Connection</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="btn_testControl">
+           <property name="text">
+            <string>Obtain Control</string>
            </property>
           </widget>
          </item>
@@ -532,46 +671,334 @@ QRadioButton::indicator::checked {
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="aircraftLayout">
-      <item>
-       <spacer name="verticalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
+     <layout class="QGridLayout" name="gridLayout_6">
+      <item row="1" column="1">
+       <widget class="QGroupBox" name="missionBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
+        <property name="title">
+         <string>Mission Control Panel</string>
         </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_testInit">
-        <property name="text">
-         <string>Initialize</string>
-        </property>
+        <layout class="QGridLayout" name="gridLayout_5">
+         <item row="0" column="1">
+          <widget class="QSpinBox" name="sb_wp_velocity">
+           <property name="suffix">
+            <string> m/s</string>
+           </property>
+           <property name="maximum">
+            <number>15</number>
+           </property>
+           <property name="value">
+            <number>10</number>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="lbl_wp_velocity">
+           <property name="text">
+            <string>Velocity:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="sb_wp_altitude">
+           <property name="suffix">
+            <string> m</string>
+           </property>
+           <property name="maximum">
+            <number>200</number>
+           </property>
+           <property name="value">
+            <number>50</number>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="lbl_wp_altitude">
+           <property name="text">
+            <string>Altitude:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QComboBox" name="cb_wp_rcLost">
+           <item>
+            <property name="text">
+             <string>Quit Mission</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Keep Going</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="btn_wp_init">
+           <property name="text">
+            <string>Initialize</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="lbl_wp_rcLost">
+           <property name="text">
+            <string>On RC Lost:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="btn_wp_start">
+           <property name="text">
+            <string>Start</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QPushButton" name="btn_wp_load">
+           <property name="text">
+            <string>Load</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="2">
+          <widget class="QPushButton" name="btn_wp_abort">
+           <property name="text">
+            <string>Abort</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QComboBox" name="cb_wp_yawLogic">
+           <item>
+            <property name="text">
+             <string>Auto yaw</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>No yaw</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>RC yaw</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Waypoint</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="lbl_wp_yawLogic">
+           <property name="text">
+            <string>Yaw Logic:</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="btn_testActivate">
-        <property name="text">
-         <string>Activate</string>
+      <item row="1" column="0">
+       <widget class="QGroupBox" name="flightBox">
+        <property name="title">
+         <string>Flight Control Panel</string>
         </property>
+        <layout class="QGridLayout" name="gridLayout_7">
+         <item row="1" column="0">
+          <widget class="QLabel" name="lbl_yawRate">
+           <property name="text">
+            <string>Yaw Rate:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="sb_yawRate">
+           <property name="buttonSymbols">
+            <enum>QAbstractSpinBox::NoButtons</enum>
+           </property>
+           <property name="suffix">
+            <string> °/sec</string>
+           </property>
+           <property name="minimum">
+            <number>-30</number>
+           </property>
+           <property name="maximum">
+            <number>30</number>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QPushButton" name="btn_startYaw">
+           <property name="text">
+            <string>Rotate</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="btn_runCommand">
+           <property name="text">
+            <string>Run</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="QComboBox" name="cb_command">
+           <item>
+            <property name="text">
+             <string>Takeoff</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Land</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Go Home</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Exit Takeoff</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Exit Landing</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Exit GoHome</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Calibrate Compass</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Exit Compass Calibration</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Landing Gear Up</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Landing Gear Down</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="btn_testReset">
-        <property name="text">
-         <string>Reset Connection</string>
+      <item row="0" column="0" colspan="2">
+       <widget class="QGroupBox" name="locationBox">
+        <property name="title">
+         <string>Location Panel</string>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_testControl">
-        <property name="text">
-         <string>Obtain Control</string>
-        </property>
+        <layout class="QVBoxLayout" name="locationLayout">
+         <item>
+          <widget class="QFrame" name="mapFrame">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>600</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QVBoxLayout" name="mapLayout"/>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="frame">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_4">
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="le_latitude"/>
+            </item>
+            <item row="1" column="2">
+             <widget class="QLabel" name="lbl_heading">
+              <property name="text">
+               <string>Heading:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="le_altitude"/>
+            </item>
+            <item row="0" column="3">
+             <widget class="QLineEdit" name="le_longitude"/>
+            </item>
+            <item row="0" column="2">
+             <widget class="QLabel" name="lbl_longitude">
+              <property name="text">
+               <string>Longitude:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="3">
+             <widget class="QLineEdit" name="le_heading"/>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="lbl_latitude">
+              <property name="text">
+               <string>Latitude:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="lbl_altitude">
+              <property name="text">
+               <string>Altitude:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="4">
+             <widget class="QPushButton" name="btn_clearMap">
+              <property name="text">
+               <string>Clear Map</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
@@ -583,8 +1010,8 @@ QRadioButton::indicator::checked {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>805</width>
-     <height>20</height>
+     <width>921</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
