@@ -289,6 +289,9 @@ void MainView::on_btn_resetScales_clicked()
     ui->slider_add->setValue(minimumAdd);
     ui->slider_product->setValue(minimumProduct);
     polarPlot->resetScales();
+
+    slider_add_prev = 0;
+    slider_product_prev = 1;
 }
 
 void MainView::on_btn_refresh_clicked()

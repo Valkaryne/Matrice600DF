@@ -79,7 +79,6 @@ public:
             QwtInterval yInterval = QwtInterval(samples.at(0).radius(), samples.at(0).radius());
             foreach (QwtPointPolar sample, samples) {
                 append(sample);
-                //d_samples << sample;
                 xInterval |= sample.azimuth();
                 yInterval |= sample.radius();
             }
@@ -100,12 +99,7 @@ public:
 
 public:
     int add;
-    double prod = 1;
+    double prod;
 };
 
-/*class PolarPhaseData : public QwtArraySeriesData<QwtPointPolar>
-{
-public:
-    PolarPhaseData() {}
-} */
 #endif // POLARPLOT_HPP

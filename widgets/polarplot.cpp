@@ -182,7 +182,7 @@ void PolarPlot::resetScales()
     PolarCurveData *dataAmS = (PolarCurveData*)(curveAmS->data());
 
     int x_add = -dataAm1->add;
-    double x_product = 1 / (dataAm1->prod - 1);
+    double x_product = 1.0 / (dataAm1->prod - 1);
 
     setProductScale(dataAm1, x_product);
     setProductScale(dataAm2, x_product);
@@ -203,6 +203,7 @@ void PolarPlot::setAddScale(PolarCurveData *data, const double &x)
     }
 
     data->add += x;
+    qDebug() << "Add: " << data->add;
 }
 
 void PolarPlot::setProductScale(PolarCurveData *data, const double &x)
@@ -216,6 +217,8 @@ void PolarPlot::setProductScale(PolarCurveData *data, const double &x)
         data->prod += 1/x;
     else if (x < 1)
         data->prod -= 1/x;
+
+    qDebug() << "Prod: " << data->prod;
 }
 
 void PolarPlot::getDirection(const QwtPointPolar &point)

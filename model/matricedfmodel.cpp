@@ -114,7 +114,7 @@ void MatriceDFModel::polarSamplesHandler(const QVector<double> samplesAm1, const
                                           ampl1Mod.begin() + rangeBounds.at(i), .0) / (rangeBounds.at(i) - rangeBounds.at(i-1)));
         ampl2range.append(std::accumulate(ampl2Mod.begin() + rangeBounds.at(i-1),
                                           ampl2Mod.begin() + rangeBounds.at(i), .0) / (rangeBounds.at(i) - rangeBounds.at(i-1)));
-        ampl2range.append(std::accumulate(amplSum.begin() + rangeBounds.at(i-1),
+        amplsrange.append(std::accumulate(amplSum.begin() + rangeBounds.at(i-1),
                                           amplSum.begin() + rangeBounds.at(i), .0) / (rangeBounds.at(i) - rangeBounds.at(i-1)));
         phaserange.append(std::accumulate(phMod.begin() + rangeBounds.at(i-1),
                                           phMod.begin() + rangeBounds.at(i), .0) / (rangeBounds.at(i) - rangeBounds.at(i-1)));
