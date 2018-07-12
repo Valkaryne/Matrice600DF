@@ -23,13 +23,13 @@ Item {
     Plugin {
         id: osmPlugin
         name: "osm"
-        PluginParameter { name: "osm.mapping.cache.directory"; value: "D:/maposm_cache/" }
+        PluginParameter { name: "osm.mapping.cache.directory"; value: "F:/maposm_cache/" }
     }
 
     Plugin {
         id: esriPlugin
         name: "esri"
-        PluginParameter { name: "esri.mapping.cache.directory"; value: "D:/mapesri_cache/" }
+        PluginParameter { name: "esri.mapping.cache.directory"; value: "F:/mapesri_cache/" }
     }
 
     function initializeMapItems()

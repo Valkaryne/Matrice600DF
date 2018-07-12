@@ -15,7 +15,7 @@ class QtOsdk : public QObject
     Q_OBJECT
 
 public:
-    explicit QtOsdk(QObject *parent = 0);
+    explicit QtOsdk(QObject *parent = nullptr);
     void setVehicle(DJI::OSDK::Vehicle* vehiclePtr)
     {
         this->vehicle = vehiclePtr;
@@ -44,8 +44,7 @@ public:
     void resetConnection();
 
     void flightRunCommandRequest(int &commandIndex);
-    void startRotationRequest(int &yawRate);
-    void stopRotationRequest();
+
 
     void initWaypointRequest(const QHash<QString, int> &settings);
     void loadWaypointRequest(const QHash<QString, int> &settings);
@@ -58,6 +57,10 @@ signals:
     void changeActivateButton(QString textToDisplay, bool success);
     void changeConnectionButtons();
     void receiveTelemetryData(const QVector<double> &subscribeData);
+    void stopRotationRequest();
+
+public slots:
+    void startRotationRequest(int yawRate);
 
 private:
     DJI::OSDK::Vehicle  *vehicle;

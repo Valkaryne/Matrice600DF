@@ -15,9 +15,13 @@ FlightController::FlightController(Vehicle *vehicle,
     command.flag &= 0xF7;
     command.flag |= Control::YawLogic::YAW_RATE;
 
-    autoSend = new QTimer;
+    //autoSend = new QTimer(this);
+    //autoSend->setInterval(100);
+
+    autoSend = new QTimer();
     autoSend->setInterval(100);
-    connect(autoSend, SIGNAL(timeout()), SLOT(moveSend()));
+
+    connect(this->autoSend, SIGNAL(timeout()), this, SLOT(moveSend()));
 }
 
 FlightController::~FlightController() {}
@@ -88,18 +92,22 @@ void FlightController::flightRunCommand(int &commandIndex)
                              this);
 }
 
-void FlightController::startRotation(int &yawRate)
+void FlightController::startRotation(int yawRate)
 {
     this->command.yaw = yawRate;
+    DSTATUS("Start");
     autoSend->start();
 }
 
 void FlightController::stopRotation()
 {
+    this->command.yaw = 0;
+    DSTATUS("Stop");
     autoSend->stop();
 }
 
 void FlightController::moveSend()
 {
+    DSTATUS("movemove");
     vehicle->control->flightCtrl(command);
 }

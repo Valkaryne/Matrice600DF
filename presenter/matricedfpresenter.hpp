@@ -27,7 +27,7 @@ public:
     void resetDjiConnection();
 
     void sendFlightRunCommandRequest(int &commandIndex);
-    void sendStartRotationRequest(int &yawRate);
+    void sendStartRotationRequest(int yawRate);
     void sendStopRotationRequest();
 
     void sendInitWaypointRequest(const QHash<QString, int> &settings);
@@ -47,6 +47,10 @@ private slots:
     void changeActivateButton(QString textToDisplay, bool success);
     void changeConnectionButtons();
     void receiveTelemetryData(const QVector<double> &subscribeData);
+
+signals:
+    void startRotationRequest(int);
+    void stopRotationRequest();
 
 private:
     MainIView       *view;

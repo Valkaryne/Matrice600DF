@@ -118,7 +118,7 @@ void QtOsdk::flightRunCommandRequest(int &commandIndex)
     flightController->flightRunCommand(commandIndex);
 }
 
-void QtOsdk::startRotationRequest(int &yawRate)
+/* void QtOsdk::startRotationRequest(int yawRate)
 {
     flightController->startRotation(yawRate);
 }
@@ -126,7 +126,7 @@ void QtOsdk::startRotationRequest(int &yawRate)
 void QtOsdk::stopRotationRequest()
 {
     flightController->stopRotation();
-}
+} */
 
 void QtOsdk::initWaypointRequest(const QHash<QString, int> &settings)
 {
@@ -201,7 +201,15 @@ void QtOsdk::initComponents()
     connect(this->subscribe, SIGNAL(subscribeDataReady(const QVector<double> &)),
             SIGNAL(receiveTelemetryData(const QVector<double> &)));
 
-    this->flightController = new FlightController(this->vehicle, 0);
+    this->flightController = new FlightController(this->vehicle, this);
+    //connect(this, SIGNAL(startRotationRequest(int)), this->flightController, SLOT(startRotation(int)));
+    connect(this, SIGNAL(stopRotationRequest()), this->flightController, SLOT(stopRotation()));
 
     this->waypoint = new Waypoint(this->vehicle, 0);
+}
+
+void QtOsdk::startRotationRequest(int yawRate)
+{
+    DSTATUS("start rotation request");
+    //flightController->startRotation(yawRate);
 }

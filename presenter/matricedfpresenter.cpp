@@ -10,8 +10,7 @@ MatriceDFPresenter::MatriceDFPresenter(MainIView *view, QObject *parent) :
     model->moveToThread(model);
     model->start();
 
-    //dji->moveToThread(dji);
-    //dji->start();
+    //dji->moveToThread((QThread*)this);
 
     connect(model, SIGNAL(amplitudeSamplesReady(const QVector<double>,const QVector<double>,const QVector<double>)),
             SLOT(amplitudeSamplesPresenter(const QVector<double>,const QVector<double>,const QVector<double>)));
@@ -30,6 +29,9 @@ MatriceDFPresenter::MatriceDFPresenter(MainIView *view, QObject *parent) :
             SLOT(changeConnectionButtons()));
     connect(dji, SIGNAL(receiveTelemetryData(const QVector<double> &)),
             SLOT(receiveTelemetryData(const QVector<double> &)));
+
+    connect(this, SIGNAL(startRotationRequest(int)), dji, SLOT(startRotationRequest(int)));
+    connect(this, SIGNAL(stopRotationRequest()), dji, SIGNAL(stopRotationRequest()));
 }
 
 MatriceDFPresenter::~MatriceDFPresenter()
@@ -81,14 +83,16 @@ void MatriceDFPresenter::sendFlightRunCommandRequest(int &commandIndex)
     dji->flightRunCommandRequest(commandIndex);
 }
 
-void MatriceDFPresenter::sendStartRotationRequest(int &yawRate)
+void MatriceDFPresenter::sendStartRotationRequest(int yawRate)
 {
-    dji->startRotationRequest(yawRate);
+    emit startRotationRequest(yawRate);
+    //dji->startRotationRequest(yawRate);
 }
 
 void MatriceDFPresenter::sendStopRotationRequest()
 {
-    dji->stopRotationRequest();
+    emit stopRotationRequest();
+    //dji->stopRotationRequest();
 }
 
 void MatriceDFPresenter::sendInitWaypointRequest(const QHash<QString, int> &settings)
