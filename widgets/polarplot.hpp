@@ -11,6 +11,8 @@
 
 #include "amplitudedisplaystrategy.hpp"
 
+#include <QTimer>
+
 class AmplitudeDisplayStrategy;
 class PolarCurveData;
 
@@ -37,6 +39,10 @@ private:
     void setAddScale(PolarCurveData *data, const double &x);
     void setProductScale(PolarCurveData *data, const double &x);
 
+    // WARNING: DELETE AFTER TEST
+private slots:
+    void testDiagram();
+
 public slots:
     void getDirection(const QwtPointPolar &point);
 
@@ -53,6 +59,11 @@ private:
     QwtPolarPicker *polarPicker;
 
     AmplitudeDisplayStrategy *strategy;
+
+    // WARNING: DELETE AFTER TEST
+    QTimer  *testTimer;
+    int counter;
+    double maxima;
 };
 
 class PolarCurveData : public QwtArraySeriesData<QwtPointPolar>
@@ -67,6 +78,8 @@ public:
     {
         QwtPointPolar& p = (QwtPointPolar&)point;
         p.setRadius((p.radius() + add) * prod);
+        if (p.radius() > 360)
+            p.setRadius(360.0);
         d_samples << p;
     }
 

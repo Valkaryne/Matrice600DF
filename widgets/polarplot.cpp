@@ -115,6 +115,12 @@ PolarPlot::PolarPlot(QWidget *parent) :
     allyDirection->setPen(QPen(QBrush(Qt::white), 3));
     allyDirection->setData(dataAlly);
     allyDirection->attach(this);
+
+    /* testTimer = new QTimer(this);
+    testTimer->setInterval(50);
+    connect(testTimer, SIGNAL(timeout()), this, SLOT(testDiagram()));
+    testTimer->start();
+    maxima = -1110; */
 }
 
 void PolarPlot::setDisplayStrategy(AmplitudeDisplayStrategy *strategy)
@@ -225,4 +231,49 @@ void PolarPlot::getDirection(const QwtPointPolar &point)
 {
     double direction = point.azimuth();
     emit setDirectionRequest(direction);
+}
+
+// WARNING: DELETE AFTER TEST
+void PolarPlot::testDiagram()
+{
+    counter++;
+
+    double d = 45;
+    double kd = 2.7831 / d;
+    double h = 360./(361-1);
+    double fi = counter * h;
+
+    double fi01 = 30;
+    double x1 = fi - fi01;
+    if (x1 >= 180) x1 -= 360;
+    double a1 = (qrand() % int (qPow(10,2) + 1)) / qPow(10,2);
+    double y1 = (0.93 + a1/10);
+    if (x1 != 0) y1 = (0.93*qAbs(sin(kd*x1)/(kd*x1)) + a1/10);
+    y1 = 10*qLn(y1) * M_LOG10E - 60;
+
+    double fi02 = 60;
+    double x2 = fi - fi02;
+    if (x2 >= 180) x2 -= 360;
+    double a2 = (qrand() % int (qPow(10,2) + 1)) / qPow(10,2);
+    double y2 = (0.93 + a2/10);
+    if (x2 != 0) y2 = (0.93*qAbs(sin(kd*x2)/(kd*x2)) + a2/10);
+    y2 = 10*qLn(y2) * M_LOG10E - 60;
+
+    double fi0s = 45;
+    double xs = fi - fi0s;
+    if (xs >= 180) xs -= 360;
+    double as = (qrand() % int (qPow(10,2) + 1)) / qPow(10,2);
+    double ys = (0.93 + as/10);
+    if (xs != 0) ys = (0.93*qAbs(sin(kd*xs)/(kd*xs)) + as/10);
+    ys = 10*qLn(ys) * M_LOG10E - 60;
+
+    updateDiagram(counter, y1, y2, ys, 0);
+
+    if (y1 > maxima) {
+        qDebug() << y1;
+        maxima = y1;
+    }
+
+    if (counter > 360)
+        counter -= 360;
 }

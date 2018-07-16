@@ -12,6 +12,7 @@
 #include <qwt_plot_canvas.h>
 #include <qwt_plot_marker.h>
 #include <qwt_symbol.h>
+#include <qwt_wheel.h>
 
 #include "../utils/constset.hpp"
 
@@ -34,8 +35,13 @@ public:
         return cntrFrequency;
     }
 
+private slots:
+    virtual void scrollLeftAxis(double) = 0;
+
 protected:
-    QwtPlotCanvas *canvas;
+    QwtPlotCanvas   *canvas;
+    QwtWheel        *wheel;
+
     double cntrFrequency;
 };
 

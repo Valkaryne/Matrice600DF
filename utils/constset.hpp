@@ -22,9 +22,6 @@ const double LSHIFT = INCR * CENTER;
 const double RSHIFT = RANGE - LSHIFT;
 
 const double CALIBRATION = 170.0;
-const double PH2 = 140.0;
-const double PH5 = 150.0;
-const double PH0 = 180.0;
 
 #define DEG2RAD 0.01745329252;
 

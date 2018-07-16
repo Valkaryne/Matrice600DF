@@ -14,6 +14,20 @@ PhaseSpectrumPlot::PhaseSpectrumPlot(QWidget *parent) :
     curve->setRenderHint(QwtPlotItem::RenderAntialiased, true);
     curve->setPaintAttribute(QwtPlotCurve::ClipPolygons, false);
     curve->attach(this);
+
+    /* Wheel */
+    wheel = new QwtWheel(canvas);
+    wheel->setVisible(true);
+    wheel->setOrientation(Qt::Vertical);
+    wheel->setRange(-180, 180);
+    wheel->setValue(0.0);
+    wheel->setMass(1.0);
+    wheel->setSingleStep(10.0);
+    wheel->setTotalAngle(4 * 360.0);
+    wheel->setGeometry(0, 30, 14, 44);
+    wheel->setEnabled(true);
+
+    connect(wheel,SIGNAL(valueChanged(double)),SIGNAL(phaseCorrector(double)));
 }
 
 void PhaseSpectrumPlot::setCentralFrequency(double cntrFrequency)
@@ -39,4 +53,10 @@ void PhaseSpectrumPlot::updateCurve(const QVector<double> &samplesPh)
 void PhaseSpectrumPlot::equalZoom(const QRectF &rect)
 {
     setAxisScale(QwtPlot::xBottom, rect.bottomLeft().x(), rect.bottomRight().x());
+    replot();
+}
+
+void PhaseSpectrumPlot::scrollLeftAxis(double value)
+{
+    qDebug() << "Current phase correction: " << value;
 }

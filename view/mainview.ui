@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>921</width>
-    <height>655</height>
+    <width>966</width>
+    <height>771</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,11 +24,20 @@
        <layout class="QGridLayout" name="polarPlotLayout">
         <item row="0" column="1">
          <widget class="QSlider" name="slider_add">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimum">
            <number>0</number>
           </property>
           <property name="maximum">
-           <number>500</number>
+           <number>200</number>
+          </property>
+          <property name="pageStep">
+           <number>1</number>
           </property>
           <property name="sliderPosition">
            <number>0</number>
@@ -48,6 +57,9 @@
           </property>
           <property name="maximum">
            <number>100</number>
+          </property>
+          <property name="pageStep">
+           <number>1</number>
           </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -656,6 +668,12 @@ QRadioButton::indicator::checked {
        </widget>
       </item>
       <item>
+       <layout class="QVBoxLayout" name="testLayout"/>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="sb_radTest"/>
+      </item>
+      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -1010,8 +1028,8 @@ QRadioButton::indicator::checked {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>921</width>
-     <height>21</height>
+     <width>966</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>

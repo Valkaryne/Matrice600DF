@@ -33,26 +33,37 @@ public:
         this->heading = heading;
     }
 
+    void setPhaseCorrection(const double &phaseCorrection) {
+        this->phaseCorrection = phaseCorrection;
+    }
+
     /* Getters */
     UdpChannel* getUdpChannel() {
         return udpChannel;
     }
+
+private:
+    double phaseCorrectionHandler(const double phase);
 
 private slots:
     void samplesHandler(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
                         const QVector<double> samplesPh);
     void polarSamplesHandler(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
                              const QVector<double> samplesPh);
+
 signals:
     void amplitudeSamplesReady(const QVector<double> samplesAm1, const QVector<double> samplesAm2, const QVector<double> samplesAmS);
     void phaseSamplesReady(const QVector<double> samplesPh);
     void polarSamplesReady(const int az, const double rado, const double radl, const double rads, const double phase);
+
+    void polarScalesCorrector(const double &rad);
 
 private:
     int band;
     double gain;
     QVector<int> rangeBounds;
 
+    double phaseCorrection;
     int heading;
 
     UdpChannel *udpChannel;

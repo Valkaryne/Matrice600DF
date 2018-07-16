@@ -10,6 +10,18 @@ MatriceDFModel::MatriceDFModel()
     this->gain = 60;
 }
 
+double MatriceDFModel::phaseCorrectionHandler(const double phase)
+{
+    double corrPhase = 0;
+    corrPhase = phase + phaseCorrection;
+    if (corrPhase > 360)
+        corrPhase -= 360;
+    else if (corrPhase < 0)
+        corrPhase += 360;
+
+    return corrPhase;
+}
+
 void MatriceDFModel::samplesHandler(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
                                     const QVector<double> samplesPh)
 {
@@ -22,17 +34,7 @@ void MatriceDFModel::samplesHandler(const QVector<double> samplesAm1, const QVec
         double tmp2 = samplesAm2.at(j) - CALIBRATION - gain;
         ampl2Mod.append(tmp2);
         amplSum.append((tmp + tmp2) / 2);
-        double tmp3 = samplesPh.at(j);
-        if (band == 2) {
-            tmp3 += PH2;
-            if (tmp3 > 360) tmp3 -= 360;
-        } else if (band == 5) {
-            tmp3 += PH5;
-            if (tmp3 > 360) tmp3 -= 360;
-        } else {
-            tmp += PH0;
-            if (tmp3 > 360) tmp3 -= 360;
-        }
+        double tmp3 = phaseCorrectionHandler(samplesPh.at(j));
         phMod.append(tmp3);
     }
 
@@ -43,20 +45,12 @@ void MatriceDFModel::samplesHandler(const QVector<double> samplesAm1, const QVec
         double tmp2 = samplesAm2.at(i) - CALIBRATION - gain;
         ampl2Mod.append(tmp2);
         amplSum.append((tmp + tmp2) / 2);
-        double tmp3 = samplesPh.at(i);
-        if (band == 2) {
-            tmp3 += PH2;
-            if (tmp3 > 360) tmp3 -= 360;
-        } else if (band == 5) {
-            tmp3 += PH5;
-            if (tmp3 > 360) tmp3 -= 360;
-        }
+        double tmp3 = phaseCorrectionHandler(samplesPh.at(i));
         phMod.append(tmp3);
     }
 
     emit amplitudeSamplesReady(ampl1Mod, ampl2Mod, amplSum);
     emit phaseSamplesReady(phMod);
-    //TODO: draw plot for summary and two-channel
 }
 
 void MatriceDFModel::polarSamplesHandler(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
@@ -73,17 +67,7 @@ void MatriceDFModel::polarSamplesHandler(const QVector<double> samplesAm1, const
         double tmp2 = samplesAm2.at(j) - CALIBRATION - gain;
         ampl2Mod.append(tmp2);
         amplSum.append((tmp + tmp2) / 2);
-        double tmp3 = samplesPh.at(j);
-        if (band == 2) {
-            tmp3 += PH2;
-            if (tmp3 > 360) tmp3 -= 360;
-        } else if (band == 5) {
-            tmp3 += PH5;
-            if (tmp3 > 360) tmp3 -= 360;
-        } else {
-            tmp3 += PH0;
-            if (tmp3 > 360) tmp3 -= 360;
-        }
+        double tmp3 = phaseCorrectionHandler(samplesPh.at(j));
         phMod.append(tmp3);
     }
 
@@ -94,17 +78,7 @@ void MatriceDFModel::polarSamplesHandler(const QVector<double> samplesAm1, const
         double tmp2 = samplesAm2.at(i) - CALIBRATION - gain;
         ampl2Mod.append(tmp2);
         amplSum.append((tmp + tmp2) / 2);
-        double tmp3 = samplesPh.at(i);
-        if (band == 2) {
-            tmp3 += PH2;
-            if (tmp3 > 360) tmp3 -= 360;
-        } else if (band == 5) {
-            tmp3 += PH5;
-            if (tmp3 > 360) tmp3 -= 360;
-        } else {
-            tmp3 += PH0;
-            if (tmp3 > 360) tmp3 -= 360;
-        }
+        double tmp3 = phaseCorrectionHandler(samplesPh.at(i));
         phMod.append(tmp3);
     }
 
@@ -126,6 +100,12 @@ void MatriceDFModel::polarSamplesHandler(const QVector<double> samplesAm1, const
     int maxxa = ampl1range.indexOf(rado);
     double phase = phaserange.at(maxxa);
 
+    emit polarScalesCorrector(qAbs(rads));
+
+    /*if (qAbs(rado) > qAbs(radl))
+        emit polarScalesCorrector(qAbs(rado));
+    else
+        emit polarScalesCorrector(qAbs(radl)); */
+
     emit polarSamplesReady(heading, rado, radl, rads, phase);
-    //TODO: draw polarplot for summary and two-channel
 }

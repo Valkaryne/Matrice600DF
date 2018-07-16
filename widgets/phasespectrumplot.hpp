@@ -15,7 +15,13 @@ public:
     }
 
     void updateCurve(const QVector<double> &samplesPh);
+
+private slots:
     void equalZoom(const QRectF &rect);
+    void scrollLeftAxis(double);
+
+signals:
+    void phaseCorrector(double);
 
 private:
     QwtPlotCurve    *curve;

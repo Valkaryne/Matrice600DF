@@ -4,7 +4,6 @@
 #include "spectrumplot.hpp"
 #include "amplitudedisplaystrategy.hpp"
 #include "markermovingstrategy.hpp"
-#include <qwt_wheel.h>
 
 //class AmplitudeSpectrumPlot;
 class AmplitudeDisplayStrategy;
@@ -60,7 +59,6 @@ private:
     QwtPlotMarker   *thresholdPr;
     QwtPlotMarker   *thresholdSec;
     QwtPlotZoomer   *zoomer;
-    QwtWheel        *wheel;
 
     AmplitudeDisplayStrategy *strategy;
     MarkerMovingStrategy *markerStrategy;

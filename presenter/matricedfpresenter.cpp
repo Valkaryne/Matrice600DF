@@ -18,6 +18,8 @@ MatriceDFPresenter::MatriceDFPresenter(MainIView *view, QObject *parent) :
             SLOT(phaseSamplesPresenter(const QVector<double>)));
     connect(model, SIGNAL(polarSamplesReady(const int,const double,const double,const double,const double)),
             SLOT(polarSamplesPresenter(const int,const double,const double, const double,const double)));
+    connect(model, SIGNAL(polarScalesCorrector(const double &)),
+            SLOT(polarScalesCorrectionPresenter(const double &)));
 
     connect(dji, SIGNAL(changeControlAuthorityStatus(QString)),
             SLOT(changeControlAuthorityStatus(QString)));
@@ -56,6 +58,11 @@ void MatriceDFPresenter::changeBandParameter(int band)
 void MatriceDFPresenter::changeBoundsParameters(QVector<int> bounds)
 {
     model->setRangeBounds(bounds);
+}
+
+void MatriceDFPresenter::changePhaseCorrection(const double &phaseCorrection)
+{
+    model->setPhaseCorrection(phaseCorrection);
 }
 
 void MatriceDFPresenter::initDjiVehicle()
@@ -131,6 +138,11 @@ void MatriceDFPresenter::polarSamplesPresenter(const int az, const double rado, 
                                           const double phase)
 {
     view->getPolarPlot()->updateDiagram(az,rado,radl,rads,phase);
+}
+
+void MatriceDFPresenter::polarScalesCorrectionPresenter(const double &rad)
+{
+    view->correctPolarScales(rad);
 }
 
 void MatriceDFPresenter::changeControlAuthorityStatus(QString textToDisplay)

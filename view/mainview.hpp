@@ -41,6 +41,8 @@ public:
     void connectionDjiVehicleResetted();
     void updateTelemetryData(const QVector<double> &subscribeData);
 
+    void correctPolarScales(const double &rad);
+
     Q_INVOKABLE void setHomePoint(QString azimuth);
     Q_INVOKABLE void setPointOnMap(QString lat, QString lng);
 
@@ -75,7 +77,9 @@ private slots:
     void on_btn_refresh_clicked();
 
     void switchMapProvider();
+    void setAutoScaleMode();
     void makeDirection(const double &direction);
+    void phaseCorrectionChanged(double phaseCorrection);
 
     void on_btn_clearMap_clicked();
 
@@ -91,6 +95,8 @@ private slots:
 
     void on_btn_startYaw_clicked(bool checked);
 
+    void on_sb_radTest_valueChanged(int arg1);
+
 private:
     Ui::MainView        *ui;
     MatriceDFPresenter  *presenter;
@@ -98,8 +104,11 @@ private:
     QQuickView          *map;
 
     QMenu   *mapMenu;
+    QMenu   *settingsMenu;
     QAction *switchProviderAct;
+    QAction *autoScaleAct;
 
+    bool autoScaleEnabled;
     int slider_add_prev;
     double slider_product_prev;
     double markerLatitude, markerLongitude;
