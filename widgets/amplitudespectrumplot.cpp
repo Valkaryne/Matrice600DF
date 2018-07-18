@@ -220,6 +220,21 @@ void AmplitudeSpectrumPlot::setMarkerStrategy(MarkerMovingStrategy *strategy)
     this->markerStrategy = strategy;
 }
 
+void AmplitudeSpectrumPlot::setMarkerBounds(QVector<int> bounds)
+{
+    for (int i = 0; i < bounds.size(); i++) {
+        double bound = cntrFrequency + INCR * (bounds.at(i) - CENTER);
+        markerVector.at(i)->setValue(bound, 0);
+    }
+    replot();
+}
+
+void AmplitudeSpectrumPlot::setThresholdBounds(QVector<int> bounds)
+{
+    thresholdPr->setValue(0, bounds.at(0));
+    thresholdSec->setValue(0, bounds.at(1));
+}
+
 QwtPlotZoomer* AmplitudeSpectrumPlot::getZoomer()
 {
     return zoomer;

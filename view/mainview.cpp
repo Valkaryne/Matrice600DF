@@ -53,11 +53,19 @@ MainView::MainView(QWidget *parent) :
     autoScaleAct = new QAction(tr("&Set Autoscale"), this);
     connect(autoScaleAct, &QAction::triggered, this, &MainView::setAutoScaleMode);
 
+    savePresetAct = new QAction(tr("&Save Preset"), this);
+    connect(savePresetAct, &QAction::triggered, this, &MainView::savePreset);
+
+    loadPresetAct = new QAction(tr("&Load Preset"), this);
+    connect(loadPresetAct, &QAction::triggered, this, &MainView::loadPreset);
+
     mapMenu = menuBar()->addMenu(tr("&Map"));
     mapMenu->addAction(switchProviderAct);
 
     settingsMenu = menuBar()->addMenu(tr("&Settings"));
     settingsMenu->addAction(autoScaleAct);
+    settingsMenu->addAction(savePresetAct);
+    settingsMenu->addAction(loadPresetAct);
 }
 
 MainView::~MainView()
@@ -68,14 +76,14 @@ MainView::~MainView()
 void MainView::on_btn_apply_clicked()
 {
     QVector<double> settings;
-    settings.append(ui->sb_frequency->value() * 1000000.0);
+    settings.append(ui->sb_frequency->value() * 1000000);
     settings.append(ui->sb_gain->value());
     settings.append(ui->sb_temp_prod->value()); // Temp value: product
     settings.append(ui->sb_temp_add->value()); // temp value: add
 
     QVector<int> thresholds = getAmplitudeSpectrumPlot()->getThresholdBounds();
     for (int thr : thresholds)
-        settings.append(thr + ui->sb_gain->value() + CALIBRATION); // WARNING: magic constant
+        settings.append(thr + ui->sb_gain->value() + CALIBRATION);
 
     QVector<int> bounds = getAmplitudeSpectrumPlot()->getMarkerBounds();
     if (thresholds.at(1) > 9999) {
@@ -227,7 +235,6 @@ void MainView::setPointOnMap(QString lat, QString lng)
 {
     markerLatitude = lat.toDouble();
     markerLongitude = lng.toDouble();
-    //qDebug() << "( " << markerLatitude * 1000000 << ", " << markerLongitude * 1000000 << ")";
 }
 
 void MainView::makeDirection(const double &direction)
@@ -371,6 +378,20 @@ void MainView::setAutoScaleMode()
     }
 }
 
+void MainView::savePreset()
+{
+    QString fileName = QFileDialog::getSaveFileName(this);
+    if (!fileName.isEmpty())
+        writeToFile(fileName);
+}
+
+void MainView::loadPreset()
+{
+    QString fileName = QFileDialog::getOpenFileName(this);
+    if (!fileName.isEmpty())
+        readFromFile(fileName);
+}
+
 void MainView::on_btn_clearMap_clicked()
 {
     QObject *object = map->rootObject();
@@ -431,4 +452,60 @@ void MainView::on_btn_startYaw_clicked(bool checked)
 void MainView::on_sb_radTest_valueChanged(int arg1)
 {
     correctPolarScales(arg1);
+}
+
+void MainView::writeToFile(const QString &fileName)
+{
+    QFile file(fileName);
+
+    if (!file.open(QIODevice::WriteOnly)) {
+        QMessageBox::information(this, tr("Unable to open file"), file.errorString());
+        return;
+    }
+
+    QVector<QVector<int>> preset;
+    QVector<int> bounds = getAmplitudeSpectrumPlot()->getMarkerBounds();
+    QVector<int> thresholds = getAmplitudeSpectrumPlot()->getThresholdBounds();
+    QVector<int> settings = getSettingsArray();
+    preset.append(bounds);
+    preset.append(thresholds);
+    preset.append(settings);
+    QDataStream out(&file);
+    out << preset;
+}
+
+void MainView::readFromFile(const QString &fileName)
+{
+    QFile file(fileName);
+
+    if (!file.open(QIODevice::ReadOnly)) {
+        QMessageBox::information(this, tr("Unable to open file"), file.errorString());
+        return;
+    }
+
+    QVector<QVector<int>> preset;
+    QDataStream in(&file);
+    in >> preset;
+    getAmplitudeSpectrumPlot()->setMarkerBounds(preset.at(0));
+    getAmplitudeSpectrumPlot()->setThresholdBounds(preset.at(1));
+    setSettingsArray(preset.at(2));
+}
+
+QVector<int> MainView::getSettingsArray()
+{
+    QVector<int> settings;
+    settings.append(ui->sb_frequency->value());
+    settings.append(ui->sb_gain->value());
+    settings.append(ui->sb_temp_prod->value());
+    settings.append(ui->sb_temp_add->value());
+
+    return settings;
+}
+
+void MainView::setSettingsArray(QVector<int> settings)
+{
+    ui->sb_frequency->setValue(settings.at(0));
+    ui->sb_gain->setValue(settings.at(1));
+    ui->sb_temp_prod->setValue(settings.at(2));
+    ui->sb_temp_add->setValue(settings.at(3));
 }

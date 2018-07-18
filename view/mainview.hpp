@@ -20,6 +20,9 @@
 #include <QtPositioning>
 #include <QVariant>
 
+#include <QFileDialog>
+#include <QMessageBox>
+
 namespace Ui {
 class MainView;
 }
@@ -78,6 +81,9 @@ private slots:
 
     void switchMapProvider();
     void setAutoScaleMode();
+    void savePreset();
+    void loadPreset();
+
     void makeDirection(const double &direction);
     void phaseCorrectionChanged(double phaseCorrection);
 
@@ -98,6 +104,13 @@ private slots:
     void on_sb_radTest_valueChanged(int arg1);
 
 private:
+    void writeToFile(const QString &fileName);
+    void readFromFile(const QString &fileName);
+
+    QVector<int> getSettingsArray();
+    void setSettingsArray(QVector<int> settings);
+
+private:
     Ui::MainView        *ui;
     MatriceDFPresenter  *presenter;
 
@@ -107,6 +120,8 @@ private:
     QMenu   *settingsMenu;
     QAction *switchProviderAct;
     QAction *autoScaleAct;
+    QAction *savePresetAct;
+    QAction *loadPresetAct;
 
     bool autoScaleEnabled;
     int slider_add_prev;

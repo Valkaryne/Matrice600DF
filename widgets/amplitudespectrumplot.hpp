@@ -29,6 +29,9 @@ public:
     void setDisplayStrategy(AmplitudeDisplayStrategy *strategy);
     void setMarkerStrategy(MarkerMovingStrategy *strategy);
 
+    void setMarkerBounds(QVector<int> bounds);
+    void setThresholdBounds(QVector<int> bounds);
+
     /* Getters */
     QwtPlotZoomer* getZoomer();
     QVector<int> getMarkerBounds();
