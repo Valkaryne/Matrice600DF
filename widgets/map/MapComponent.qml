@@ -19,6 +19,11 @@ Map {
         marker.coordinate = mouseArea.lastCoordinate
         var lat = marker.coordinate.latitude
         var lng = marker.coordinate.longitude
+        /* var drlat = drone.coordinate.latitude
+        var drlng = drone.coordinate.longitude
+        var mlat = (lat + drlat) / 2
+        var mlng = (lng + drlng) / 2
+        homePoint.coordinate = QtPositioning.coordinate(mlat, mlng) */
         mainview.setPointOnMap(lat, lng)
     }
 
@@ -99,7 +104,7 @@ Map {
                 map.setMarker()
             else if (mouse.button === Qt.RightButton)
             {
-                homePointCoordinate = mouseArea.lastCoordinate
+                homePointCoordinate = QtPositioning.coordinate(mouseArea.lastCoordinate.latitude, mouseArea.lastCoordinate.longitude)
                 map.setHomePoint()
             }
 
