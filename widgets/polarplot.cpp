@@ -269,9 +269,9 @@ void PolarPlot::testDiagram()
 
     updateDiagram(counter, y1, y2, ys, 0);
 
-    if (y1 > maxima) {
-        qDebug() << y1;
-        maxima = y1;
+    if (qAbs(y1) > maxima) {
+        qDebug() << qAbs(y1);
+        maxima = qAbs(y1);
     }
 
     if (counter > 360)
