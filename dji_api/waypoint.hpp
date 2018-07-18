@@ -25,6 +25,8 @@ private:
     DJI::OSDK::WayPointSettings      wayPointDataTmp;
     DJI::OSDK::WayPointInitSettings *wpInitSettings;
 
+    int initLat, initLng;
+
     DJI::OSDK::Vehicle  *vehicle;
 };
 
