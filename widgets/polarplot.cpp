@@ -120,10 +120,10 @@ PolarPlot::PolarPlot(QWidget *parent) :
     allyDirection->setData(dataAlly);
     allyDirection->attach(this);
 
-    testTimer = new QTimer(this);
+    /* testTimer = new QTimer(this);
     testTimer->setInterval(50);
     connect(testTimer, SIGNAL(timeout()), this, SLOT(testDiagram()));
-    testTimer->start();
+    testTimer->start(); */
 }
 
 void PolarPlot::setDisplayStrategy(AmplitudeDisplayStrategy *strategy)
