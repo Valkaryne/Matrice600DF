@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>966</width>
-    <height>809</height>
+    <height>901</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -165,21 +165,24 @@
           </widget>
          </item>
          <item row="0" column="1" colspan="2">
-          <widget class="QSpinBox" name="sb_frequency">
+          <widget class="QDoubleSpinBox" name="sb_frequency">
            <property name="buttonSymbols">
             <enum>QAbstractSpinBox::NoButtons</enum>
            </property>
            <property name="suffix">
             <string> MHz</string>
            </property>
+           <property name="decimals">
+            <number>0</number>
+           </property>
            <property name="minimum">
-            <number>70</number>
+            <double>70.000000000000000</double>
            </property>
            <property name="maximum">
-            <number>6000</number>
+            <double>6000.000000000000000</double>
            </property>
            <property name="value">
-            <number>2420</number>
+            <double>2420.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -854,7 +857,7 @@ QRadioButton::indicator::checked {
       <item row="1" column="0">
        <widget class="QGroupBox" name="flightBox">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="title">
          <string>Flight Control Panel</string>
@@ -1058,7 +1061,7 @@ QRadioButton::indicator::checked {
      <x>0</x>
      <y>0</y>
      <width>966</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

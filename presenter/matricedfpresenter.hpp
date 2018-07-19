@@ -50,10 +50,6 @@ private slots:
     void changeConnectionButtons();
     void receiveTelemetryData(const QVector<double> &subscribeData);
 
-signals:
-    void startRotationRequest(int);
-    void stopRotationRequest();
-
 private:
     MainIView       *view;
     MatriceDFModel  *model;

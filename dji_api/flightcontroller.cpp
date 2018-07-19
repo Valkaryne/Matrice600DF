@@ -18,10 +18,13 @@ FlightController::FlightController(Vehicle *vehicle,
     //autoSend = new QTimer(this);
     //autoSend->setInterval(100);
 
-    autoSend = new QTimer();
-    autoSend->setInterval(100);
+    //autoSend = new QTimer();
+    //autoSend->setInterval(50);
 
-    connect(this->autoSend, SIGNAL(timeout()), this, SLOT(moveSend()));
+    //qDebug() << "This thread: " << this->thread();
+    //qDebug() << "Timer thread: " << autoSend->thread();
+
+    //connect(this->autoSend, SIGNAL(timeout()), this, SLOT(moveSend()));
 }
 
 FlightController::~FlightController() {}
@@ -92,22 +95,8 @@ void FlightController::flightRunCommand(int &commandIndex)
                              this);
 }
 
-void FlightController::startRotation(int yawRate)
+void FlightController::moveSend(int yawRate)
 {
-    this->command.yaw = yawRate;
-    DSTATUS("Start");
-    autoSend->start();
-}
-
-void FlightController::stopRotation()
-{
-    this->command.yaw = 0;
-    DSTATUS("Stop");
-    autoSend->stop();
-}
-
-void FlightController::moveSend()
-{
-    DSTATUS("movemove");
-    vehicle->control->flightCtrl(command);
+    command.yaw = yawRate;
+    this->vehicle->control->flightCtrl(command);
 }

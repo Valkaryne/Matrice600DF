@@ -9,6 +9,10 @@ QtOsdk::QtOsdk(QObject *parent)
 {
     vehicle = nullptr;
     //qRegisterMetaType<QHash<QString, int>>("QHash<QString, int>");
+
+    autoSend = new QTimer();
+    autoSend->setInterval(100);
+    connect(autoSend, SIGNAL(timeout()), SLOT(rotationCommandSend()));
 }
 
 QtOsdk::~QtOsdk()
@@ -201,15 +205,23 @@ void QtOsdk::initComponents()
     connect(this->subscribe, SIGNAL(subscribeDataReady(const QVector<double> &)),
             SIGNAL(receiveTelemetryData(const QVector<double> &)));
 
-    this->flightController = new FlightController(this->vehicle, this);
-    //connect(this, SIGNAL(startRotationRequest(int)), this->flightController, SLOT(startRotation(int)));
-    connect(this, SIGNAL(stopRotationRequest()), this->flightController, SLOT(stopRotation()));
+    this->flightController = new FlightController(this->vehicle, 0);
 
     this->waypoint = new Waypoint(this->vehicle, 0);
 }
 
 void QtOsdk::startRotationRequest(int yawRate)
 {
-    DSTATUS("start rotation request");
-    //flightController->startRotation(yawRate);
+    this->yawRate = yawRate;
+    autoSend->start();
+}
+
+void QtOsdk::stopRotationRequest()
+{
+    autoSend->stop();
+}
+
+void QtOsdk::rotationCommandSend()
+{
+    flightController->moveSend(yawRate);
 }

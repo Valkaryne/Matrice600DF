@@ -76,6 +76,7 @@ MainView::~MainView()
 void MainView::on_btn_apply_clicked()
 {
     QVector<double> settings;
+    qDebug() << ui->sb_frequency->value();
     settings.append(ui->sb_frequency->value() * 1000000);
     settings.append(ui->sb_gain->value());
     settings.append(ui->sb_temp_prod->value()); // Temp value: product
@@ -212,7 +213,7 @@ void MainView::updateTelemetryData(const QVector<double> &subscribeData){
 
 void MainView::correctPolarScales(const double &rad)
 {
-    int scale = (int)rad - 10;
+    int scale = (int)rad - 15;
     if (scale > ui->slider_add->value() && autoScaleEnabled) {
         ui->lbltest_base->setText("Scale base: " + QString::number(rad));
 

@@ -31,9 +31,6 @@ MatriceDFPresenter::MatriceDFPresenter(MainIView *view, QObject *parent) :
             SLOT(changeConnectionButtons()));
     connect(dji, SIGNAL(receiveTelemetryData(const QVector<double> &)),
             SLOT(receiveTelemetryData(const QVector<double> &)));
-
-    connect(this, SIGNAL(startRotationRequest(int)), dji, SLOT(startRotationRequest(int)));
-    connect(this, SIGNAL(stopRotationRequest()), dji, SIGNAL(stopRotationRequest()));
 }
 
 MatriceDFPresenter::~MatriceDFPresenter()
@@ -92,14 +89,12 @@ void MatriceDFPresenter::sendFlightRunCommandRequest(int &commandIndex)
 
 void MatriceDFPresenter::sendStartRotationRequest(int yawRate)
 {
-    emit startRotationRequest(yawRate);
-    //dji->startRotationRequest(yawRate);
+    dji->startRotationRequest(yawRate);
 }
 
 void MatriceDFPresenter::sendStopRotationRequest()
 {
-    emit stopRotationRequest();
-    //dji->stopRotationRequest();
+    dji->stopRotationRequest();
 }
 
 void MatriceDFPresenter::sendInitWaypointRequest(const QHash<QString, int> &settings)

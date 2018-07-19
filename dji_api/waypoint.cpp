@@ -44,48 +44,54 @@ void Waypoint::loadWaypoint(const QHash<QString, int> &settings)
     int destLat = settings.value("latitude");
     int destLng = settings.value("longitude");
 
-    int index = 0;
-    wayPointDataTmp.index = index;
-    wayPointDataTmp.latitude = ((initLat + destLat) / 2000000.0) * DEG2RAD;
-    wayPointDataTmp.longitude = ((initLng + destLng) / 2000000.0) * DEG2RAD;
-    wayPointDataTmp.altitude = settings.value("altitude");
-    wayPointDataTmp.damping = 0;
-    wayPointDataTmp.yaw = 0;
-    wayPointDataTmp.gimbalPitch = 0;
-    wayPointDataTmp.turnMode = 0;
-    wayPointDataTmp.hasAction = 0;
-    wayPointDataTmp.actionTimeLimit = 0;
-    wayPointDataTmp.actionNumber = 0;
-    wayPointDataTmp.actionRepeat = 0;
+    WayPointSettings *wayPointData = new WayPointSettings();
+    wayPointData->index = 0;
+    wayPointData->latitude = ((initLat + destLat) / 2000000.0) * DEG2RAD;
+    wayPointData->longitude = ((initLng + destLng) / 2000000.0) * DEG2RAD;
+    wayPointData->altitude = settings.value("altitude");
+    wayPointData->damping = 0;
+    wayPointData->yaw = 0;
+    wayPointData->gimbalPitch = 0;
+    wayPointData->turnMode = 0;
+    wayPointData->hasAction = 0;
+    wayPointData->actionTimeLimit = 0;
+    wayPointData->actionNumber = 0;
+    wayPointData->actionRepeat = 0;
     for (int i = 0; i < 16; ++i)
     {
-        wayPointDataTmp.commandList[i] = 0;
-        wayPointDataTmp.commandParameter[i] = 0;
+        wayPointData->commandList[i] = 0;
+        wayPointData->commandParameter[i] = 0;
     }
 
-    if (!vehicle->missionManager->wpMission->uploadIndexData(&wayPointDataTmp))
+    qDebug() << "Lat1: " << QString::number((wayPointData->latitude / 0.01745329252), 'f', 6);
+    qDebug() << "Lng1: " << QString::number((wayPointData->longitude / 0.01745329252), 'f', 6);
+
+    if (!vehicle->missionManager->wpMission->uploadIndexData(wayPointData))
         qDebug() << "fail";
 
-    index = 1;
-    wayPointDataTmp.index = index;
-    wayPointDataTmp.latitude = (destLat / 1000000.0) * DEG2RAD;
-    wayPointDataTmp.longitude = (destLng / 1000000.0) * DEG2RAD;
-    wayPointDataTmp.altitude = settings.value("altitude");
-    wayPointDataTmp.damping = 0;
-    wayPointDataTmp.yaw = 0;
-    wayPointDataTmp.gimbalPitch = 0;
-    wayPointDataTmp.turnMode = 0;
-    wayPointDataTmp.hasAction = 0;
-    wayPointDataTmp.actionTimeLimit = 0;
-    wayPointDataTmp.actionNumber = 0;
-    wayPointDataTmp.actionRepeat = 0;
+    wayPointData = new WayPointSettings();
+    wayPointData->index = 1;
+    wayPointData->latitude = (destLat / 1000000.0) * DEG2RAD;
+    wayPointData->longitude = (destLng / 1000000.0) * DEG2RAD;
+    wayPointData->altitude = settings.value("altitude");
+    wayPointData->damping = 0;
+    wayPointData->yaw = 0;
+    wayPointData->gimbalPitch = 0;
+    wayPointData->turnMode = 0;
+    wayPointData->hasAction = 0;
+    wayPointData->actionTimeLimit = 0;
+    wayPointData->actionNumber = 0;
+    wayPointData->actionRepeat = 0;
     for (int i = 0; i < 16; ++i)
     {
-        wayPointDataTmp.commandList[i] = 0;
-        wayPointDataTmp.commandParameter[i] = 0;
+        wayPointData->commandList[i] = 0;
+        wayPointData->commandParameter[i] = 0;
     }
 
-    if (!vehicle->missionManager->wpMission->uploadIndexData(&wayPointDataTmp))
+    qDebug() << "Lat2: " << QString::number((wayPointData->latitude / 0.01745329252), 'f', 6);
+    qDebug() << "Lng2: " << QString::number((wayPointData->longitude / 0.01745329252), 'f', 6);
+
+    if (!vehicle->missionManager->wpMission->uploadIndexData(wayPointData))
         qDebug() << "fail";
 }
 

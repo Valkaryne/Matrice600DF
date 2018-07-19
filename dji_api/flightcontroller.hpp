@@ -18,17 +18,15 @@ public:
                                DJI::OSDK::UserData       userData);
 
     void flightRunCommand(int &commandIndex);
-    void startRotation(int yawRate);
+    void moveSend(int yawRate);
 
-public slots:
-    void stopRotation();
-    void moveSend();
+
 
 private:
     DJI::OSDK::Vehicle              *vehicle;
     DJI::OSDK::Control::CtrlData     command;
 
-    QTimer  *autoSend;
+    //QTimer  *autoSend;
 };
 
 #endif // FLIGHTCONTROLLER_HPP

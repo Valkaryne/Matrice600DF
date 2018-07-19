@@ -57,10 +57,12 @@ signals:
     void changeActivateButton(QString textToDisplay, bool success);
     void changeConnectionButtons();
     void receiveTelemetryData(const QVector<double> &subscribeData);
-    void stopRotationRequest();
+
 
 public slots:
+    void rotationCommandSend();
     void startRotationRequest(int yawRate);
+    void stopRotationRequest();
 
 private:
     DJI::OSDK::Vehicle  *vehicle;
@@ -70,6 +72,9 @@ private:
 
     QString appIDInput;
     QString keyInput;
+
+    int yawRate;
+    QTimer *autoSend;
 };
 
 #endif // QTOSDK_HPP
