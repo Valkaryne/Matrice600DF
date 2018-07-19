@@ -31,13 +31,8 @@ public:
                        const double &radAmS, const double &radPh);
     void updateAllyDirection(const int az);
 
-    void changeAddCoefficient(int x);
-    void changeProductCoefficient(double x);
+    void changeSharpCoefficient(int x);
     void resetScales();
-
-private:
-    void setAddScale(PolarCurveData *data, const double &x);
-    void setProductScale(PolarCurveData *data, const double &x);
 
     // WARNING: DELETE AFTER TEST
 private slots:
@@ -63,23 +58,40 @@ private:
     // WARNING: DELETE AFTER TEST
     QTimer  *testTimer;
     int counter;
-    double maxima;
 };
 
 class PolarCurveData : public QwtArraySeriesData<QwtPointPolar>
 {
 public:
     PolarCurveData() {
-        add = 0;
-        prod = 1;
+        c_add = 0.0;
+        c_prod = 1.0;
+        c_min = 1000;
+        c_max = -1000;
+        this->autoscaleEnabled = false;
+        this->sharpness = -1;
     }
 
     void append(const QwtPointPolar &point)
     {
         QwtPointPolar& p = (QwtPointPolar&)point;
-        p.setRadius((p.radius() + add) * prod);
-        if (p.radius() > 360)
-            p.setRadius(360.0);
+        double rad = point.radius();
+
+        if (autoscaleEnabled) {
+            if (rad < c_min) {
+                c_min = rad;
+                updateCoefficients();
+            }
+            if (rad > c_max) {
+                c_max = rad;
+                updateCoefficients();
+            }
+
+            p.setRadius((p.radius() + c_add) * c_prod);
+            if (p.radius() > 360.0)
+                p.setRadius(360.0);
+        }
+
         d_samples << p;
     }
 
@@ -98,6 +110,27 @@ public:
         }
     }
 
+    void setAutoscale(bool autoscaleEnabled) {
+        if (this->autoscaleEnabled != autoscaleEnabled)
+            this->autoscaleEnabled = autoscaleEnabled;
+    }
+
+    void setSharpness(int sharpness) {
+        if (this->sharpness != sharpness)
+            this->sharpness = sharpness;
+        updateCoefficients();
+    }
+
+    void resetScales()
+    {
+        c_max = -1000;
+        c_min = 1000;
+        resetSamples();
+        c_add = 0;
+        c_prod = 1;
+        updateSamples();
+    }
+
     void clear()
     {
         d_samples.clear();
@@ -110,9 +143,36 @@ public:
         return d_boundingRect;
     }
 
-public:
-    int add;
-    double prod;
+private:
+    void resetSamples() {
+        for (int i = 0; i < size(); i++) {
+            QwtPointPolar &s = (QwtPointPolar&)samples().at(i);
+                s.setRadius(s.radius() / c_prod - c_add);
+        }
+    }
+
+    void updateSamples() {
+        for (int i = 0; i < size(); i++) {
+            QwtPointPolar &s = (QwtPointPolar&)samples().at(i);
+                s.setRadius((s.radius() + c_add) * c_prod);
+        }
+    }
+
+    void updateCoefficients() {
+        resetSamples();
+        c_add = qAbs(c_min) - sharpness;
+        c_prod = 0.95 * 360.0 / (c_max + c_add);
+        updateSamples();
+    }
+
+private:
+    bool autoscaleEnabled;
+    double c_add;
+    double c_prod;
+    double c_min;
+    double c_max;
+
+    int sharpness;
 };
 
 #endif // POLARPLOT_HPP

@@ -31,16 +31,19 @@
            </sizepolicy>
           </property>
           <property name="minimum">
-           <number>0</number>
+           <number>-1</number>
           </property>
           <property name="maximum">
-           <number>200</number>
+           <number>30</number>
           </property>
           <property name="pageStep">
            <number>1</number>
           </property>
+          <property name="value">
+           <number>-1</number>
+          </property>
           <property name="sliderPosition">
-           <number>0</number>
+           <number>-1</number>
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -52,6 +55,9 @@
         </item>
         <item row="0" column="0">
          <widget class="QSlider" name="slider_product">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="minimum">
            <number>1</number>
           </property>
@@ -665,37 +671,9 @@ QRadioButton::indicator::checked {
        <layout class="QVBoxLayout" name="testLayout"/>
       </item>
       <item>
-       <widget class="QSpinBox" name="sb_radTest">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QLabel" name="lbltest_phase">
         <property name="text">
          <string>Phase: 0</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="lbltest_base">
-        <property name="text">
-         <string>Scale base: 0</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="lbltest_add">
-        <property name="text">
-         <string>Add scale: 0</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="lbltest_prod">
-        <property name="text">
-         <string>Prod scale: 1</string>
         </property>
        </widget>
       </item>
@@ -1061,7 +1039,7 @@ QRadioButton::indicator::checked {
      <x>0</x>
      <y>0</y>
      <width>966</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

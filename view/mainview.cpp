@@ -3,10 +3,7 @@
 
 MainView::MainView(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainView),
-    slider_add_prev(0),
-    slider_product_prev(1),
-    autoScaleEnabled(false)
+    ui(new Ui::MainView)
 {
     ui->setupUi(this);
     presenter = new MatriceDFPresenter(this);
@@ -50,9 +47,6 @@ MainView::MainView(QWidget *parent) :
     switchProviderAct = new QAction(tr("&Switch Provider"), this);
     connect(switchProviderAct, &QAction::triggered, this, &MainView::switchMapProvider);
 
-    autoScaleAct = new QAction(tr("&Set Autoscale"), this);
-    connect(autoScaleAct, &QAction::triggered, this, &MainView::setAutoScaleMode);
-
     savePresetAct = new QAction(tr("&Save Preset"), this);
     connect(savePresetAct, &QAction::triggered, this, &MainView::savePreset);
 
@@ -63,7 +57,6 @@ MainView::MainView(QWidget *parent) :
     mapMenu->addAction(switchProviderAct);
 
     settingsMenu = menuBar()->addMenu(tr("&Settings"));
-    settingsMenu->addAction(autoScaleAct);
     settingsMenu->addAction(savePresetAct);
     settingsMenu->addAction(loadPresetAct);
 }
@@ -211,23 +204,6 @@ void MainView::updateTelemetryData(const QVector<double> &subscribeData){
     presenter->updateCurrentHeading(heading);
 }
 
-void MainView::correctPolarScales(const double &rad)
-{
-    int scale = (int)rad - 15;
-    if (scale > ui->slider_add->value() && autoScaleEnabled) {
-        ui->lbltest_base->setText("Scale base: " + QString::number(rad));
-
-        ui->slider_add->setMinimum(scale - 30);
-        ui->slider_add->setMaximum(scale + 30);
-        ui->slider_add->setValue(scale);
-
-        int pos = int(slider_product_prev);
-        ui->slider_product->setMaximum(scale + 50);
-        for (int i = pos; i <= 4 * sqrt(scale); i++)
-            ui->slider_product->setValue(i);
-    }
-}
-
 void MainView::setHomePoint(QString azimuth) {
     polarPlot->updateAllyDirection(azimuth.toDouble());
 }
@@ -247,12 +223,9 @@ void MainView::makeDirection(const double &direction)
 
 void MainView::phaseCorrectionChanged(double phaseCorrection)
 {
-    qDebug() << "Phase Correction: " << phaseCorrection;
-
     // 5760: -130
     // 2430: +130
     // 915: -180
-
 
     presenter->changePhaseCorrection(phaseCorrection);
     if (phaseCorrection <= 0)
@@ -322,37 +295,17 @@ void MainView::on_sb_expCoeff_valueChanged(double arg1)
 
 void MainView::on_slider_add_valueChanged(int position)
 {
-    ui->lbltest_add->setText("Add scale: " + QString::number(ui->slider_add->value()));
-    polarPlot->changeAddCoefficient(position - slider_add_prev);
-    slider_add_prev = position;
+    polarPlot->changeSharpCoefficient(position);
 }
 
 void MainView::on_slider_product_valueChanged(int position)
 {
-    ui->lbltest_prod->setText("Prod scale: " + QString::number(ui->slider_product->value()));
-    if ((position - slider_product_prev) > 1)
-        polarPlot->changeProductCoefficient(position - slider_product_prev);
-    else
-        polarPlot->changeProductCoefficient(position / slider_product_prev);
-    slider_product_prev = position;
+
 }
 
 void MainView::on_btn_resetScales_clicked()
 {
-    ui->slider_add->setMinimum(0);
-    ui->slider_add->setMaximum(100);
-
-    ui->slider_product->setMaximum(100);
-
-    int minimumAdd = ui->slider_add->minimum();
-    int minimumProduct = ui->slider_product->minimum();
-
-    ui->slider_add->setValue(minimumAdd);
-    ui->slider_product->setValue(minimumProduct);
     polarPlot->resetScales();
-
-    slider_add_prev = 0;
-    slider_product_prev = 1;
 }
 
 void MainView::on_btn_refresh_clicked()
@@ -366,17 +319,6 @@ void MainView::switchMapProvider()
 {
     QObject *object = map->rootObject();
     QMetaObject::invokeMethod(object, "switchProvider");
-}
-
-void MainView::setAutoScaleMode()
-{
-    if (autoScaleEnabled) {
-        autoScaleEnabled = false;
-        qDebug() << "Autoscale disabled";
-    } else {
-        autoScaleEnabled = true;
-        qDebug() << "Autoscale enabled";
-    }
 }
 
 void MainView::savePreset()
@@ -448,11 +390,6 @@ void MainView::on_btn_startYaw_clicked(bool checked)
         presenter->sendStopRotationRequest();
         ui->btn_startYaw->setText("Rotate");
     }
-}
-
-void MainView::on_sb_radTest_valueChanged(int arg1)
-{
-    correctPolarScales(arg1);
 }
 
 void MainView::writeToFile(const QString &fileName)

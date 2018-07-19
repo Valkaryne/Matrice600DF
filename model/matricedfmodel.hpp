@@ -56,8 +56,6 @@ signals:
     void phaseSamplesReady(const QVector<double> samplesPh);
     void polarSamplesReady(const int az, const double rado, const double radl, const double rads, const double phase);
 
-    void polarScalesCorrector(const double &rad);
-
 private:
     int band;
     double gain;

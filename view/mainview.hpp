@@ -80,7 +80,6 @@ private slots:
     void on_btn_refresh_clicked();
 
     void switchMapProvider();
-    void setAutoScaleMode();
     void savePreset();
     void loadPreset();
 
@@ -101,8 +100,6 @@ private slots:
 
     void on_btn_startYaw_clicked(bool checked);
 
-    void on_sb_radTest_valueChanged(int arg1);
-
 private:
     void writeToFile(const QString &fileName);
     void readFromFile(const QString &fileName);
@@ -119,13 +116,9 @@ private:
     QMenu   *mapMenu;
     QMenu   *settingsMenu;
     QAction *switchProviderAct;
-    QAction *autoScaleAct;
     QAction *savePresetAct;
     QAction *loadPresetAct;
 
-    bool autoScaleEnabled;
-    int slider_add_prev;
-    double slider_product_prev;
     double markerLatitude, markerLongitude;
 
 };

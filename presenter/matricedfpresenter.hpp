@@ -42,7 +42,6 @@ private slots:
     void phaseSamplesPresenter(const QVector<double> samplesPh);
     void polarSamplesPresenter(const int az, const double rado, const double radl, const double rads,
                                const double phase);
-    void polarScalesCorrectionPresenter(const double &rad);
 
     void changeControlAuthorityStatus(QString textToDisplay);
     void changeInitButton(QString textToDisplay, bool success);

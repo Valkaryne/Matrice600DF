@@ -28,8 +28,6 @@ public:
     virtual void connectionDjiVehicleResetted() = 0;
     virtual void updateTelemetryData(const QVector<double> &subscribeData);
 
-    virtual void correctPolarScales(const double &rad) = 0;
-
 protected:
     SpectrumPlot        *amplitudeSpectrumPlot;
     SpectrumPlot        *phaseSpectrumPlot;

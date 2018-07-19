@@ -101,6 +101,10 @@ PolarPlot::PolarPlot(QWidget *parent) :
     curveAmS->setData(dataAmS);
     curveAmS->attach(this);
 
+    dataAm1->setAutoscale(true);
+    dataAm2->setAutoscale(true);
+    dataAmS->setAutoscale(true);
+
     PolarCurveData *dataPh = new PolarCurveData;
     curvePh = new QwtPolarCurve;
     curvePh->setPen(QPen(Qt::magenta));
@@ -116,11 +120,10 @@ PolarPlot::PolarPlot(QWidget *parent) :
     allyDirection->setData(dataAlly);
     allyDirection->attach(this);
 
-    /* testTimer = new QTimer(this);
+    testTimer = new QTimer(this);
     testTimer->setInterval(50);
     connect(testTimer, SIGNAL(timeout()), this, SLOT(testDiagram()));
     testTimer->start();
-    maxima = -1110; */
 }
 
 void PolarPlot::setDisplayStrategy(AmplitudeDisplayStrategy *strategy)
@@ -155,28 +158,15 @@ void PolarPlot::updateAllyDirection(const int az)
     replot();
 }
 
-void PolarPlot::changeAddCoefficient(int x)
+void PolarPlot::changeSharpCoefficient(int x)
 {
     PolarCurveData *dataAm1 = (PolarCurveData*)(curveAm1->data());
     PolarCurveData *dataAm2 = (PolarCurveData*)(curveAm2->data());
     PolarCurveData *dataAmS = (PolarCurveData*)(curveAmS->data());
 
-    setAddScale(dataAm1, x);
-    setAddScale(dataAm2, x);
-    setAddScale(dataAmS, x);
-
-    replot();
-}
-
-void PolarPlot::changeProductCoefficient(double x)
-{
-    PolarCurveData *dataAm1 = (PolarCurveData*)(curveAm1->data());
-    PolarCurveData *dataAm2 = (PolarCurveData*)(curveAm2->data());
-    PolarCurveData *dataAmS = (PolarCurveData*)(curveAmS->data());
-
-    setProductScale(dataAm1, x);
-    setProductScale(dataAm2, x);
-    setProductScale(dataAmS, x);
+    dataAm1->setSharpness(x);
+    dataAm2->setSharpness(x);
+    dataAmS->setSharpness(x);
 
     replot();
 }
@@ -187,44 +177,11 @@ void PolarPlot::resetScales()
     PolarCurveData *dataAm2 = (PolarCurveData*)(curveAm2->data());
     PolarCurveData *dataAmS = (PolarCurveData*)(curveAmS->data());
 
-    int x_add = -dataAm1->add;
-    double x_product = 1.0 / (dataAm1->prod - 1);
-
-    setProductScale(dataAm1, x_product);
-    setProductScale(dataAm2, x_product);
-    setProductScale(dataAmS, x_product);
-
-    setAddScale(dataAm1, x_add);
-    setAddScale(dataAm2, x_add);
-    setAddScale(dataAmS, x_add);
+    dataAm1->resetScales();
+    dataAm2->resetScales();
+    dataAmS->resetScales();
 
     replot();
-}
-
-void PolarPlot::setAddScale(PolarCurveData *data, const double &x)
-{
-    for (int i = 0; i < data->size(); i++) {
-        QwtPointPolar &s = (QwtPointPolar&)data->samples().at(i);
-        s.setRadius(s.radius() + x);
-    }
-
-    data->add += x;
-    qDebug() << "Add: " << data->add;
-}
-
-void PolarPlot::setProductScale(PolarCurveData *data, const double &x)
-{
-    for (int i = 0; i < data->size(); i++) {
-        QwtPointPolar &s = (QwtPointPolar&)data->samples().at(i);
-        s.setRadius(s.radius() * x);
-    }
-
-    if (x > 1)
-        data->prod += 1/x;
-    else if (x < 1)
-        data->prod -= 1/x;
-
-    qDebug() << "Prod: " << data->prod;
 }
 
 void PolarPlot::getDirection(const QwtPointPolar &point)
@@ -268,11 +225,6 @@ void PolarPlot::testDiagram()
     ys = 10*qLn(ys) * M_LOG10E - 60;
 
     updateDiagram(counter, y1, y2, ys, 0);
-
-    if (qAbs(y1) > maxima) {
-        qDebug() << qAbs(y1);
-        maxima = qAbs(y1);
-    }
 
     if (counter > 360)
         counter -= 360;

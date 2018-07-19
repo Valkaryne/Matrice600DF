@@ -100,12 +100,5 @@ void MatriceDFModel::polarSamplesHandler(const QVector<double> samplesAm1, const
     int maxxa = ampl1range.indexOf(rado);
     double phase = phaserange.at(maxxa);
 
-    emit polarScalesCorrector(qAbs(rads));
-
-    /*if (qAbs(rado) > qAbs(radl))
-        emit polarScalesCorrector(qAbs(rado));
-    else
-        emit polarScalesCorrector(qAbs(radl)); */
-
     emit polarSamplesReady(heading, rado, radl, rads, phase);
 }
