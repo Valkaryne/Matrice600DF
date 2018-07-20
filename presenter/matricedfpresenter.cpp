@@ -85,16 +85,6 @@ void MatriceDFPresenter::sendFlightRunCommandRequest(int &commandIndex)
     dji->flightRunCommandRequest(commandIndex);
 }
 
-void MatriceDFPresenter::sendStartRotationRequest(int yawRate)
-{
-    dji->startRotationRequest(yawRate);
-}
-
-void MatriceDFPresenter::sendStopRotationRequest()
-{
-    dji->stopRotationRequest();
-}
-
 void MatriceDFPresenter::sendInitWaypointRequest(const QHash<QString, int> &settings)
 {
     dji->initWaypointRequest(settings);
@@ -113,6 +103,21 @@ void MatriceDFPresenter::sendStartWaypointRequest()
 void MatriceDFPresenter::sendAbortWaypointRequest()
 {
     dji->abortWaypointRequest();
+}
+
+void MatriceDFPresenter::sendInitHotpointRequest(const QVector<double> &coordinates)
+{
+    dji->initHotpointRequest(coordinates);
+}
+
+void MatriceDFPresenter::sendStartHotpointRequest(int yawRate)
+{
+    dji->startHotpointRequest(yawRate);
+}
+
+void MatriceDFPresenter::sendStopHotpointRequest()
+{
+    dji->stopHotpointRequest();
 }
 
 /* Slots */

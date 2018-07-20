@@ -5,13 +5,15 @@ HEADERS += \
     $$PWD/qtosdk.hpp \
     $$PWD/subscribe.hpp \
     $$PWD/waypoint.hpp \
-    $$PWD/flightcontroller.hpp
+    $$PWD/flightcontroller.hpp \
+    $$PWD/hotpoint.hpp
 
 SOURCES += \
     $$PWD/qtosdk.cpp \
     $$PWD/subscribe.cpp \
     $$PWD/waypoint.cpp \
-    $$PWD/flightcontroller.cpp
+    $$PWD/flightcontroller.cpp \
+    $$PWD/hotpoint.cpp
 
 QT += serialport
 

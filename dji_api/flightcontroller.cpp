@@ -6,25 +6,9 @@ using namespace DJI::OSDK;
 
 FlightController::FlightController(Vehicle *vehicle,
                                    QObject *parent)
-    : QObject(parent),
-      command(0, 0, 0, 0, 0)
+    : QObject(parent)
 {
     this->vehicle = vehicle;
-
-    // Set yaw logic according to yaw rate
-    command.flag &= 0xF7;
-    command.flag |= Control::YawLogic::YAW_RATE;
-
-    //autoSend = new QTimer(this);
-    //autoSend->setInterval(100);
-
-    //autoSend = new QTimer();
-    //autoSend->setInterval(50);
-
-    //qDebug() << "This thread: " << this->thread();
-    //qDebug() << "Timer thread: " << autoSend->thread();
-
-    //connect(this->autoSend, SIGNAL(timeout()), this, SLOT(moveSend()));
 }
 
 FlightController::~FlightController() {}
@@ -93,10 +77,4 @@ void FlightController::flightRunCommand(int &commandIndex)
     qDebug() << commandIndex << flightTask;
     vehicle->control->action(flightTask, FlightController::actionCallback,
                              this);
-}
-
-void FlightController::moveSend(int yawRate)
-{
-    command.yaw = yawRate;
-    this->vehicle->control->flightCtrl(command);
 }

@@ -3,7 +3,6 @@
 
 #include <dji_vehicle.hpp>
 #include <QObject>
-#include <QTimer>
 
 class FlightController : public QObject
 {
@@ -18,15 +17,9 @@ public:
                                DJI::OSDK::UserData       userData);
 
     void flightRunCommand(int &commandIndex);
-    void moveSend(int yawRate);
-
-
 
 private:
     DJI::OSDK::Vehicle              *vehicle;
-    DJI::OSDK::Control::CtrlData     command;
-
-    //QTimer  *autoSend;
 };
 
 #endif // FLIGHTCONTROLLER_HPP

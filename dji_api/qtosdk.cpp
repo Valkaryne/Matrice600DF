@@ -9,10 +9,6 @@ QtOsdk::QtOsdk(QObject *parent)
 {
     vehicle = nullptr;
     //qRegisterMetaType<QHash<QString, int>>("QHash<QString, int>");
-
-    autoSend = new QTimer();
-    autoSend->setInterval(100);
-    connect(autoSend, SIGNAL(timeout()), SLOT(rotationCommandSend()));
 }
 
 QtOsdk::~QtOsdk()
@@ -91,8 +87,6 @@ void QtOsdk::activateCallback(Vehicle *vehicle, RecvContainer recvFrame,
         emit sdk->changeActivateButton(QString("ACK Decode Error"), false);
     }
 
-
-
     // Do the stuff the OSDK callback does, since it is private and we cannot call
     // it here
     if (ack_data.data == OpenProtocolCMD::ErrorCode::ActivationACK::SUCCESS &&
@@ -122,16 +116,6 @@ void QtOsdk::flightRunCommandRequest(int &commandIndex)
     flightController->flightRunCommand(commandIndex);
 }
 
-/* void QtOsdk::startRotationRequest(int yawRate)
-{
-    flightController->startRotation(yawRate);
-}
-
-void QtOsdk::stopRotationRequest()
-{
-    flightController->stopRotation();
-} */
-
 void QtOsdk::initWaypointRequest(const QHash<QString, int> &settings)
 {
     waypoint->initWaypoint(settings);
@@ -150,6 +134,21 @@ void QtOsdk::startWaypointRequest()
 void QtOsdk::abortWaypointRequest()
 {
     waypoint->abortWaypoint();
+}
+
+void QtOsdk::initHotpointRequest(const QVector<double> &coordinates)
+{
+    hotpoint->initHotpoint(coordinates);
+}
+
+void QtOsdk::startHotpointRequest(int yawRate)
+{
+    hotpoint->startHotpoint(yawRate);
+}
+
+void QtOsdk::stopHotpointRequest()
+{
+    hotpoint->stopHotpoint();
 }
 
 void QtOsdk::setControlCallback(Vehicle *vehicle, RecvContainer recvFrame,
@@ -208,20 +207,6 @@ void QtOsdk::initComponents()
     this->flightController = new FlightController(this->vehicle, 0);
 
     this->waypoint = new Waypoint(this->vehicle, 0);
-}
 
-void QtOsdk::startRotationRequest(int yawRate)
-{
-    this->yawRate = yawRate;
-    autoSend->start();
-}
-
-void QtOsdk::stopRotationRequest()
-{
-    autoSend->stop();
-}
-
-void QtOsdk::rotationCommandSend()
-{
-    flightController->moveSend(yawRate);
+    this->hotpoint = new Hotpoint(this->vehicle, 0);
 }

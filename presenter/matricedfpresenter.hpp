@@ -28,13 +28,15 @@ public:
     void resetDjiConnection();
 
     void sendFlightRunCommandRequest(int &commandIndex);
-    void sendStartRotationRequest(int yawRate);
-    void sendStopRotationRequest();
 
     void sendInitWaypointRequest(const QHash<QString, int> &settings);
     void sendLoadWaypointRequest(const QHash<QString, int> &settings);
     void sendStartWaypointRequest();
     void sendAbortWaypointRequest();
+
+    void sendInitHotpointRequest(const QVector<double> &coordinates);
+    void sendStartHotpointRequest(int yawRate);
+    void sendStopHotpointRequest();
 
 private slots:
     void amplitudeSamplesPresenter(const QVector<double> samplesAm1, const QVector<double> samplesAm2,

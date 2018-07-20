@@ -212,6 +212,12 @@ void MainView::setPointOnMap(QString lat, QString lng)
 {
     markerLatitude = lat.toDouble();
     markerLongitude = lng.toDouble();
+
+    QVector<double> coordinates;
+    coordinates.append(markerLatitude);
+    coordinates.append(markerLongitude);
+    coordinates.append(ui->sb_wp_altitude->value());
+    presenter->sendInitHotpointRequest(coordinates);
 }
 
 void MainView::makeDirection(const double &direction)
@@ -380,15 +386,15 @@ void MainView::on_btn_runCommand_clicked()
     presenter->sendFlightRunCommandRequest(commandIndex);
 }
 
-void MainView::on_btn_startYaw_clicked(bool checked)
+void MainView::on_btn_hp_start_clicked(bool checked)
 {
     if (checked) {
         int yawRate = ui->sb_yawRate->value();
-        presenter->sendStartRotationRequest(yawRate);
-        ui->btn_startYaw->setText("Stop");
+        presenter->sendStartHotpointRequest(yawRate);
+        ui->btn_hp_start->setText("Stop");
     } else {
-        presenter->sendStopRotationRequest();
-        ui->btn_startYaw->setText("Rotate");
+        presenter->sendStopHotpointRequest();
+        ui->btn_hp_start->setText("Rotate");
     }
 }
 

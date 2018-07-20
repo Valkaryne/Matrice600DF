@@ -9,6 +9,7 @@
 #include <subscribe.hpp>
 #include <flightcontroller.hpp>
 #include <waypoint.hpp>
+#include <hotpoint.hpp>
 
 class QtOsdk : public QObject
 {
@@ -45,11 +46,14 @@ public:
 
     void flightRunCommandRequest(int &commandIndex);
 
-
     void initWaypointRequest(const QHash<QString, int> &settings);
     void loadWaypointRequest(const QHash<QString, int> &settings);
     void startWaypointRequest();
     void abortWaypointRequest();
+
+    void initHotpointRequest(const QVector<double> &coordinates);
+    void startHotpointRequest(int yawRate);
+    void stopHotpointRequest();
 
 signals:
     void changeControlAuthorityStatus(QString textToDisplay);
@@ -58,23 +62,15 @@ signals:
     void changeConnectionButtons();
     void receiveTelemetryData(const QVector<double> &subscribeData);
 
-
-public slots:
-    void rotationCommandSend();
-    void startRotationRequest(int yawRate);
-    void stopRotationRequest();
-
 private:
     DJI::OSDK::Vehicle  *vehicle;
     Subscribe           *subscribe;
     FlightController    *flightController;
     Waypoint            *waypoint;
+    Hotpoint            *hotpoint;
 
     QString appIDInput;
     QString keyInput;
-
-    int yawRate;
-    QTimer *autoSend;
 };
 
 #endif // QTOSDK_HPP
