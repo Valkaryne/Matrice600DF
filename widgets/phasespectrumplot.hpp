@@ -13,6 +13,7 @@ public:
         Q_UNUSED(xleft)
         Q_UNUSED(xright)
     }
+    void setPhaseCorrection(int phaseCorrection);
 
     void updateCurve(const QVector<double> &samplesPh);
 

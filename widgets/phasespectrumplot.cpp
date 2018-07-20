@@ -39,6 +39,11 @@ void PhaseSpectrumPlot::setCentralFrequency(double cntrFrequency)
     setAxisScale(QwtPlot::xBottom, xleft, xright);
 }
 
+void PhaseSpectrumPlot::setPhaseCorrection(int phaseCorrection)
+{
+    wheel->setValue(phaseCorrection);
+}
+
 void PhaseSpectrumPlot::updateCurve(const QVector<double> &samplesPh)
 {
     QVector<double> frequency;

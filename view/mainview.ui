@@ -865,7 +865,7 @@ QRadioButton::indicator::checked {
           </widget>
          </item>
          <item row="1" column="2">
-          <widget class="QPushButton" name="btn_startYaw">
+          <widget class="QPushButton" name="btn_hp_start">
            <property name="text">
             <string>Rotate</string>
            </property>
@@ -1039,7 +1039,7 @@ QRadioButton::indicator::checked {
      <x>0</x>
      <y>0</y>
      <width>966</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

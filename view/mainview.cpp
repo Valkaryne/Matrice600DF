@@ -442,6 +442,7 @@ QVector<int> MainView::getSettingsArray()
     settings.append(ui->sb_gain->value());
     settings.append(ui->sb_temp_prod->value());
     settings.append(ui->sb_temp_add->value());
+    settings.append(ui->lbltest_phase->text().remove(0,7).toInt());
 
     return settings;
 }
@@ -452,4 +453,6 @@ void MainView::setSettingsArray(QVector<int> settings)
     ui->sb_gain->setValue(settings.at(1));
     ui->sb_temp_prod->setValue(settings.at(2));
     ui->sb_temp_add->setValue(settings.at(3));
+
+    getPhaseSpectrumPlot()->setPhaseCorrection(settings.at(4));
 }

@@ -98,8 +98,8 @@ private slots:
 
     void on_btn_runCommand_clicked();
 
-    void on_btn_startYaw_clicked(bool checked);
-
+    void on_btn_hp_start_clicked(bool checked);
+    
 private:
     void writeToFile(const QString &fileName);
     void readFromFile(const QString &fileName);
