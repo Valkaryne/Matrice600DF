@@ -27,7 +27,7 @@ void Hotpoint::hotpointReadCallback(Vehicle *vehicle, RecvContainer recvFrame,
     qDebug() << "Yaw mode: " << vehicle->missionManager->hpMission->getData().yawMode;
 }
 
-void Hotpoint::initHotpoint(QVector<double> coordinates)
+void Hotpoint::initHotpoint(const QVector<double> &coordinates)
 {
     this->latitude = coordinates.at(0) * DEG2RAD;
     this->longitude = coordinates.at(1) * DEG2RAD;
