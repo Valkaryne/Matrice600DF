@@ -15,6 +15,7 @@ Item {
     property var drone
 
     property MapPolyline beam
+    property MapPolyline droneVector
     property variant beams : []
 
     property real dLng : 0.000008983152841195396 * 1.69;
@@ -40,9 +41,11 @@ Item {
         marker = Qt.createQmlObject('Marker {}', map)
         drone = Qt.createQmlObject('Drone {}', map)
         homePoint = Qt.createQmlObject('Home {}', map)
+        droneVector = Qt.createQmlObject('import QtLocation 5.11; MapPolyline {}', map)
         map.addMapItem(marker)
         map.addMapItem(drone)
         map.addMapItem(homePoint)
+        map.addMapItem(droneVector)
         marker.z = map.z + 1
         console.log("Map is initilized")
     }
@@ -52,6 +55,17 @@ Item {
         drone.coordinate.latitude = lat;
         drone.coordinate.longitude = lng;
         drone.rotation = heading;
+
+        var stLat = lat;
+        var stLng = lng;
+        var x0 = stLat / dLat;
+        var y0 = stLng / dLng;
+        var angle = heading * Math.PI / 180;
+        var x1 = Math.cos(angle)*3000 + x0;
+        var y1 = Math.sin(angle)*3000 + y0;
+        var endLat = x1 * dLat;
+        var endLng = y1 * dLng;
+        droneVector.path = [ { latitude: stLat, longitude: stLng }, { latitude: endLat, longitude: endLng } ]
     }
 
     function makeBeam(direction)
@@ -112,6 +126,9 @@ Item {
 
         homePoint = Qt.createQmlObject('Home {}', map)
         map.addMapItem(homePoint)
+
+        droneVector = Qt.createQmlObject('import QtLocation 5.11; MapPolyline {}', map)
+        map.addMapItem(droneVector)
 
         console.log("Provider was changed to " + map.plugin.name)
     }
