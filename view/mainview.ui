@@ -718,7 +718,7 @@ QRadioButton::indicator::checked {
             <number>15</number>
            </property>
            <property name="value">
-            <number>10</number>
+            <number>15</number>
            </property>
           </widget>
          </item>
@@ -861,6 +861,9 @@ QRadioButton::indicator::checked {
            </property>
            <property name="maximum">
             <number>36</number>
+           </property>
+           <property name="value">
+            <number>15</number>
            </property>
           </widget>
          </item>
