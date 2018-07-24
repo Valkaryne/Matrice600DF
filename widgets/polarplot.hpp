@@ -37,12 +37,14 @@ public:
     // WARNING: DELETE AFTER TEST
 private slots:
     void testDiagram();
-
-public slots:
     void getDirection(const QwtPointPolar &point);
+    void enlightSector(const QwtPointPolar &point);
 
 signals:
     void setDirectionRequest(const double &direction);
+
+private:
+    double estimateZeroPhase(const double azimuth, const double radius);
 
 public:
     QwtPolarCurve *curveAm1, *curveAm2, *curveAmS, *curvePh;
@@ -50,6 +52,8 @@ public:
 private:
     QwtPolarCurve *phaseMarker;
     QwtPolarCurve *allyDirection;
+    QwtPolarCurve *dfVector;
+    QwtPolarCurve *dfSector;
 
     QwtPolarPicker *polarPicker;
 
@@ -57,7 +61,7 @@ private:
 
     // WARNING: DELETE AFTER TEST
     QTimer  *testTimer;
-    int counter;
+    double counter;
 };
 
 class PolarCurveData : public QwtArraySeriesData<QwtPointPolar>
@@ -108,6 +112,18 @@ public:
                 yInterval |= sample.radius();
             }
         }
+    }
+
+    QVector<QwtPointPolar> getSamplesWithinSector(const double azimuth, const double radius)
+    {
+        QVector<QwtPointPolar> samples;
+        foreach (QwtPointPolar sample, d_samples) {
+            if ((sample.azimuth() >= azimuth - 30) && (sample.azimuth() <= azimuth + 30)) {
+                if ((sample.radius() >= radius - 45) && (sample.radius() <= radius + 45))
+                    samples.append(sample);
+            }
+        }
+        return samples;
     }
 
     void setAutoscale(bool autoscaleEnabled) {
