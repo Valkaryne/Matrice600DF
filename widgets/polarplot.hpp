@@ -44,7 +44,7 @@ signals:
     void setDirectionRequest(const double &direction);
 
 private:
-    double estimateZeroPhase(const double azimuth, const double radius);
+    double estimateZeroPhase(const double azimuth);
 
 public:
     QwtPolarCurve *curveAm1, *curveAm2, *curveAmS, *curvePh;
@@ -114,7 +114,7 @@ public:
         }
     }
 
-    QVector<QwtPointPolar> getSamplesWithinSector(const double azimuth, const double radius)
+    QVector<QwtPointPolar> getSamplesWithinSector(const double azimuth)
     {
         QVector<QwtPointPolar> samples;
         foreach (QwtPointPolar sample, d_samples) {
