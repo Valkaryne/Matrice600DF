@@ -137,10 +137,10 @@ PolarPlot::PolarPlot(QWidget *parent) :
     dfSector->setData(dataSector);
     dfSector->attach(this);
 
-    testTimer = new QTimer(this);
+    /* testTimer = new QTimer(this);
     testTimer->setInterval(25);
     connect(testTimer, SIGNAL(timeout()), this, SLOT(testDiagram()));
-    testTimer->start();
+    testTimer->start(); */
 }
 
 void PolarPlot::setDisplayStrategy(AmplitudeDisplayStrategy *strategy)
