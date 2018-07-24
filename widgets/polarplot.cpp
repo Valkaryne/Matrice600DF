@@ -208,17 +208,17 @@ void PolarPlot::enlightSector(const QwtPointPolar &point)
 
     PolarCurveData *data = (PolarCurveData*)(dfSector->data());
     QVector<QwtPointPolar> samples;
-    for (double i = radius - 45; i < radius + 45; i++) {
-        samples.append(QwtPointPolar(azimuth - 30, i));
+    for (double i = 0; i < 361; i++) {
+        samples.append(QwtPointPolar(azimuth - 20, i));
     }
-    for (double i = radius - 45; i < radius + 45; i++) {
-        samples.append(QwtPointPolar(azimuth + 30, i));
+    for (double i = 0; i < 361; i++) {
+        samples.append(QwtPointPolar(azimuth + 20, i));
     }
-    for (double i = azimuth - 30; i < azimuth + 30; i++) {
-        samples.append(QwtPointPolar(i, radius - 45));
+    for (double i = azimuth - 20; i < azimuth + 20; i++) {
+        samples.append(QwtPointPolar(i, 0));
     }
-    for (double i = azimuth - 30; i < azimuth + 30; i++) {
-        samples.append(QwtPointPolar(i, radius + 45));
+    for (double i = azimuth - 20; i < azimuth + 20; i++) {
+        samples.append(QwtPointPolar(i, 360));
     }
     data->setSamples(samples);
 
@@ -234,6 +234,9 @@ void PolarPlot::getDirection(const QwtPointPolar &point)
     qDebug() << zeroPhase;
 
     if (zeroPhase < 0.1) {
+        qDebug() << "Nope";
+        return;
+    } else if ((zeroPhase < azimuth - 20) || (zeroPhase > azimuth + 20)) {
         qDebug() << "Nope";
         return;
     }
@@ -275,7 +278,7 @@ double PolarPlot::estimateZeroPhase(const double azimuth, const double radius)
     double b = (rads_sum - a*azs_sum)/n;
 
     QVector<QwtPointPolar> zeroSamples;
-    for (int az = azimuth - 30; az <= azimuth + 30; az++) {
+    for (int az = azimuth - 20; az <= azimuth + 20; az++) {
         int rad = a*az+b;
         zeroSamples.append(QwtPointPolar(az, rad));
     }
@@ -287,7 +290,6 @@ double PolarPlot::estimateZeroPhase(const double azimuth, const double radius)
 
     /* PolarCurveData *dataV = (PolarCurveData*)(dfVector->data());
     dataV->setSamples(zeroSamples);
-    qDebug() << "Samples: " << zeroSamples;
     replot(); */
 
     //qDebug() << "Size: " << samplesWithinSector.size();
