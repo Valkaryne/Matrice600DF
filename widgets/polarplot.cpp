@@ -228,9 +228,8 @@ void PolarPlot::enlightSector(const QwtPointPolar &point)
 void PolarPlot::getDirection(const QwtPointPolar &point)
 {
     double azimuth = point.azimuth();
-    double radius = point.radius();
 
-    double zeroPhase = estimateZeroPhase(azimuth, radius);
+    double zeroPhase = estimateZeroPhase(azimuth);
     qDebug() << zeroPhase;
 
     if (zeroPhase < 0.1) {
@@ -240,7 +239,6 @@ void PolarPlot::getDirection(const QwtPointPolar &point)
         qDebug() << "Nope";
         return;
     }
-
 
     PolarCurveData *data = (PolarCurveData*)(dfVector->data());
     data->clear();
@@ -252,12 +250,12 @@ void PolarPlot::getDirection(const QwtPointPolar &point)
     emit setDirectionRequest(zeroPhase);
 }
 
-double PolarPlot::estimateZeroPhase(const double azimuth, const double radius)
+double PolarPlot::estimateZeroPhase(const double azimuth)
 {
     double zeroPhase;
     PolarCurveData *data = (PolarCurveData*)(curvePh->data());
 
-    QVector<QwtPointPolar> samplesWithinSector = data->getSamplesWithinSector(azimuth, radius);
+    QVector<QwtPointPolar> samplesWithinSector = data->getSamplesWithinSector(azimuth);
     QVector<double> azs, rads;
     QVector<double> azrad, sqaz;
 
