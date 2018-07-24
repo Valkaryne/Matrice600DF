@@ -38,13 +38,13 @@ public:
 private slots:
     void testDiagram();
     void getDirection(const QwtPointPolar &point);
-    void enlightSector(const QwtPointPolar &point);
 
 signals:
     void setDirectionRequest(const double &direction);
 
 private:
     double estimateZeroPhase(const double azimuth);
+    void enlightSector(const double azimuth);
 
 public:
     QwtPolarCurve *curveAm1, *curveAm2, *curveAmS, *curvePh;

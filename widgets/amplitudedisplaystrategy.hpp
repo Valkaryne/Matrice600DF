@@ -19,6 +19,8 @@ public:
 
     virtual void setMaxHoldEnabled(bool enable) = 0;
 
+    virtual double getPowerMaximum() = 0;
+
     void setExpCoefficient(double expCoeff) {
         if (this->expCoeff != expCoeff)
             this->expCoeff = expCoeff;
