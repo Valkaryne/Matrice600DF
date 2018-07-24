@@ -118,12 +118,24 @@ public:
     {
         QVector<QwtPointPolar> samples;
         foreach (QwtPointPolar sample, d_samples) {
-            if ((sample.azimuth() >= azimuth - 30) && (sample.azimuth() <= azimuth + 30)) {
-                if ((sample.radius() >= radius - 45) && (sample.radius() <= radius + 45))
+            if ((sample.azimuth() >= azimuth - 20) && (sample.azimuth() <= azimuth + 20)) {
+                if ((sample.radius() >= 0) && (sample.radius() <= 360))
                     samples.append(sample);
             }
         }
         return samples;
+    }
+
+    double getPowerMaximum() {
+        double maximum = -1000;
+        double powerAzimuth = 0;
+        foreach (QwtPointPolar sample, d_samples) {
+            if (sample.radius() > maximum) {
+                maximum = sample.radius();
+                powerAzimuth = sample.azimuth();
+            }
+        }
+        return powerAzimuth;
     }
 
     void setAutoscale(bool autoscaleEnabled) {
