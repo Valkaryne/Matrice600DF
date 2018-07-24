@@ -54,3 +54,12 @@ void SummaryStrategy::update(const int &azHeading, const double &radAm1, const d
     dataPh->append(QwtPointPolar(azHeading, radPh));
     polarPlot->replot();
 }
+
+double SummaryStrategy::getPowerMaximum()
+{
+    double maximumAz = 0;
+    PolarCurveData *data = (PolarCurveData*)(polarPlot->curveAmS->data());
+    maximumAz = data->getPowerMaximum();
+    qDebug() << maximumAz;
+    return maximumAz;
+}

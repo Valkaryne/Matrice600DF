@@ -48,8 +48,8 @@ PolarPlot::PolarPlot(QWidget *parent) :
 
     connect(polarPicker,SIGNAL(appended(const QwtPointPolar &)),
             SLOT(getDirection(const QwtPointPolar &)));
-    connect(polarPicker, SIGNAL(appended(const QwtPointPolar &)),
-            SLOT(enlightSector(const QwtPointPolar &)));
+    /* connect(polarPicker, SIGNAL(appended(const QwtPointPolar &)),
+            SLOT(enlightSector(const QwtPointPolar &))); */
 
     /* Marker */
 
@@ -201,10 +201,9 @@ void PolarPlot::resetScales()
     replot();
 }
 
-void PolarPlot::enlightSector(const QwtPointPolar &point)
+void PolarPlot::enlightSector(const double azimuth)
 {
-    double azimuth = point.azimuth();
-    double radius = point.radius();
+    //double azimuth = point.azimuth();
 
     PolarCurveData *data = (PolarCurveData*)(dfSector->data());
     QVector<QwtPointPolar> samples;
@@ -228,6 +227,10 @@ void PolarPlot::enlightSector(const QwtPointPolar &point)
 void PolarPlot::getDirection(const QwtPointPolar &point)
 {
     double azimuth = point.azimuth();
+
+    //qDebug() << "Azimuth: " << strategy->getPowerMaximum();
+    azimuth = strategy->getPowerMaximum();
+    enlightSector(azimuth);
 
     double zeroPhase = estimateZeroPhase(azimuth);
     qDebug() << zeroPhase;
