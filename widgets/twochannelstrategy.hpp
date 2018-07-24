@@ -21,6 +21,8 @@ public:
         else
             plot->curveMax->detach();
     }
+
+    double getPowerMaximum();
 };
 
 #endif // TWOCHANNELSTRATEGY_HPP

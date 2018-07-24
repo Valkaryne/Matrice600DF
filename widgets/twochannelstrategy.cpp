@@ -57,3 +57,26 @@ void TwoChannelStrategy::update(const int &azHeading, const double &radAm1,
     polarPlot->replot();
 }
 
+double TwoChannelStrategy::getPowerMaximum()
+{
+    double maximumAz1 = 0;
+    double maximumAz2 = 0;
+    double maximumAz = 0;
+    PolarCurveData *data1 = (PolarCurveData*)(polarPlot->curveAm1->data());
+    maximumAz1 = data1->getPowerMaximum();
+    PolarCurveData *data2 = (PolarCurveData*)(polarPlot->curveAm2->data());
+    maximumAz2 = data2->getPowerMaximum();
+
+    bool zeroCondition = ((maximumAz1 > 315) && (maximumAz2 < 45))
+            || ((maximumAz2 > 315) && (maximumAz1 < 45));
+
+    if (zeroCondition)
+        maximumAz = (maximumAz1 + maximumAz2 - 360) / 2;
+    else
+        maximumAz = (maximumAz1 + maximumAz2) / 2;
+
+    if (maximumAz < 0) maximumAz += 360;
+
+    return maximumAz;
+}
+
