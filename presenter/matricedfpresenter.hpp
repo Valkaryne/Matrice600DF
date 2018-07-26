@@ -28,6 +28,7 @@ public:
     void resetDjiConnection();
 
     void sendFlightRunCommandRequest(int &commandIndex);
+    void sendFlightControlRequest(QChar control);
 
     void sendInitWaypointRequest(const QHash<QString, int> &settings);
     void sendLoadWaypointRequest(const QHash<QString, int> &settings);

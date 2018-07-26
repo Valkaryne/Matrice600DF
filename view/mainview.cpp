@@ -280,6 +280,13 @@ void MainView::on_bgr_modes_buttonClicked(QAbstractButton *button)
     }
 }
 
+void MainView::on_bgr_controls_buttonClicked(QAbstractButton *button)
+{
+    QChar control = button->text().at(0);
+    //qDebug() << control;
+    presenter->sendFlightControlRequest(control);
+}
+
 void MainView::on_btn_maxHold_clicked(bool checked)
 {
     AmplitudeSpectrumPlot *plot = getAmplitudeSpectrumPlot();
