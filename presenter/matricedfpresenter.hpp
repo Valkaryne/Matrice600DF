@@ -32,6 +32,14 @@ public:
     void sendStableYawRequest(int direction);
     void sendStablePitchRequest(int direction);
     void sendStableRollRequest(int direction);
+    void sendSlowThrustRequest(int direction);
+    void sendSlowYawRequest(int direction);
+    void sendSlowPitchRequest(int direction);
+    void sendSlowRollRequest(int direction);
+    void sendFastThrustRequest(int direction);
+    void sendFastYawRequest(int direction);
+    void sendFastPitchRequest(int direction);
+    void sendFastRollRequest(int direction);
     void sendResetThrust();
     void sendResetYaw();
     void sendResetPitch();

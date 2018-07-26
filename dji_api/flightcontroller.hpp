@@ -22,6 +22,14 @@ public:
     void stableYaw(int &direction);
     void stablePitch(int &direction);
     void stableRoll(int &direction);
+    void slowThrust(int &direction);
+    void slowYaw(int &direction);
+    void slowPitch(int &direction);
+    void slowRoll(int &direction);
+    void fastThrust(int &direction);
+    void fastYaw(int &direction);
+    void fastPitch(int &direction);
+    void fastRoll(int &direction);
     void resetThrust();
     void resetYaw();
     void resetPitch();
@@ -35,7 +43,15 @@ private:
 
     int stableHorizontalVelocity = 5;
     int stableVerticalVelocity = 3;
-    int stableYawRate = 9;
+    int stableYawRate = 12;
+
+    int slowHorizontalVelocity = 3;
+    int slowVerticalVelocity = 1;
+    int slowYawRate = 9;
+
+    int fastHorizontalVelocity = 7;
+    int fastVerticalVelocity = 5;
+    int fastYawRate = 15;
 
     //QTimer  *autoSend;
 };

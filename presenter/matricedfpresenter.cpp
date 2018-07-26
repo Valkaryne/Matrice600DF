@@ -105,6 +105,46 @@ void MatriceDFPresenter::sendStableRollRequest(int direction)
     dji->stableRollRequest(direction);
 }
 
+void MatriceDFPresenter::sendSlowThrustRequest(int direction)
+{
+    dji->slowThrustRequest(direction);
+}
+
+void MatriceDFPresenter::sendSlowYawRequest(int direction)
+{
+    dji->slowYawRequest(direction);
+}
+
+void MatriceDFPresenter::sendSlowPitchRequest(int direction)
+{
+    dji->slowPitchRequest(direction);
+}
+
+void MatriceDFPresenter::sendSlowRollRequest(int direction)
+{
+    dji->slowRollRequest(direction);
+}
+
+void MatriceDFPresenter::sendFastThrustRequest(int direction)
+{
+    dji->fastThrustRequest(direction);
+}
+
+void MatriceDFPresenter::sendFastYawRequest(int direction)
+{
+    dji->fastYawRequest(direction);
+}
+
+void MatriceDFPresenter::sendFastPitchRequest(int direction)
+{
+    dji->fastPitchRequest(direction);
+}
+
+void MatriceDFPresenter::sendFastRollRequest(int direction)
+{
+    dji->fastRollRequest(direction);
+}
+
 void MatriceDFPresenter::sendResetThrust()
 {
     dji->resetThrust();

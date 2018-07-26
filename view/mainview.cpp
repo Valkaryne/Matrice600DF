@@ -183,21 +183,61 @@ void MainView::keyPressEvent(QKeyEvent *event)
         presenter->sendStablePitchRequest(-1);
         presenter->sendStableRollRequest(1);
     } else if (key_W) {
-        presenter->sendStableThrustRequest(1);
+        if (event->modifiers().testFlag(Qt::ShiftModifier))
+            presenter->sendFastThrustRequest(1);
+        else if (event->modifiers().testFlag(Qt::ControlModifier))
+            presenter->sendSlowThrustRequest(1);
+        else
+            presenter->sendStableThrustRequest(1);
     } else if (key_A) {
-        presenter->sendStableYawRequest(-1);
+        if (event->modifiers().testFlag(Qt::ShiftModifier))
+            presenter->sendFastYawRequest(-1);
+        else if (event->modifiers().testFlag(Qt::ControlModifier))
+            presenter->sendSlowYawRequest(-1);
+        else
+            presenter->sendStableYawRequest(-1);
     } else if (key_S) {
-        presenter->sendStableThrustRequest(-1);
+        if (event->modifiers().testFlag(Qt::ShiftModifier))
+            presenter->sendFastThrustRequest(-1);
+        else if (event->modifiers().testFlag(Qt::ControlModifier))
+            presenter->sendSlowThrustRequest(-1);
+        else
+            presenter->sendStableThrustRequest(-1);
     } else if (key_D) {
-        presenter->sendStableYawRequest(1);
+        if (event->modifiers().testFlag(Qt::ShiftModifier))
+            presenter->sendFastYawRequest(1);
+        else if (event->modifiers().testFlag(Qt::ControlModifier))
+            presenter->sendSlowYawRequest(1);
+        else
+            presenter->sendStableYawRequest(1);
     } else if (key_I) {
-        presenter->sendStablePitchRequest(1);
+        if (event->modifiers().testFlag(Qt::ShiftModifier))
+            presenter->sendFastPitchRequest(1);
+        else if (event->modifiers().testFlag(Qt::ControlModifier))
+            presenter->sendSlowPitchRequest(1);
+        else
+            presenter->sendStablePitchRequest(1);
     } else if (key_J) {
-        presenter->sendStableRollRequest(-1);
+        if (event->modifiers().testFlag(Qt::ShiftModifier))
+            presenter->sendFastRollRequest(-1);
+        else if (event->modifiers().testFlag(Qt::ControlModifier))
+            presenter->sendSlowRollRequest(-1);
+        else
+            presenter->sendStableRollRequest(-1);
     } else if (key_K) {
-        presenter->sendStablePitchRequest(-1);
+        if (event->modifiers().testFlag(Qt::ShiftModifier))
+            presenter->sendFastPitchRequest(-1);
+        else if (event->modifiers().testFlag(Qt::ControlModifier))
+            presenter->sendSlowPitchRequest(-1);
+        else
+            presenter->sendStablePitchRequest(-1);
     } else if (key_L) {
-        presenter->sendStableRollRequest(1);
+        if (event->modifiers().testFlag(Qt::ShiftModifier))
+            presenter->sendFastRollRequest(1);
+        else if (event->modifiers().testFlag(Qt::ControlModifier))
+            presenter->sendSlowRollRequest(1);
+        else
+            presenter->sendStableRollRequest(1);
     }
 }
 

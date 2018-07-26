@@ -142,6 +142,46 @@ void QtOsdk::stableRollRequest(int &direction)
     flightController->stableRoll(direction);
 }
 
+void QtOsdk::slowThrustRequest(int &direction)
+{
+    flightController->slowThrust(direction);
+}
+
+void QtOsdk::slowYawRequest(int &direction)
+{
+    flightController->slowYaw(direction);
+}
+
+void QtOsdk::slowPitchRequest(int &direction)
+{
+    flightController->slowPitch(direction);
+}
+
+void QtOsdk::slowRollRequest(int &direction)
+{
+    flightController->slowRoll(direction);
+}
+
+void QtOsdk::fastThrustRequest(int &direction)
+{
+    flightController->fastThrust(direction);
+}
+
+void QtOsdk::fastYawRequest(int &direction)
+{
+    flightController->fastYaw(direction);
+}
+
+void QtOsdk::fastPitchRequest(int &direction)
+{
+    flightController->fastPitch(direction);
+}
+
+void QtOsdk::fastRollRequest(int &direction)
+{
+    flightController->fastRoll(direction);
+}
+
 void QtOsdk::resetThrust()
 {
     flightController->resetThrust();

@@ -117,6 +117,46 @@ void FlightController::stableRoll(int &direction)
     command.y = stableHorizontalVelocity * direction;
 }
 
+void FlightController::slowThrust(int &direction)
+{
+    command.z = slowVerticalVelocity * direction;
+}
+
+void FlightController::slowYaw(int &direction)
+{
+    command.yaw = slowYawRate * direction;
+}
+
+void FlightController::slowPitch(int &direction)
+{
+    command.x = slowHorizontalVelocity * direction;
+}
+
+void FlightController::slowRoll(int &direction)
+{
+    command.y = slowHorizontalVelocity * direction;
+}
+
+void FlightController::fastThrust(int &direction)
+{
+    command.z = fastVerticalVelocity * direction;
+}
+
+void FlightController::fastYaw(int &direction)
+{
+    command.yaw = fastYawRate * direction;
+}
+
+void FlightController::fastPitch(int &direction)
+{
+    command.x = fastHorizontalVelocity * direction;
+}
+
+void FlightController::fastRoll(int &direction)
+{
+    command.y = fastHorizontalVelocity * direction;
+}
+
 void FlightController::resetThrust()
 {
     command.z = 0;
