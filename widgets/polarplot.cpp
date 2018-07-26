@@ -235,7 +235,7 @@ void PolarPlot::getDirection(const QwtPointPolar &point)
     double zeroPhase = estimateZeroPhase(azimuth);
     qDebug() << zeroPhase;
 
-    if (zeroPhase < 0.1) {
+    if (zeroPhase < 0) {
         qDebug() << "Nope";
         return;
     } else if ((zeroPhase < azimuth - 20) || (zeroPhase > azimuth + 20)) {
@@ -284,10 +284,25 @@ double PolarPlot::estimateZeroPhase(const double azimuth)
         zeroSamples.append(QwtPointPolar(az, rad));
     }
 
-     foreach (QwtPointPolar sample, zeroSamples) {
-        if ((sample.radius() <= 181) && (sample.radius() >= 179))
-            zeroPhase = sample.azimuth();
-    }
+     /* foreach (QwtPointPolar sample, zeroSamples) {
+         if (sample.radius() == 180) {
+             zeroPhase = sample.azimuth();
+             return zeroPhase;
+         } else if ((sample.radius() <= 181) && (sample.radius() >= 179)) {
+             zeroPhase = sample.azimuth();
+             return zeroPhase;
+         } else if ((sample.radius() <= 182) && (sample.radius() >= 178))
+             zeroPhase = sample.azimuth();
+    } */
+
+     for (int i = 0; i <= 3; i++) {
+         foreach (QwtPointPolar sample, zeroSamples) {
+             if ((sample.radius() <= 180 + i) && (sample.radius() >= 180 - i)) {
+                 zeroPhase = sample.azimuth();
+                 return zeroPhase;
+             }
+         }
+     }
 
     /* PolarCurveData *dataV = (PolarCurveData*)(dfVector->data());
     dataV->setSamples(zeroSamples);
@@ -295,7 +310,7 @@ double PolarPlot::estimateZeroPhase(const double azimuth)
 
     //qDebug() << "Size: " << samplesWithinSector.size();
     //qDebug() << "Samples: " << samplesWithinSector;
-    return zeroPhase;
+    return -1;
 }
 
 // WARNING: DELETE AFTER TEST
