@@ -122,6 +122,46 @@ void QtOsdk::flightRunCommandRequest(int &commandIndex)
     flightController->flightRunCommand(commandIndex);
 }
 
+void QtOsdk::stableThrustRequest(int &direction)
+{
+    flightController->stableThrust(direction);
+}
+
+void QtOsdk::stableYawRequest(int &direction)
+{
+    flightController->stableYaw(direction);
+}
+
+void QtOsdk::stablePitchRequest(int &direction)
+{
+    flightController->stablePitch(direction);
+}
+
+void QtOsdk::stableRollRequest(int &direction)
+{
+    flightController->stableRoll(direction);
+}
+
+void QtOsdk::resetThrust()
+{
+    flightController->resetThrust();
+}
+
+void QtOsdk::resetYaw()
+{
+    flightController->resetYaw();
+}
+
+void QtOsdk::resetPitch()
+{
+    flightController->resetPitch();
+}
+
+void QtOsdk::resetRoll()
+{
+    flightController->resetRoll();
+}
+
 void QtOsdk::flightControlRequest(QChar control)
 {
     flightController->setControls(control);

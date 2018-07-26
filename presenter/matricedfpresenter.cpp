@@ -85,6 +85,46 @@ void MatriceDFPresenter::sendFlightRunCommandRequest(int &commandIndex)
     dji->flightRunCommandRequest(commandIndex);
 }
 
+void MatriceDFPresenter::sendStableThrustRequest(int direction)
+{
+    dji->stableThrustRequest(direction);
+}
+
+void MatriceDFPresenter::sendStableYawRequest(int direction)
+{
+    dji->stableYawRequest(direction);
+}
+
+void MatriceDFPresenter::sendStablePitchRequest(int direction)
+{
+    dji->stablePitchRequest(direction);
+}
+
+void MatriceDFPresenter::sendStableRollRequest(int direction)
+{
+    dji->stableRollRequest(direction);
+}
+
+void MatriceDFPresenter::sendResetThrust()
+{
+    dji->resetThrust();
+}
+
+void MatriceDFPresenter::sendResetYaw()
+{
+    dji->resetYaw();
+}
+
+void MatriceDFPresenter::sendResetPitch()
+{
+    dji->resetPitch();
+}
+
+void MatriceDFPresenter::sendResetRoll()
+{
+    dji->resetRoll();
+}
+
 void MatriceDFPresenter::sendFlightControlRequest(QChar control)
 {
     dji->flightControlRequest(control);

@@ -46,6 +46,14 @@ public:
     void resetConnection();
 
     void flightRunCommandRequest(int &commandIndex);
+    void stableThrustRequest(int &direction);
+    void stableYawRequest(int &direction);
+    void stablePitchRequest(int &direction);
+    void stableRollRequest(int &direction);
+    void resetThrust();
+    void resetYaw();
+    void resetPitch();
+    void resetRoll();
     void flightControlRequest(QChar control);
 
     void initWaypointRequest(const QHash<QString, int> &settings);

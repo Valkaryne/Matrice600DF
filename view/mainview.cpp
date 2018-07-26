@@ -69,14 +69,6 @@ MainView::~MainView()
 void MainView::keyPressEvent(QKeyEvent *event)
 {
     pressedKeys += event->key();
-}
-
-void MainView::keyReleaseEvent(QKeyEvent *event)
-{
-    if (event->isAutoRepeat())
-        return;
-
-    pressedKeys -= event->key();
 
     bool key_W = pressedKeys.contains(Qt::Key_W);
     bool key_WA = pressedKeys.contains(Qt::Key_W) && pressedKeys.contains(Qt::Key_A);
@@ -118,6 +110,118 @@ void MainView::keyReleaseEvent(QKeyEvent *event)
 
     bool key_L = pressedKeys.contains(Qt::Key_L);
 
+    if (key_WA) {
+        presenter->sendStableThrustRequest(1);
+        presenter->sendStableYawRequest(-1);
+    } else if (key_WD) {
+        presenter->sendStableThrustRequest(1);
+        presenter->sendStableYawRequest(1);
+    } else if (key_WI) {
+        presenter->sendStableThrustRequest(1);
+        presenter->sendStablePitchRequest(1);
+    } else if (key_WJ) {
+        presenter->sendStableThrustRequest(1);
+        presenter->sendStableRollRequest(-1);
+    } else if (key_WK) {
+        presenter->sendStableThrustRequest(1);
+        presenter->sendStablePitchRequest(-1);
+    } else if (key_WL) {
+        presenter->sendStableThrustRequest(1);
+        presenter->sendStableRollRequest(1);
+    } else if (key_AS) {
+        presenter->sendStableYawRequest(-1);
+        presenter->sendStableThrustRequest(-1);
+    } else if (key_AI) {
+        presenter->sendStableYawRequest(-1);
+        presenter->sendStablePitchRequest(1);
+    } else if (key_AJ) {
+        presenter->sendStableYawRequest(-1);
+        presenter->sendStableRollRequest(-1);
+    } else if (key_AK) {
+        presenter->sendStableYawRequest(-1);
+        presenter->sendStablePitchRequest(-1);
+    } else if (key_AL) {
+        presenter->sendStableYawRequest(-1);
+        presenter->sendStableRollRequest(1);
+    } else if (key_SD) {
+        presenter->sendStableThrustRequest(-1);
+        presenter->sendStableYawRequest(1);
+    } else if (key_SI) {
+        presenter->sendStableThrustRequest(-1);
+        presenter->sendStablePitchRequest(1);
+    } else if (key_SJ) {
+        presenter->sendStableThrustRequest(-1);
+        presenter->sendStableRollRequest(-1);
+    } else if (key_SK) {
+        presenter->sendStableThrustRequest(-1);
+        presenter->sendStablePitchRequest(-1);
+    } else if (key_SL) {
+        presenter->sendStableThrustRequest(-1);
+        presenter->sendStableRollRequest(1);
+    } else if (key_DI) {
+        presenter->sendStableYawRequest(1);
+        presenter->sendStablePitchRequest(1);
+    } else if (key_DJ) {
+        presenter->sendStableYawRequest(1);
+        presenter->sendStableRollRequest(-1);
+    } else if (key_DK) {
+        presenter->sendStableYawRequest(1);
+        presenter->sendStablePitchRequest(-1);
+    } else if (key_DL) {
+        presenter->sendStableYawRequest(1);
+        presenter->sendStableRollRequest(1);
+    } else if (key_IJ) {
+        presenter->sendStablePitchRequest(1);
+        presenter->sendStableRollRequest(-1);
+    } else if (key_IL) {
+        presenter->sendStablePitchRequest(1);
+        presenter->sendStableRollRequest(1);
+    } else if (key_JK) {
+        presenter->sendStableRollRequest(-1);
+        presenter->sendStablePitchRequest(-1);
+    } else if (key_KL) {
+        presenter->sendStablePitchRequest(-1);
+        presenter->sendStableRollRequest(1);
+    } else if (key_W) {
+        presenter->sendStableThrustRequest(1);
+    } else if (key_A) {
+        presenter->sendStableYawRequest(-1);
+    } else if (key_S) {
+        presenter->sendStableThrustRequest(-1);
+    } else if (key_D) {
+        presenter->sendStableYawRequest(1);
+    } else if (key_I) {
+        presenter->sendStablePitchRequest(1);
+    } else if (key_J) {
+        presenter->sendStableRollRequest(-1);
+    } else if (key_K) {
+        presenter->sendStablePitchRequest(-1);
+    } else if (key_L) {
+        presenter->sendStableRollRequest(1);
+    }
+}
+
+void MainView::keyReleaseEvent(QKeyEvent *event)
+{
+    if (event->isAutoRepeat())
+        return;
+
+    switch (event->key()) {
+    case Qt::Key_W: case Qt::Key_S:
+        presenter->sendResetThrust();
+        break;
+    case Qt::Key_A: case Qt::Key_D:
+        presenter->sendResetYaw();
+        break;
+    case Qt::Key_I: case Qt::Key_K:
+        presenter->sendResetPitch();
+        break;
+    case Qt::Key_J: case Qt::Key_L:
+        presenter->sendResetRoll();
+        break;
+    }
+
+    pressedKeys -= event->key();
 }
 
 void MainView::on_btn_apply_clicked()

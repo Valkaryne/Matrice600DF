@@ -97,6 +97,46 @@ void FlightController::flightRunCommand(int &commandIndex)
                              this);
 }
 
+void FlightController::stableThrust(int &direction)
+{
+    command.z = stableVerticalVelocity * direction;
+}
+
+void FlightController::stableYaw(int &direction)
+{
+    command.yaw = stableYawRate * direction;
+}
+
+void FlightController::stablePitch(int &direction)
+{
+    command.x = stableHorizontalVelocity * direction;
+}
+
+void FlightController::stableRoll(int &direction)
+{
+    command.y = stableHorizontalVelocity * direction;
+}
+
+void FlightController::resetThrust()
+{
+    command.z = 0;
+}
+
+void FlightController::resetYaw()
+{
+    command.yaw = 0;
+}
+
+void FlightController::resetPitch()
+{
+    command.x = 0;
+}
+
+void FlightController::resetRoll()
+{
+    command.y = 0;
+}
+
 void FlightController::setControls(QChar control)
 {
     char c = static_cast<char>(control.toLatin1());
@@ -175,7 +215,8 @@ void FlightController::sendFlightCommand()
     float32_t duration = 0.04;
     float32_t elapsed = 0;
 
-    //qDebug() << "cat";
+    if ((command.x == 0) && (command.y == 0) && (command.z == 0) && (command.yaw == 0))
+        return;
 
     while (elapsed < duration) {
         vehicle->control->flightCtrl(command);

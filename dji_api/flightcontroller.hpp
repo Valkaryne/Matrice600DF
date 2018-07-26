@@ -18,12 +18,24 @@ public:
                                DJI::OSDK::UserData       userData);
 
     void flightRunCommand(int &commandIndex);
+    void stableThrust(int &direction);
+    void stableYaw(int &direction);
+    void stablePitch(int &direction);
+    void stableRoll(int &direction);
+    void resetThrust();
+    void resetYaw();
+    void resetPitch();
+    void resetRoll();
     void setControls(QChar control);
     void sendFlightCommand();
 
 private:
     DJI::OSDK::Vehicle              *vehicle;
     DJI::OSDK::Control::CtrlData     command;
+
+    int stableHorizontalVelocity = 5;
+    int stableVerticalVelocity = 3;
+    int stableYawRate = 9;
 
     //QTimer  *autoSend;
 };

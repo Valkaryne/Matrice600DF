@@ -28,6 +28,14 @@ public:
     void resetDjiConnection();
 
     void sendFlightRunCommandRequest(int &commandIndex);
+    void sendStableThrustRequest(int direction);
+    void sendStableYawRequest(int direction);
+    void sendStablePitchRequest(int direction);
+    void sendStableRollRequest(int direction);
+    void sendResetThrust();
+    void sendResetYaw();
+    void sendResetPitch();
+    void sendResetRoll();
     void sendFlightControlRequest(QChar control);
 
     void sendInitWaypointRequest(const QHash<QString, int> &settings);
