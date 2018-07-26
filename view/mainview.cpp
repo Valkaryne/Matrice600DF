@@ -66,6 +66,204 @@ MainView::~MainView()
     delete ui;
 }
 
+void MainView::keyPressEvent(QKeyEvent *event)
+{
+    pressedKeys += event->key();
+
+    bool key_W = pressedKeys.contains(Qt::Key_W);
+    bool key_WA = pressedKeys.contains(Qt::Key_W) && pressedKeys.contains(Qt::Key_A);
+    bool key_WD = pressedKeys.contains(Qt::Key_W) && pressedKeys.contains(Qt::Key_D);
+    bool key_WI = pressedKeys.contains(Qt::Key_W) && pressedKeys.contains(Qt::Key_I);
+    bool key_WJ = pressedKeys.contains(Qt::Key_W) && pressedKeys.contains(Qt::Key_J);
+    bool key_WK = pressedKeys.contains(Qt::Key_W) && pressedKeys.contains(Qt::Key_K);
+    bool key_WL = pressedKeys.contains(Qt::Key_W) && pressedKeys.contains(Qt::Key_L);
+
+    bool key_A = pressedKeys.contains(Qt::Key_A);
+    bool key_AS = pressedKeys.contains(Qt::Key_A) && pressedKeys.contains(Qt::Key_S);
+    bool key_AI = pressedKeys.contains(Qt::Key_A) && pressedKeys.contains(Qt::Key_I);
+    bool key_AJ = pressedKeys.contains(Qt::Key_A) && pressedKeys.contains(Qt::Key_J);
+    bool key_AK = pressedKeys.contains(Qt::Key_A) && pressedKeys.contains(Qt::Key_K);
+    bool key_AL = pressedKeys.contains(Qt::Key_A) && pressedKeys.contains(Qt::Key_L);
+
+    bool key_S = pressedKeys.contains(Qt::Key_S);
+    bool key_SD = pressedKeys.contains(Qt::Key_S) && pressedKeys.contains(Qt::Key_D);
+    bool key_SI = pressedKeys.contains(Qt::Key_S) && pressedKeys.contains(Qt::Key_I);
+    bool key_SJ = pressedKeys.contains(Qt::Key_S) && pressedKeys.contains(Qt::Key_J);
+    bool key_SK = pressedKeys.contains(Qt::Key_S) && pressedKeys.contains(Qt::Key_K);
+    bool key_SL = pressedKeys.contains(Qt::Key_S) && pressedKeys.contains(Qt::Key_L);
+
+    bool key_D = pressedKeys.contains(Qt::Key_D);
+    bool key_DI = pressedKeys.contains(Qt::Key_D) && pressedKeys.contains(Qt::Key_I);
+    bool key_DJ = pressedKeys.contains(Qt::Key_D) && pressedKeys.contains(Qt::Key_J);
+    bool key_DK = pressedKeys.contains(Qt::Key_D) && pressedKeys.contains(Qt::Key_K);
+    bool key_DL = pressedKeys.contains(Qt::Key_D) && pressedKeys.contains(Qt::Key_L);
+
+    bool key_I = pressedKeys.contains(Qt::Key_I);
+    bool key_IJ = pressedKeys.contains(Qt::Key_I) && pressedKeys.contains(Qt::Key_J);
+    bool key_IL  = pressedKeys.contains(Qt::Key_I)  && pressedKeys.contains(Qt::Key_L);
+
+    bool key_J = pressedKeys.contains(Qt::Key_J);
+    bool key_JK = pressedKeys.contains(Qt::Key_J) && pressedKeys.contains(Qt::Key_K);
+
+    bool key_K = pressedKeys.contains(Qt::Key_K);
+    bool key_KL = pressedKeys.contains(Qt::Key_K) && pressedKeys.contains(Qt::Key_L);
+
+    bool key_L = pressedKeys.contains(Qt::Key_L);
+
+    if (key_WA) {
+        presenter->sendStableThrustRequest(1);
+        presenter->sendStableYawRequest(-1);
+    } else if (key_WD) {
+        presenter->sendStableThrustRequest(1);
+        presenter->sendStableYawRequest(1);
+    } else if (key_WI) {
+        presenter->sendStableThrustRequest(1);
+        presenter->sendStablePitchRequest(1);
+    } else if (key_WJ) {
+        presenter->sendStableThrustRequest(1);
+        presenter->sendStableRollRequest(-1);
+    } else if (key_WK) {
+        presenter->sendStableThrustRequest(1);
+        presenter->sendStablePitchRequest(-1);
+    } else if (key_WL) {
+        presenter->sendStableThrustRequest(1);
+        presenter->sendStableRollRequest(1);
+    } else if (key_AS) {
+        presenter->sendStableYawRequest(-1);
+        presenter->sendStableThrustRequest(-1);
+    } else if (key_AI) {
+        presenter->sendStableYawRequest(-1);
+        presenter->sendStablePitchRequest(1);
+    } else if (key_AJ) {
+        presenter->sendStableYawRequest(-1);
+        presenter->sendStableRollRequest(-1);
+    } else if (key_AK) {
+        presenter->sendStableYawRequest(-1);
+        presenter->sendStablePitchRequest(-1);
+    } else if (key_AL) {
+        presenter->sendStableYawRequest(-1);
+        presenter->sendStableRollRequest(1);
+    } else if (key_SD) {
+        presenter->sendStableThrustRequest(-1);
+        presenter->sendStableYawRequest(1);
+    } else if (key_SI) {
+        presenter->sendStableThrustRequest(-1);
+        presenter->sendStablePitchRequest(1);
+    } else if (key_SJ) {
+        presenter->sendStableThrustRequest(-1);
+        presenter->sendStableRollRequest(-1);
+    } else if (key_SK) {
+        presenter->sendStableThrustRequest(-1);
+        presenter->sendStablePitchRequest(-1);
+    } else if (key_SL) {
+        presenter->sendStableThrustRequest(-1);
+        presenter->sendStableRollRequest(1);
+    } else if (key_DI) {
+        presenter->sendStableYawRequest(1);
+        presenter->sendStablePitchRequest(1);
+    } else if (key_DJ) {
+        presenter->sendStableYawRequest(1);
+        presenter->sendStableRollRequest(-1);
+    } else if (key_DK) {
+        presenter->sendStableYawRequest(1);
+        presenter->sendStablePitchRequest(-1);
+    } else if (key_DL) {
+        presenter->sendStableYawRequest(1);
+        presenter->sendStableRollRequest(1);
+    } else if (key_IJ) {
+        presenter->sendStablePitchRequest(1);
+        presenter->sendStableRollRequest(-1);
+    } else if (key_IL) {
+        presenter->sendStablePitchRequest(1);
+        presenter->sendStableRollRequest(1);
+    } else if (key_JK) {
+        presenter->sendStableRollRequest(-1);
+        presenter->sendStablePitchRequest(-1);
+    } else if (key_KL) {
+        presenter->sendStablePitchRequest(-1);
+        presenter->sendStableRollRequest(1);
+    } else if (key_W) {
+        if (event->modifiers().testFlag(Qt::ShiftModifier))
+            presenter->sendFastThrustRequest(1);
+        else if (event->modifiers().testFlag(Qt::ControlModifier))
+            presenter->sendSlowThrustRequest(1);
+        else
+            presenter->sendStableThrustRequest(1);
+    } else if (key_A) {
+        if (event->modifiers().testFlag(Qt::ShiftModifier))
+            presenter->sendFastYawRequest(-1);
+        else if (event->modifiers().testFlag(Qt::ControlModifier))
+            presenter->sendSlowYawRequest(-1);
+        else
+            presenter->sendStableYawRequest(-1);
+    } else if (key_S) {
+        if (event->modifiers().testFlag(Qt::ShiftModifier))
+            presenter->sendFastThrustRequest(-1);
+        else if (event->modifiers().testFlag(Qt::ControlModifier))
+            presenter->sendSlowThrustRequest(-1);
+        else
+            presenter->sendStableThrustRequest(-1);
+    } else if (key_D) {
+        if (event->modifiers().testFlag(Qt::ShiftModifier))
+            presenter->sendFastYawRequest(1);
+        else if (event->modifiers().testFlag(Qt::ControlModifier))
+            presenter->sendSlowYawRequest(1);
+        else
+            presenter->sendStableYawRequest(1);
+    } else if (key_I) {
+        if (event->modifiers().testFlag(Qt::ShiftModifier))
+            presenter->sendFastPitchRequest(1);
+        else if (event->modifiers().testFlag(Qt::ControlModifier))
+            presenter->sendSlowPitchRequest(1);
+        else
+            presenter->sendStablePitchRequest(1);
+    } else if (key_J) {
+        if (event->modifiers().testFlag(Qt::ShiftModifier))
+            presenter->sendFastRollRequest(-1);
+        else if (event->modifiers().testFlag(Qt::ControlModifier))
+            presenter->sendSlowRollRequest(-1);
+        else
+            presenter->sendStableRollRequest(-1);
+    } else if (key_K) {
+        if (event->modifiers().testFlag(Qt::ShiftModifier))
+            presenter->sendFastPitchRequest(-1);
+        else if (event->modifiers().testFlag(Qt::ControlModifier))
+            presenter->sendSlowPitchRequest(-1);
+        else
+            presenter->sendStablePitchRequest(-1);
+    } else if (key_L) {
+        if (event->modifiers().testFlag(Qt::ShiftModifier))
+            presenter->sendFastRollRequest(1);
+        else if (event->modifiers().testFlag(Qt::ControlModifier))
+            presenter->sendSlowRollRequest(1);
+        else
+            presenter->sendStableRollRequest(1);
+    }
+}
+
+void MainView::keyReleaseEvent(QKeyEvent *event)
+{
+    if (event->isAutoRepeat())
+        return;
+
+    switch (event->key()) {
+    case Qt::Key_W: case Qt::Key_S:
+        presenter->sendResetThrust();
+        break;
+    case Qt::Key_A: case Qt::Key_D:
+        presenter->sendResetYaw();
+        break;
+    case Qt::Key_I: case Qt::Key_K:
+        presenter->sendResetPitch();
+        break;
+    case Qt::Key_J: case Qt::Key_L:
+        presenter->sendResetRoll();
+        break;
+    }
+
+    pressedKeys -= event->key();
+}
+
 void MainView::on_btn_apply_clicked()
 {
     QVector<double> settings;
@@ -282,9 +480,9 @@ void MainView::on_bgr_modes_buttonClicked(QAbstractButton *button)
 
 void MainView::on_bgr_controls_buttonClicked(QAbstractButton *button)
 {
-    QChar control = button->text().at(0);
+    //QChar control = button->text().at(0);
     //qDebug() << control;
-    presenter->sendFlightControlRequest(control);
+    //presenter->sendFlightControlRequest(control);
 }
 
 void MainView::on_btn_maxHold_clicked(bool checked)

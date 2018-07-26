@@ -943,6 +943,9 @@ QRadioButton::indicator::checked {
       </item>
       <item row="1" column="0">
        <widget class="QGroupBox" name="controlBox">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="title">
          <string>Flight Control Panel</string>
         </property>
@@ -1251,7 +1254,7 @@ QRadioButton::indicator::checked {
      <x>0</x>
      <y>0</y>
      <width>966</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -1269,8 +1272,8 @@ QRadioButton::indicator::checked {
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="bgr_modes"/>
   <buttongroup name="bgr_markers"/>
   <buttongroup name="bgr_controls"/>
+  <buttongroup name="bgr_modes"/>
  </buttongroups>
 </ui>
