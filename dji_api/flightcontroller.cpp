@@ -6,9 +6,27 @@ using namespace DJI::OSDK;
 
 FlightController::FlightController(Vehicle *vehicle,
                                    QObject *parent)
-    : QObject(parent)
+    : QObject(parent),
+      command(0,0,0,0,0)
 {
     this->vehicle = vehicle;
+
+    command.flag &= 0x3F;
+    command.flag |= Control::HorizontalLogic::HORIZONTAL_VELOCITY; // (-10, 10)
+
+    command.flag &= 0xCF;
+    command.flag |= Control::VerticalLogic::VERTICAL_VELOCITY; // (-5, 5)
+
+    command.flag &= 0xF7;
+    command.flag |= Control::YawLogic::YAW_RATE; // (-36, 36)
+
+    command.flag &= 0xF9;
+    command.flag |= Control::HorizontalCoordinate::HORIZONTAL_BODY;
+
+    command.flag &= 0xFE;
+    command.flag |= Control::StableMode::STABLE_ENABLE;
+
+    //qDebug() << "Flight Cat";
 }
 
 FlightController::~FlightController() {}
@@ -77,4 +95,91 @@ void FlightController::flightRunCommand(int &commandIndex)
     qDebug() << commandIndex << flightTask;
     vehicle->control->action(flightTask, FlightController::actionCallback,
                              this);
+}
+
+void FlightController::setControls(QChar control)
+{
+    char c = static_cast<char>(control.toLatin1());
+    switch (c) {
+    case 'W':
+        if (command.z < 0) {
+            command.z = 0;
+            break;
+        }
+        if (command.z + 1 <= 5) command.z++;
+        break;
+    case 'A':
+        if (command.yaw > 0) {
+            command.yaw = 0;
+            break;
+        }
+        //if (command.yaw - 1 >= -36) command.yaw--;
+        command.yaw = -6;
+        break;
+    case 'S':
+        if (command.z > 0) {
+            command.z = 0;
+            break;
+        }
+        if (command.z - 1 >= -5) command.z--;
+        break;
+    case 'D':
+        if (command.yaw < 0) {
+            command.yaw = 0;
+            break;
+        }
+        //if (command.yaw + 1 <= 36) command.yaw++;
+        command.yaw = 6;
+        break;
+    case 'I':
+        if (command.x < 0) {
+            command.x = 0;
+            break;
+        }
+        if (command.x + 1 <= 10) command.x++;
+        break;
+    case 'J':
+        if (command.y > 0) {
+            command.y = 0;
+            break;
+        }
+        if (command.y - 1 >= -10) command.y--;
+        break;
+    case 'K':
+        if (command.x > 0) {
+            command.x = 0;
+            break;
+        }
+        if (command.x - 1 >= -10) command.x--;
+        break;
+    case 'L':
+        if (command.y < 0) {
+            command.y = 0;
+            break;
+        }
+        if (command.y + 1 <= 10) command.y++;
+        break;
+    default:
+        qDebug() << "Unknown controls";
+        break;
+    }
+
+    qDebug() << "pitch: " << command.x;
+    qDebug() << "roll: " << command.y;
+    qDebug() << "thrust: " << command.z;
+    qDebug() << "yaw: " << command.yaw;
+}
+
+void FlightController::sendFlightCommand()
+{
+    float32_t duration = 0.04;
+    float32_t elapsed = 0;
+
+    //qDebug() << "cat";
+
+    while (elapsed < duration) {
+        vehicle->control->flightCtrl(command);
+        QThread::usleep(20000);
+        elapsed += 0.02;
+    }
 }

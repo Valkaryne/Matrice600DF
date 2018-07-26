@@ -66,6 +66,7 @@ private slots:
 
     void on_bgr_markers_buttonClicked(QAbstractButton *button);
     void on_bgr_modes_buttonClicked(QAbstractButton *button);
+    void on_bgr_controls_buttonClicked(QAbstractButton *button);
 
     void on_btn_maxHold_clicked(bool checked);
 
@@ -99,7 +100,7 @@ private slots:
     void on_btn_runCommand_clicked();
 
     void on_btn_hp_start_clicked(bool checked);
-    
+
 private:
     void writeToFile(const QString &fileName);
     void readFromFile(const QString &fileName);

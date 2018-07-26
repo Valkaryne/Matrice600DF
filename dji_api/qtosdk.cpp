@@ -9,6 +9,9 @@ QtOsdk::QtOsdk(QObject *parent)
 {
     vehicle = nullptr;
     //qRegisterMetaType<QHash<QString, int>>("QHash<QString, int>");
+    autoSend = new QTimer(this);
+    autoSend->setInterval(100);
+    connect(autoSend, SIGNAL(timeout()), this, SLOT(testTimer()));
 }
 
 QtOsdk::~QtOsdk()
@@ -97,10 +100,13 @@ void QtOsdk::activateCallback(Vehicle *vehicle, RecvContainer recvFrame,
 
 void QtOsdk::obtainCtrl(QString ctrlOperation)
 {
-    if (ctrlOperation == "Release Control")
+    if (ctrlOperation == "Release Control") {
+        autoSend->stop();
         vehicle->releaseCtrlAuthority(QtOsdk::setControlCallback, this);
-    else if (ctrlOperation == "Obtain Control")
+    } else if (ctrlOperation == "Obtain Control") {
+        autoSend->start();
         vehicle->obtainCtrlAuthority(QtOsdk::setControlCallback, this);
+    }
 }
 
 void QtOsdk::resetConnection()
@@ -114,6 +120,11 @@ void QtOsdk::resetConnection()
 void QtOsdk::flightRunCommandRequest(int &commandIndex)
 {
     flightController->flightRunCommand(commandIndex);
+}
+
+void QtOsdk::flightControlRequest(QChar control)
+{
+    flightController->setControls(control);
 }
 
 void QtOsdk::initWaypointRequest(const QHash<QString, int> &settings)
@@ -209,4 +220,9 @@ void QtOsdk::initComponents()
     this->waypoint = new Waypoint(this->vehicle, 0);
 
     this->hotpoint = new Hotpoint(this->vehicle, 0);
+}
+
+void QtOsdk::testTimer()
+{
+    flightController->sendFlightCommand();
 }

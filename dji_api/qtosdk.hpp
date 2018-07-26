@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QSerialPortInfo>
 #include <dji_vehicle.hpp>
+#include <QTimer>
 
 #include <subscribe.hpp>
 #include <flightcontroller.hpp>
@@ -45,6 +46,7 @@ public:
     void resetConnection();
 
     void flightRunCommandRequest(int &commandIndex);
+    void flightControlRequest(QChar control);
 
     void initWaypointRequest(const QHash<QString, int> &settings);
     void loadWaypointRequest(const QHash<QString, int> &settings);
@@ -62,6 +64,9 @@ signals:
     void changeConnectionButtons();
     void receiveTelemetryData(const QVector<double> &subscribeData);
 
+private slots:
+    void testTimer();
+
 private:
     DJI::OSDK::Vehicle  *vehicle;
     Subscribe           *subscribe;
@@ -71,6 +76,8 @@ private:
 
     QString appIDInput;
     QString keyInput;
+
+    QTimer *autoSend;
 };
 
 #endif // QTOSDK_HPP
