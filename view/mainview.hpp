@@ -23,6 +23,8 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
+#include <QKeyEvent>
+
 namespace Ui {
 class MainView;
 }
@@ -37,6 +39,9 @@ class MainView : public QMainWindow, public MainIView
 public:
     explicit MainView(QWidget *parent = 0);
     ~MainView();
+
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 
     void ctrlDjiStatusChanged(QString);
     void initDjiVehicleFinished(QString initStatus, bool initResult);
@@ -122,6 +127,7 @@ private:
 
     double markerLatitude, markerLongitude;
 
+    QSet<int> pressedKeys;
 };
 
 #endif // MAINVIEW_HPP

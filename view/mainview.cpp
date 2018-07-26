@@ -66,6 +66,60 @@ MainView::~MainView()
     delete ui;
 }
 
+void MainView::keyPressEvent(QKeyEvent *event)
+{
+    pressedKeys += event->key();
+}
+
+void MainView::keyReleaseEvent(QKeyEvent *event)
+{
+    if (event->isAutoRepeat())
+        return;
+
+    pressedKeys -= event->key();
+
+    bool key_W = pressedKeys.contains(Qt::Key_W);
+    bool key_WA = pressedKeys.contains(Qt::Key_W) && pressedKeys.contains(Qt::Key_A);
+    bool key_WD = pressedKeys.contains(Qt::Key_W) && pressedKeys.contains(Qt::Key_D);
+    bool key_WI = pressedKeys.contains(Qt::Key_W) && pressedKeys.contains(Qt::Key_I);
+    bool key_WJ = pressedKeys.contains(Qt::Key_W) && pressedKeys.contains(Qt::Key_J);
+    bool key_WK = pressedKeys.contains(Qt::Key_W) && pressedKeys.contains(Qt::Key_K);
+    bool key_WL = pressedKeys.contains(Qt::Key_W) && pressedKeys.contains(Qt::Key_L);
+
+    bool key_A = pressedKeys.contains(Qt::Key_A);
+    bool key_AS = pressedKeys.contains(Qt::Key_A) && pressedKeys.contains(Qt::Key_S);
+    bool key_AI = pressedKeys.contains(Qt::Key_A) && pressedKeys.contains(Qt::Key_I);
+    bool key_AJ = pressedKeys.contains(Qt::Key_A) && pressedKeys.contains(Qt::Key_J);
+    bool key_AK = pressedKeys.contains(Qt::Key_A) && pressedKeys.contains(Qt::Key_K);
+    bool key_AL = pressedKeys.contains(Qt::Key_A) && pressedKeys.contains(Qt::Key_L);
+
+    bool key_S = pressedKeys.contains(Qt::Key_S);
+    bool key_SD = pressedKeys.contains(Qt::Key_S) && pressedKeys.contains(Qt::Key_D);
+    bool key_SI = pressedKeys.contains(Qt::Key_S) && pressedKeys.contains(Qt::Key_I);
+    bool key_SJ = pressedKeys.contains(Qt::Key_S) && pressedKeys.contains(Qt::Key_J);
+    bool key_SK = pressedKeys.contains(Qt::Key_S) && pressedKeys.contains(Qt::Key_K);
+    bool key_SL = pressedKeys.contains(Qt::Key_S) && pressedKeys.contains(Qt::Key_L);
+
+    bool key_D = pressedKeys.contains(Qt::Key_D);
+    bool key_DI = pressedKeys.contains(Qt::Key_D) && pressedKeys.contains(Qt::Key_I);
+    bool key_DJ = pressedKeys.contains(Qt::Key_D) && pressedKeys.contains(Qt::Key_J);
+    bool key_DK = pressedKeys.contains(Qt::Key_D) && pressedKeys.contains(Qt::Key_K);
+    bool key_DL = pressedKeys.contains(Qt::Key_D) && pressedKeys.contains(Qt::Key_L);
+
+    bool key_I = pressedKeys.contains(Qt::Key_I);
+    bool key_IJ = pressedKeys.contains(Qt::Key_I) && pressedKeys.contains(Qt::Key_J);
+    bool key_IL  = pressedKeys.contains(Qt::Key_I)  && pressedKeys.contains(Qt::Key_L);
+
+    bool key_J = pressedKeys.contains(Qt::Key_J);
+    bool key_JK = pressedKeys.contains(Qt::Key_J) && pressedKeys.contains(Qt::Key_K);
+
+    bool key_K = pressedKeys.contains(Qt::Key_K);
+    bool key_KL = pressedKeys.contains(Qt::Key_K) && pressedKeys.contains(Qt::Key_L);
+
+    bool key_L = pressedKeys.contains(Qt::Key_L);
+
+}
+
 void MainView::on_btn_apply_clicked()
 {
     QVector<double> settings;
@@ -282,9 +336,9 @@ void MainView::on_bgr_modes_buttonClicked(QAbstractButton *button)
 
 void MainView::on_bgr_controls_buttonClicked(QAbstractButton *button)
 {
-    QChar control = button->text().at(0);
+    //QChar control = button->text().at(0);
     //qDebug() << control;
-    presenter->sendFlightControlRequest(control);
+    //presenter->sendFlightControlRequest(control);
 }
 
 void MainView::on_btn_maxHold_clicked(bool checked)
