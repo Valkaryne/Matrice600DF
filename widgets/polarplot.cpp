@@ -47,9 +47,15 @@ PolarPlot::PolarPlot(QWidget *parent) :
     polarPicker->setMousePattern(QwtPolarPicker::MouseSelect1, Qt::LeftButton);
 
     connect(polarPicker,SIGNAL(appended(const QwtPointPolar &)),
-            SLOT(getDirection(const QwtPointPolar &)));
-    /* connect(polarPicker, SIGNAL(appended(const QwtPointPolar &)),
-            SLOT(enlightSector(const QwtPointPolar &))); */
+            SLOT(getDirectionAuto(const QwtPointPolar &)));
+
+    polarPickerManual = new QwtPolarPicker(canvas());
+    polarPickerManual->setStateMachine(new QwtPickerDragPointMachine);
+    polarPickerManual->setMousePattern(QwtPolarPicker::MouseSelect1, Qt::RightButton);
+
+    connect(polarPickerManual,SIGNAL(appended(const QwtPointPolar &)),
+            SLOT(getDirectionManual(const QwtPointPolar &)));
+
 
     /* Marker */
 
@@ -224,12 +230,12 @@ void PolarPlot::enlightSector(const double azimuth)
     replot();
 }
 
-void PolarPlot::getDirection(const QwtPointPolar &point)
+void PolarPlot::getDirectionAuto(const QwtPointPolar &point)
 {
     double azimuth = point.azimuth();
 
     //qDebug() << "Azimuth: " << strategy->getPowerMaximum();
-    azimuth = strategy->getPowerMaximum();
+    //azimuth = strategy->getPowerMaximum();
     enlightSector(azimuth);
 
     double zeroPhase = estimateZeroPhase(azimuth);
@@ -251,6 +257,32 @@ void PolarPlot::getDirection(const QwtPointPolar &point)
     replot();
 
     emit setDirectionRequest(zeroPhase);
+}
+
+void PolarPlot::getDirectionManual(const QwtPointPolar &point)
+{
+    double azimuth = point.azimuth();
+    enlightSector(azimuth);
+
+    //double zeroPhase = estimateZeroPhase(azimuth);
+    //qDebug() << zeroPhase;
+
+    //if (zeroPhase < 0) {
+     //   qDebug() << "Nope";
+    //    return;
+    //} else if ((zeroPhase < azimuth - 20) || (zeroPhase > azimuth + 20)) {
+    //    qDebug() << "Nope";
+    //    return;
+    //}
+
+    PolarCurveData *data = (PolarCurveData*)(dfVector->data());
+    data->clear();
+    data->append(QwtPointPolar(0, 0));
+    data->append(QwtPointPolar(azimuth, 360.0));
+
+    replot();
+
+    emit setDirectionRequest(azimuth);
 }
 
 double PolarPlot::estimateZeroPhase(const double azimuth)
@@ -295,7 +327,7 @@ double PolarPlot::estimateZeroPhase(const double azimuth)
              zeroPhase = sample.azimuth();
     } */
 
-     for (int i = 0; i <= 3; i++) {
+     for (int i = 0; i <= 5; i++) {
          foreach (QwtPointPolar sample, zeroSamples) {
              if ((sample.radius() <= 180 + i) && (sample.radius() >= 180 - i)) {
                  zeroPhase = sample.azimuth();

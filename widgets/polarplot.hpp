@@ -37,7 +37,8 @@ public:
     // WARNING: DELETE AFTER TEST
 private slots:
     void testDiagram();
-    void getDirection(const QwtPointPolar &point);
+    void getDirectionAuto(const QwtPointPolar &point);
+    void getDirectionManual(const QwtPointPolar &point);
 
 signals:
     void setDirectionRequest(const double &direction);
@@ -56,6 +57,7 @@ private:
     QwtPolarCurve *dfSector;
 
     QwtPolarPicker *polarPicker;
+    QwtPolarPicker *polarPickerManual;
 
     AmplitudeDisplayStrategy *strategy;
 
