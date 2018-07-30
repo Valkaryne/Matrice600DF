@@ -71,7 +71,6 @@ private slots:
 
     void on_bgr_markers_buttonClicked(QAbstractButton *button);
     void on_bgr_modes_buttonClicked(QAbstractButton *button);
-    void on_bgr_controls_buttonClicked(QAbstractButton *button);
 
     void on_btn_maxHold_clicked(bool checked);
 
@@ -126,8 +125,6 @@ private:
     QAction *loadPresetAct;
 
     double markerLatitude, markerLongitude;
-
-    QSet<int> pressedKeys;
 };
 
 #endif // MAINVIEW_HPP

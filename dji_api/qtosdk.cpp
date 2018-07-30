@@ -202,11 +202,6 @@ void QtOsdk::resetRoll()
     flightController->resetRoll();
 }
 
-void QtOsdk::flightControlRequest(QChar control)
-{
-    flightController->setControls(control);
-}
-
 void QtOsdk::initWaypointRequest(const QHash<QString, int> &settings)
 {
     waypoint->initWaypoint(settings);

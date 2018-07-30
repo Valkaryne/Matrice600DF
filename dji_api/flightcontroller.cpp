@@ -177,90 +177,19 @@ void FlightController::resetRoll()
     command.y = 0;
 }
 
-void FlightController::setControls(QChar control)
-{
-    char c = static_cast<char>(control.toLatin1());
-    switch (c) {
-    case 'W':
-        if (command.z < 0) {
-            command.z = 0;
-            break;
-        }
-        if (command.z + 1 <= 5) command.z++;
-        break;
-    case 'A':
-        if (command.yaw > 0) {
-            command.yaw = 0;
-            break;
-        }
-        //if (command.yaw - 1 >= -36) command.yaw--;
-        command.yaw = -6;
-        break;
-    case 'S':
-        if (command.z > 0) {
-            command.z = 0;
-            break;
-        }
-        if (command.z - 1 >= -5) command.z--;
-        break;
-    case 'D':
-        if (command.yaw < 0) {
-            command.yaw = 0;
-            break;
-        }
-        //if (command.yaw + 1 <= 36) command.yaw++;
-        command.yaw = 6;
-        break;
-    case 'I':
-        if (command.x < 0) {
-            command.x = 0;
-            break;
-        }
-        if (command.x + 1 <= 10) command.x++;
-        break;
-    case 'J':
-        if (command.y > 0) {
-            command.y = 0;
-            break;
-        }
-        if (command.y - 1 >= -10) command.y--;
-        break;
-    case 'K':
-        if (command.x > 0) {
-            command.x = 0;
-            break;
-        }
-        if (command.x - 1 >= -10) command.x--;
-        break;
-    case 'L':
-        if (command.y < 0) {
-            command.y = 0;
-            break;
-        }
-        if (command.y + 1 <= 10) command.y++;
-        break;
-    default:
-        qDebug() << "Unknown controls";
-        break;
-    }
-
-    qDebug() << "pitch: " << command.x;
-    qDebug() << "roll: " << command.y;
-    qDebug() << "thrust: " << command.z;
-    qDebug() << "yaw: " << command.yaw;
-}
-
 void FlightController::sendFlightCommand()
 {
-    float32_t duration = 0.04;
-    float32_t elapsed = 0;
+    //float32_t duration = 0.04;
+    //float32_t elapsed = 0;
 
     if ((command.x == 0) && (command.y == 0) && (command.z == 0) && (command.yaw == 0))
         return;
 
-    while (elapsed < duration) {
+    vehicle->control->flightCtrl(command);
+
+    /* while (elapsed < duration) {
         vehicle->control->flightCtrl(command);
         QThread::usleep(20000);
         elapsed += 0.02;
-    }
+    } */
 }

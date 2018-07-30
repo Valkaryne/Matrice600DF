@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QSerialPortInfo>
 #include <dji_vehicle.hpp>
+#include <QThread>
 #include <QTimer>
 
 #include <subscribe.hpp>
@@ -62,7 +63,6 @@ public:
     void resetYaw();
     void resetPitch();
     void resetRoll();
-    void flightControlRequest(QChar control);
 
     void initWaypointRequest(const QHash<QString, int> &settings);
     void loadWaypointRequest(const QHash<QString, int> &settings);

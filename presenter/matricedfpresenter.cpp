@@ -165,11 +165,6 @@ void MatriceDFPresenter::sendResetRoll()
     dji->resetRoll();
 }
 
-void MatriceDFPresenter::sendFlightControlRequest(QChar control)
-{
-    dji->flightControlRequest(control);
-}
-
 void MatriceDFPresenter::sendInitWaypointRequest(const QHash<QString, int> &settings)
 {
     dji->initWaypointRequest(settings);

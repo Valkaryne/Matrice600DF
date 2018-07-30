@@ -75,7 +75,7 @@ Item {
         var stLng = drone.coordinate.longitude;
         var x0 = stLat / dLat;
         var y0 = stLng / dLng;
-        var angle = direction * Math.PI / 180;
+        var angle = (direction + 2.5) * Math.PI / 180;
         var x1 = Math.cos(angle)*3000 + x0;
         var y1 = Math.sin(angle)*3000 + y0;
         var endLat = x1 * dLat;

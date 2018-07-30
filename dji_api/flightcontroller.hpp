@@ -34,7 +34,6 @@ public:
     void resetYaw();
     void resetPitch();
     void resetRoll();
-    void setControls(QChar control);
     void sendFlightCommand();
 
 private:
@@ -42,7 +41,7 @@ private:
     DJI::OSDK::Control::CtrlData     command;
 
     int stableHorizontalVelocity = 5;
-    int stableVerticalVelocity = 3;
+    int stableVerticalVelocity = 2;
     int stableYawRate = 12;
 
     int slowHorizontalVelocity = 3;
@@ -50,7 +49,7 @@ private:
     int slowYawRate = 9;
 
     int fastHorizontalVelocity = 7;
-    int fastVerticalVelocity = 5;
+    int fastVerticalVelocity = 3;
     int fastYawRate = 15;
 
     //QTimer  *autoSend;
