@@ -137,4 +137,62 @@ Item {
     {
         map.setHomePoint()
     }
+
+    function getMapProvider()
+    {
+        var name = map.plugin.name;
+        if (name === "osm")
+            return 0;
+        else if (name === "esri")
+            return 1;
+    }
+
+    function getMapCenter()
+    {
+        var center = map.center;
+        var centerCoordinates = Qt.vector2d(center.latitude, center.longitude);
+        return centerCoordinates;
+    }
+
+    function getMapZoomLevel()
+    {
+        var zoomLevel = map.zoomLevel;
+        return zoomLevel;
+    }
+
+    function getMapHomePoint()
+    {
+        var hp = homePoint.coordinate;
+        var hpCoordinates = Qt.vector2d(hp.latitude, hp.longitude);
+        return hpCoordinates;
+    }
+
+    function setMapProvider(provider)
+    {
+        var name;
+        if (provider == 0)
+            name = "osm";
+        else if (provider == 1)
+            name = "esri";
+
+        if (map.plugin.name !== name)
+            switchProvider();
+    }
+
+    function setMapCenter(centerLat, centerLng)
+    {
+        map.center.latitude = centerLat;
+        map.center.longitude = centerLng;
+    }
+
+    function setMapZoomLevel(zoomLevel)
+    {
+        map.zoomLevel = zoomLevel;
+    }
+
+    function setMapHomePoint(hpLat, hpLng)
+    {
+        homePoint.coordinate.latitude = hpLat;
+        homePoint.coordinate.longitude = hpLng;
+    }
 }

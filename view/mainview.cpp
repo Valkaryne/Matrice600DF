@@ -493,9 +493,11 @@ void MainView::writeToFile(const QString &fileName)
     QVector<int> bounds = getAmplitudeSpectrumPlot()->getMarkerBounds();
     QVector<int> thresholds = getAmplitudeSpectrumPlot()->getThresholdBounds();
     QVector<int> settings = getSettingsArray();
+    QVector<int> mapSettings = getMapSettingsArray();
     preset.append(bounds);
     preset.append(thresholds);
     preset.append(settings);
+    preset.append(mapSettings);
     QDataStream out(&file);
     out << preset;
 }
@@ -515,6 +517,7 @@ void MainView::readFromFile(const QString &fileName)
     getAmplitudeSpectrumPlot()->setMarkerBounds(preset.at(0));
     getAmplitudeSpectrumPlot()->setThresholdBounds(preset.at(1));
     setSettingsArray(preset.at(2));
+    setMapSettingsArray(preset.at(3));
 }
 
 QVector<int> MainView::getSettingsArray()
@@ -529,6 +532,37 @@ QVector<int> MainView::getSettingsArray()
     return settings;
 }
 
+QVector<int> MainView::getMapSettingsArray()
+{
+    QVector<int> mapSettings;
+    QVariant varProvider, varCenter, varZoomLevel, varHomePoint;
+
+    QObject *object = map->rootObject();
+
+    QMetaObject::invokeMethod(object, "getMapProvider",
+                              Q_RETURN_ARG(QVariant, varProvider));
+    QMetaObject::invokeMethod(object, "getMapCenter",
+                              Q_RETURN_ARG(QVariant, varCenter));
+    QMetaObject::invokeMethod(object, "getMapZoomLevel",
+                              Q_RETURN_ARG(QVariant, varZoomLevel));
+    QMetaObject::invokeMethod(object, "getMapHomePoint",
+                              Q_RETURN_ARG(QVariant, varHomePoint));
+
+    int provider = varProvider.value<int>();
+    QVector2D center = varCenter.value<QVector2D>();
+    int zoomLevel = varZoomLevel.value<double>() * 100;
+    QVector2D homePoint = varHomePoint.value<QVector2D>();
+
+    mapSettings.append(provider);
+    mapSettings.append(center.x() * 1000000);
+    mapSettings.append(center.y() * 1000000);
+    mapSettings.append(zoomLevel);
+    mapSettings.append(homePoint.x() * 1000000);
+    mapSettings.append(homePoint.y() * 1000000);
+
+    return  mapSettings;
+}
+
 void MainView::setSettingsArray(QVector<int> settings)
 {
     ui->sb_frequency->setValue(settings.at(0));
@@ -537,4 +571,20 @@ void MainView::setSettingsArray(QVector<int> settings)
     ui->sb_temp_add->setValue(settings.at(3));
 
     getPhaseSpectrumPlot()->setPhaseCorrection(settings.at(4));
+}
+
+void MainView::setMapSettingsArray(QVector<int> mapSettings)
+{
+    QObject *object = map->rootObject();
+
+    QMetaObject::invokeMethod(object, "setMapProvider",
+                              Q_ARG(QVariant, mapSettings.at(0)));
+    QMetaObject::invokeMethod(object, "setMapCenter",
+                              Q_ARG(QVariant, mapSettings.at(1) / 1000000.0),
+                              Q_ARG(QVariant, mapSettings.at(2) / 1000000.0));
+    QMetaObject::invokeMethod(object, "setMapZoomLevel",
+                              Q_ARG(QVariant, mapSettings.at(3) / 100.0));
+    QMetaObject::invokeMethod(object, "setMapHomePoint",
+                              Q_ARG(QVariant, mapSettings.at(4) / 1000000.0),
+                              Q_ARG(QVariant, mapSettings.at(5) / 1000000.0));
 }

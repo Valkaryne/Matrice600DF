@@ -110,7 +110,9 @@ private:
     void readFromFile(const QString &fileName);
 
     QVector<int> getSettingsArray();
+    QVector<int> getMapSettingsArray();
     void setSettingsArray(QVector<int> settings);
+    void setMapSettingsArray(QVector<int> mapSettings);
 
 private:
     Ui::MainView        *ui;
