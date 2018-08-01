@@ -975,18 +975,12 @@ QRadioButton::indicator::checked {
             <item row="0" column="1">
              <widget class="QLineEdit" name="le_latitude"/>
             </item>
-            <item row="1" column="2">
-             <widget class="QLabel" name="lbl_heading">
+            <item row="0" column="0">
+             <widget class="QLabel" name="lbl_latitude">
               <property name="text">
-               <string>Heading:</string>
+               <string>Latitude:</string>
               </property>
              </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLineEdit" name="le_altitude"/>
-            </item>
-            <item row="0" column="3">
-             <widget class="QLineEdit" name="le_longitude"/>
             </item>
             <item row="0" column="2">
              <widget class="QLabel" name="lbl_longitude">
@@ -995,27 +989,73 @@ QRadioButton::indicator::checked {
               </property>
              </widget>
             </item>
-            <item row="1" column="3">
-             <widget class="QLineEdit" name="le_heading"/>
+            <item row="0" column="3">
+             <widget class="QLineEdit" name="le_longitude"/>
             </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="lbl_latitude">
+            <item row="0" column="6">
+             <widget class="QLabel" name="lbl_heading">
               <property name="text">
-               <string>Latitude:</string>
+               <string>Heading:</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="0">
+            <item row="0" column="5">
+             <widget class="QLineEdit" name="le_altitude"/>
+            </item>
+            <item row="0" column="7">
+             <widget class="QLineEdit" name="le_heading"/>
+            </item>
+            <item row="0" column="4">
              <widget class="QLabel" name="lbl_altitude">
               <property name="text">
                <string>Altitude:</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="4">
+            <item row="1" column="7">
              <widget class="QPushButton" name="btn_clearMap">
               <property name="text">
                <string>Clear Map</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="lbl_destination">
+              <property name="text">
+               <string>Destination:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="lbl_homePoint">
+              <property name="text">
+               <string>Home Point: </string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1" colspan="6">
+             <widget class="QLabel" name="lbl_hpCoordinates">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Lat: 0.000000, Lng: 0.000000, Distance: 0 m</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1" colspan="6">
+             <widget class="QLabel" name="lbl_dstCoordinates">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Lat: 0.000000, Lng: 0.000000, Distance: 0 m</string>
               </property>
              </widget>
             </item>
@@ -1144,7 +1184,7 @@ QRadioButton::indicator::checked {
      <x>0</x>
      <y>0</y>
      <width>1095</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -1162,7 +1202,7 @@ QRadioButton::indicator::checked {
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="bgr_markers"/>
   <buttongroup name="bgr_modes"/>
+  <buttongroup name="bgr_markers"/>
  </buttongroups>
 </ui>
