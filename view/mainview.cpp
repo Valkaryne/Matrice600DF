@@ -3,7 +3,8 @@
 
 MainView::MainView(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainView)
+    ui(new Ui::MainView),
+    channel(3)
 {
     ui->setupUi(this);
     presenter = new MatriceDFPresenter(this);
@@ -15,10 +16,10 @@ MainView::MainView(QWidget *parent) :
     getAmplitudeSpectrumPlot()->setPickers(false);
     getAmplitudeSpectrumPlot()->setZoomer(true);
     getAmplitudeSpectrumPlot()->setThresholdPickers(false);
-    ui->spectrumPlotLayout->addWidget(amplitudeSpectrumPlot);
+    ui->spectrumPlotLayout->addWidget(amplitudeSpectrumPlot, 0, 1, 1, 1);
 
     phaseSpectrumPlot = new PhaseSpectrumPlot(this);
-    ui->spectrumPlotLayout->addWidget(phaseSpectrumPlot);
+    ui->spectrumPlotLayout->addWidget(phaseSpectrumPlot, 1, 1, 1, 1);
     connect(getAmplitudeSpectrumPlot()->getZoomer(), SIGNAL(zoomed(const QRectF &)),
             getPhaseSpectrumPlot(), SLOT(equalZoom(const QRectF &)));
     connect(getPhaseSpectrumPlot(), SIGNAL(phaseCorrector(double)), SLOT(phaseCorrectionChanged(double)));
@@ -59,6 +60,18 @@ MainView::MainView(QWidget *parent) :
     settingsMenu = menuBar()->addMenu(tr("&Settings"));
     settingsMenu->addAction(savePresetAct);
     settingsMenu->addAction(loadPresetAct);
+
+    /* custom buttons */
+    QPushButton *btn_prevChannel = new QPushButton("<");
+    btn_prevChannel->setMaximumWidth(25);
+    btn_prevChannel->setMinimumHeight(75);
+    ui->spectrumPlotLayout->addWidget(btn_prevChannel, 0, 0, 2, 3);
+    QPushButton *btn_nextChannel = new QPushButton(">");
+    btn_nextChannel->setMaximumWidth(25);
+    btn_nextChannel->setMinimumHeight(75);
+    ui->spectrumPlotLayout->addWidget(btn_nextChannel, 0, 2, 2, 3);
+    connect(btn_prevChannel, &QPushButton::clicked, this, &MainView::shiftFrequenciesPrevChannel);
+    connect(btn_nextChannel, &QPushButton::clicked, this, &MainView::shiftFrequenciesNextChannel);
 }
 
 MainView::~MainView()
@@ -151,7 +164,6 @@ void MainView::keyReleaseEvent(QKeyEvent *event)
 void MainView::on_btn_apply_clicked()
 {
     QVector<double> settings;
-    qDebug() << ui->sb_frequency->value();
     settings.append(ui->sb_frequency->value() * 1000000);
     settings.append(ui->sb_gain->value());
     settings.append(ui->sb_temp_prod->value()); // Temp value: product
@@ -483,6 +495,32 @@ void MainView::on_btn_hp_start_clicked(bool checked)
         presenter->sendStopHotpointRequest();
         ui->btn_hp_start->setText("Rotate");
     }
+}
+
+void MainView::shiftFrequenciesStepLeft()
+{
+
+}
+
+void MainView::shiftFrequenciesStepRight()
+{
+
+}
+
+void MainView::shiftFrequenciesPrevChannel()
+{
+    channel--;
+    if (channel < 0) channel = 30;
+    ui->sb_frequency->setValue(freqEnum[channel]);
+    on_btn_apply_clicked();
+}
+
+void MainView::shiftFrequenciesNextChannel()
+{
+    channel++;
+    if (channel > 30) channel = 0;
+    ui->sb_frequency->setValue(freqEnum[channel]);
+    on_btn_apply_clicked();
 }
 
 void MainView::writeToFile(const QString &fileName)

@@ -106,6 +106,11 @@ private slots:
 
     void on_btn_hp_start_clicked(bool checked);
 
+    void shiftFrequenciesStepLeft();
+    void shiftFrequenciesStepRight();
+    void shiftFrequenciesPrevChannel();
+    void shiftFrequenciesNextChannel();
+
 private:
     void writeToFile(const QString &fileName);
     void readFromFile(const QString &fileName);
@@ -128,6 +133,7 @@ private:
     QAction *loadPresetAct;
 
     double markerLatitude, markerLongitude;
+    int channel;
 };
 
 #endif // MAINVIEW_HPP

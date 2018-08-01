@@ -29,6 +29,11 @@ public:
     virtual void updateTelemetryData(const QVector<double> &subscribeData);
     virtual void displayPhaseDeviation(const double &phDev) = 0;
 
+public:
+    int freqEnum[31] = { 895, 915, 2400, 2420, 2440, 2460, 2480, 2500, 5180, 5200, 5220, 5240, 5260, 5280,
+                       5300, 5320, 5500, 5520, 5540, 5560, 5580, 5600, 5620, 5640, 5660, 5680, 5700, 5745,
+                       5765, 5785, 5805};
+
 protected:
     SpectrumPlot        *amplitudeSpectrumPlot;
     SpectrumPlot        *phaseSpectrumPlot;
