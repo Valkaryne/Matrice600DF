@@ -18,7 +18,7 @@
     <item>
      <layout class="QVBoxLayout" name="analysisLayout">
       <item>
-       <layout class="QVBoxLayout" name="spectrumPlotLayout"/>
+       <layout class="QGridLayout" name="spectrumPlotLayout"/>
       </item>
       <item>
        <layout class="QGridLayout" name="polarPlotLayout">
@@ -215,7 +215,7 @@
            </property>
           </widget>
          </item>
-         <item row="6" column="0" colspan="2">
+         <item row="6" column="0" colspan="3">
           <widget class="QPushButton" name="btn_apply">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -1144,7 +1144,7 @@ QRadioButton::indicator::checked {
      <x>0</x>
      <y>0</y>
      <width>1095</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
