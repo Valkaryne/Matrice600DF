@@ -222,7 +222,7 @@ void MatriceDFPresenter::polarSamplesPresenter(const int az, const double rado, 
 
 void MatriceDFPresenter::phaseDeviationPresenter(const double phDev)
 {
-
+    view->displayPhaseDeviation(phDev);
 }
 
 void MatriceDFPresenter::changeControlAuthorityStatus(QString textToDisplay)
