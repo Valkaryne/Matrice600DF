@@ -298,6 +298,11 @@ void MainView::updateTelemetryData(const QVector<double> &subscribeData){
     presenter->updateCurrentHeading(heading);
 }
 
+void MainView::displayPhaseDeviation(const double &phDev)
+{
+    ui->prb_deviation->setValue((int)phDev);
+}
+
 void MainView::setHomePoint(QString azimuth) {
     polarPlot->updateAllyDirection(azimuth.toDouble());
 }

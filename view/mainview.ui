@@ -780,6 +780,28 @@ QRadioButton::indicator::checked {
        </widget>
       </item>
       <item>
+       <widget class="QProgressBar" name="prb_deviation">
+        <property name="minimum">
+         <number>-180</number>
+        </property>
+        <property name="maximum">
+         <number>180</number>
+        </property>
+        <property name="value">
+         <number>0</number>
+        </property>
+        <property name="invertedAppearance">
+         <bool>false</bool>
+        </property>
+        <property name="textDirection">
+         <enum>QProgressBar::TopToBottom</enum>
+        </property>
+        <property name="format">
+         <string>%v</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -1162,7 +1184,7 @@ QRadioButton::indicator::checked {
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="bgr_markers"/>
   <buttongroup name="bgr_modes"/>
+  <buttongroup name="bgr_markers"/>
  </buttongroups>
 </ui>

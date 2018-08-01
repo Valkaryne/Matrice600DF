@@ -101,4 +101,5 @@ void MatriceDFModel::polarSamplesHandler(const QVector<double> samplesAm1, const
     double phase = phaserange.at(maxxa);
 
     emit polarSamplesReady(heading, rado, radl, rads, phase);
+    emit phaseDeviationEstimated(phase - 180.0);
 }

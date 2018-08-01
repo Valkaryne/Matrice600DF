@@ -18,6 +18,8 @@ MatriceDFPresenter::MatriceDFPresenter(MainIView *view, QObject *parent) :
             SLOT(phaseSamplesPresenter(const QVector<double>)));
     connect(model, SIGNAL(polarSamplesReady(const int,const double,const double,const double,const double)),
             SLOT(polarSamplesPresenter(const int,const double,const double, const double,const double)));
+    connect(model, SIGNAL(phaseDeviationEstimated(const double)),
+            SLOT(phaseDeviationPresenter(const double)));
 
     connect(dji, SIGNAL(changeControlAuthorityStatus(QString)),
             SLOT(changeControlAuthorityStatus(QString)));
@@ -216,6 +218,11 @@ void MatriceDFPresenter::polarSamplesPresenter(const int az, const double rado, 
                                           const double phase)
 {
     view->getPolarPlot()->updateDiagram(az,rado,radl,rads,phase);
+}
+
+void MatriceDFPresenter::phaseDeviationPresenter(const double phDev)
+{
+    view->displayPhaseDeviation(phDev);
 }
 
 void MatriceDFPresenter::changeControlAuthorityStatus(QString textToDisplay)

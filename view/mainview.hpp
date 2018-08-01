@@ -48,8 +48,9 @@ public:
     void activateDjiVehicleFinished(QString activateStatus, bool activateResult);
     void connectionDjiVehicleResetted();
     void updateTelemetryData(const QVector<double> &subscribeData);
+    void displayPhaseDeviation(const double &phDev);
 
-    void correctPolarScales(const double &rad);
+    //void correctPolarScales(const double &rad);
 
     Q_INVOKABLE void setHomePoint(QString azimuth);
     Q_INVOKABLE void setPointOnMap(QString lat, QString lng);

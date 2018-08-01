@@ -27,6 +27,7 @@ public:
     virtual void activateDjiVehicleFinished(QString activateStatus, bool activateResult) = 0;
     virtual void connectionDjiVehicleResetted() = 0;
     virtual void updateTelemetryData(const QVector<double> &subscribeData);
+    virtual void displayPhaseDeviation(const double &phDev) = 0;
 
 public:
     int freqEnum[31] = { 895, 915, 2400, 2420, 2440, 2460, 2480, 2500, 5180, 5200, 5220, 5240, 5260, 5280,
