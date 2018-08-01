@@ -5,6 +5,7 @@
 #include <widgets/amplitudespectrumplot.hpp>
 #include <widgets/phasespectrumplot.hpp>
 #include <widgets/polarplot.hpp>
+#include <qwt_thermo.h>
 
 class MainIView
 {
@@ -38,6 +39,9 @@ protected:
     SpectrumPlot        *amplitudeSpectrumPlot;
     SpectrumPlot        *phaseSpectrumPlot;
     PolarPlot           *polarPlot;
+    QwtThermo           *deviationIndicator;
+
+    double current_phDev;
 };
 
 #endif // MAINIVIEW_HPP

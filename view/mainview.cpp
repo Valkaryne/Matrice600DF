@@ -32,6 +32,16 @@ MainView::MainView(QWidget *parent) :
     ui->polarPlotLayout->addWidget(ui->slider_product, 0, 3, 1, 1);
     connect(polarPlot, SIGNAL(setDirectionRequest(const double &)), SLOT(makeDirection(const double &)));
 
+    /* Phase deviation indicator */
+    deviationIndicator = new QwtThermo();
+    deviationIndicator->setOrientation(Qt::Horizontal);
+    deviationIndicator->setOriginMode(QwtThermo::OriginCustom);
+    deviationIndicator->setOrigin(0.0);
+    deviationIndicator->setScale(-90.0, 90.0);
+    deviationIndicator->setFillBrush(Qt::darkMagenta);
+    ui->configLayout->addWidget(deviationIndicator);
+    current_phDev = 0.0;
+
     /* map */
     map = new QQuickView;
     map->setSource(QUrl(QStringLiteral("qrc:/mapview.qml")));
@@ -300,7 +310,9 @@ void MainView::updateTelemetryData(const QVector<double> &subscribeData){
 
 void MainView::displayPhaseDeviation(const double &phDev)
 {
-    ui->prb_deviation->setValue((int)phDev);
+    double expCoeff = ui->sb_expCoeff->value();
+    double new_phDev = expCoeff * phDev + (1 - expCoeff) * current_phDev;
+    deviationIndicator->setValue(new_phDev);
 }
 
 void MainView::setHomePoint(QString azimuth) {
