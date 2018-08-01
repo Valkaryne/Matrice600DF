@@ -27,6 +27,7 @@ public:
     virtual void activateDjiVehicleFinished(QString activateStatus, bool activateResult) = 0;
     virtual void connectionDjiVehicleResetted() = 0;
     virtual void updateTelemetryData(const QVector<double> &subscribeData);
+    virtual void displayPhaseDeviation(const double &phDev) = 0;
 
 protected:
     SpectrumPlot        *amplitudeSpectrumPlot;
