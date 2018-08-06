@@ -47,18 +47,28 @@ public:
     void resetConnection();
 
     void flightRunCommandRequest(int &commandIndex);
+
+    void setAutoHorizontalVelocityRequest(int &velocity);
+    void setAutoYawRateRequest(int &rate);
+
+    void autoYawRequest(int &direction);
+    void autoPitchRequest(int &direction);
+
     void stableThrustRequest(int &direction);
     void stableYawRequest(int &direction);
     void stablePitchRequest(int &direction);
     void stableRollRequest(int &direction);
+
     void slowThrustRequest(int &direction);
     void slowYawRequest(int &direction);
     void slowPitchRequest(int &direction);
     void slowRollRequest(int &direction);
+
     void fastThrustRequest(int &direction);
     void fastYawRequest(int &direction);
     void fastPitchRequest(int &direction);
     void fastRollRequest(int &direction);
+
     void resetThrust();
     void resetYaw();
     void resetPitch();

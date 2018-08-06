@@ -87,6 +87,26 @@ void MatriceDFPresenter::sendFlightRunCommandRequest(int &commandIndex)
     dji->flightRunCommandRequest(commandIndex);
 }
 
+void MatriceDFPresenter::sendSetAutoHorizontalVelocityRequest(int velocity)
+{
+    dji->setAutoHorizontalVelocityRequest(velocity);
+}
+
+void MatriceDFPresenter::sendSetAutoYawRateRequest(int rate)
+{
+    dji->setAutoYawRateRequest(rate);
+}
+
+void MatriceDFPresenter::sendAutoPitchRequest(int direction)
+{
+    dji->autoPitchRequest(direction);
+}
+
+void MatriceDFPresenter::sendAutoYawRequest(int direction)
+{
+    dji->autoYawRequest(direction);
+}
+
 void MatriceDFPresenter::sendStableThrustRequest(int direction)
 {
     dji->stableThrustRequest(direction);
@@ -223,6 +243,7 @@ void MatriceDFPresenter::polarSamplesPresenter(const int az, const double rado, 
 void MatriceDFPresenter::phaseDeviationPresenter(const double phDev)
 {
     view->displayPhaseDeviation(phDev);
+    //view->automaticPathFinder(phDev);
 }
 
 void MatriceDFPresenter::changeControlAuthorityStatus(QString textToDisplay)

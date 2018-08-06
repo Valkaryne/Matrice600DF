@@ -122,6 +122,26 @@ void QtOsdk::flightRunCommandRequest(int &commandIndex)
     flightController->flightRunCommand(commandIndex);
 }
 
+void QtOsdk::setAutoHorizontalVelocityRequest(int &velocity)
+{
+    flightController->setAutoHorizontalVelocity(velocity);
+}
+
+void QtOsdk::setAutoYawRateRequest(int &rate)
+{
+    flightController->setAutoYawRate(rate);
+}
+
+void QtOsdk::autoPitchRequest(int &direction)
+{
+    flightController->autoPitch(direction);
+}
+
+void QtOsdk::autoYawRequest(int &direction)
+{
+    flightController->autoYaw(direction);
+}
+
 void QtOsdk::stableThrustRequest(int &direction)
 {
     flightController->stableThrust(direction);

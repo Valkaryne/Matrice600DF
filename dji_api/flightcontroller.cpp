@@ -97,6 +97,26 @@ void FlightController::flightRunCommand(int &commandIndex)
                              this);
 }
 
+void FlightController::setAutoHorizontalVelocity(int &velocity)
+{
+    this->autoHorizontalVelocity = velocity;
+}
+
+void FlightController::setAutoYawRate(int &rate)
+{
+    this->autoYawRate = rate;
+}
+
+void FlightController::autoYaw(int &direction)
+{
+    command.yaw = autoYawRate * direction;
+}
+
+void FlightController::autoPitch(int &direction)
+{
+    command.x = autoHorizontalVelocity * direction;
+}
+
 void FlightController::stableThrust(int &direction)
 {
     command.z = stableVerticalVelocity * direction;

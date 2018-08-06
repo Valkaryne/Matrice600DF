@@ -17,14 +17,25 @@ Map {
 
     function setMarker() {
         marker.coordinate = mouseArea.lastCoordinate
-        var lat = marker.coordinate.latitude
-        var lng = marker.coordinate.longitude
-        /* var drlat = drone.coordinate.latitude
-        var drlng = drone.coordinate.longitude
-        var mlat = (lat + drlat) / 2
-        var mlng = (lng + drlng) / 2
-        homePoint.coordinate = QtPositioning.coordinate(mlat, mlng) */
-        mainview.setPointOnMap(lat, lng)
+        var endLat = marker.coordinate.latitude
+        var endLng = marker.coordinate.longitude
+
+        var stLat1 = drone.coordinate.latitude;
+        var stLng1 = drone.coordinate.longitude;
+        var stLat2 = homePoint.coordinate.latitude;
+        var stLng2 = homePoint.coordinate.longitude;
+
+        var x01 = stLat1 / dLat;
+        var y01 = stLng1 / dLng;
+        var x02 = stLat2 / dLat;
+        var y02 = stLng2 / dLng;
+        var x1 = endLat / dLat;
+        var y1 = endLng / dLng;
+
+        var range_dr = Math.sqrt(Math.pow(x1 - x01, 2) + Math.pow(y1 - y01, 2));
+        var range_hp = Math.sqrt(Math.pow(x1 - x02, 2) + Math.pow(y1 - y02, 2));
+
+        mainview.setPointOnMap(endLat, endLng, range_dr, range_hp);
     }
 
     function setHomePoint() {
@@ -49,7 +60,7 @@ Map {
             azimuth *= -1;
 
         console.log("Azimuth: " + azimuth);
-        mainview.setHomePoint(azimuth);
+        mainview.setHomePoint(azimuth, endLat, endLng, range);
     }
 
     MapPolyline {

@@ -81,7 +81,7 @@
       <item>
        <widget class="QGroupBox" name="usrpBox">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -97,24 +97,10 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="lbl_frequency">
-           <property name="text">
-            <string>Frequency:</string>
-           </property>
-          </widget>
-         </item>
          <item row="2" column="0">
           <widget class="QLabel" name="lbl_temp_prod">
            <property name="text">
             <string>Product:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="lbl_temp_add">
-           <property name="text">
-            <string>Add:</string>
            </property>
           </widget>
          </item>
@@ -143,41 +129,30 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="1" colspan="2">
-          <widget class="QSpinBox" name="sb_temp_prod">
-           <property name="maximumSize">
-            <size>
-             <width>75</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="buttonSymbols">
-            <enum>QAbstractSpinBox::NoButtons</enum>
-           </property>
-           <property name="maximum">
-            <number>32000</number>
-           </property>
-           <property name="value">
-            <number>70</number>
+         <item row="3" column="0">
+          <widget class="QLabel" name="lbl_temp_add">
+           <property name="text">
+            <string>Add:</string>
            </property>
           </widget>
          </item>
-         <item row="3" column="1" colspan="2">
-          <widget class="QSpinBox" name="sb_temp_add">
-           <property name="maximumSize">
-            <size>
-             <width>75</width>
-             <height>16777215</height>
-            </size>
+         <item row="0" column="0">
+          <widget class="QLabel" name="lbl_frequency">
+           <property name="text">
+            <string>Frequency:</string>
            </property>
-           <property name="buttonSymbols">
-            <enum>QAbstractSpinBox::NoButtons</enum>
+          </widget>
+         </item>
+         <item row="6" column="0" colspan="3">
+          <widget class="QPushButton" name="btn_apply">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
-           <property name="maximum">
-            <number>32000</number>
-           </property>
-           <property name="value">
-            <number>50</number>
+           <property name="text">
+            <string>Apply</string>
            </property>
           </widget>
          </item>
@@ -215,16 +190,41 @@
            </property>
           </widget>
          </item>
-         <item row="6" column="0" colspan="3">
-          <widget class="QPushButton" name="btn_apply">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+         <item row="3" column="1" colspan="2">
+          <widget class="QSpinBox" name="sb_temp_add">
+           <property name="maximumSize">
+            <size>
+             <width>75</width>
+             <height>16777215</height>
+            </size>
            </property>
-           <property name="text">
-            <string>Apply</string>
+           <property name="buttonSymbols">
+            <enum>QAbstractSpinBox::NoButtons</enum>
+           </property>
+           <property name="maximum">
+            <number>32000</number>
+           </property>
+           <property name="value">
+            <number>50</number>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1" colspan="2">
+          <widget class="QSpinBox" name="sb_temp_prod">
+           <property name="maximumSize">
+            <size>
+             <width>75</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="buttonSymbols">
+            <enum>QAbstractSpinBox::NoButtons</enum>
+           </property>
+           <property name="maximum">
+            <number>32000</number>
+           </property>
+           <property name="value">
+            <number>70</number>
            </property>
           </widget>
          </item>
@@ -234,7 +234,7 @@
       <item>
        <widget class="QGroupBox" name="dfControlBox">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -710,6 +710,12 @@ QRadioButton::indicator::checked {
       </item>
       <item>
        <widget class="QGroupBox" name="initAircraftBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="title">
          <string>Initialize Aircraft</string>
         </property>
@@ -770,27 +776,68 @@ QRadioButton::indicator::checked {
        </widget>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="testLayout"/>
-      </item>
-      <item>
        <widget class="QLabel" name="lbltest_phase">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>Phase: 0</string>
         </property>
        </widget>
       </item>
       <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
+       <widget class="QFrame" name="speedFrame">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
+        <property name="frameShadow">
+         <enum>QFrame::Sunken</enum>
         </property>
-       </spacer>
+        <property name="lineWidth">
+         <number>2</number>
+        </property>
+        <layout class="QGridLayout" name="speedLayout">
+         <property name="leftMargin">
+          <number>6</number>
+         </property>
+         <property name="topMargin">
+          <number>6</number>
+         </property>
+         <property name="rightMargin">
+          <number>6</number>
+         </property>
+         <property name="bottomMargin">
+          <number>6</number>
+         </property>
+         <property name="spacing">
+          <number>7</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QLabel" name="lbl_pitch">
+           <property name="text">
+            <string>Velocity: 3 m/s</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="lbl_yaw">
+           <property name="text">
+            <string>Yaw rate:  3 °/s</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="lbl_antialiasing">
+           <property name="text">
+            <string>Antialiasing: 90 %</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </item>
      </layout>
     </item>
@@ -973,7 +1020,11 @@ QRadioButton::indicator::checked {
            </property>
            <layout class="QGridLayout" name="gridLayout_4">
             <item row="0" column="1">
-             <widget class="QLineEdit" name="le_latitude"/>
+             <widget class="QLineEdit" name="le_latitude">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+             </widget>
             </item>
             <item row="0" column="0">
              <widget class="QLabel" name="lbl_latitude">
@@ -990,7 +1041,11 @@ QRadioButton::indicator::checked {
              </widget>
             </item>
             <item row="0" column="3">
-             <widget class="QLineEdit" name="le_longitude"/>
+             <widget class="QLineEdit" name="le_longitude">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+             </widget>
             </item>
             <item row="0" column="6">
              <widget class="QLabel" name="lbl_heading">
@@ -1000,10 +1055,18 @@ QRadioButton::indicator::checked {
              </widget>
             </item>
             <item row="0" column="5">
-             <widget class="QLineEdit" name="le_altitude"/>
+             <widget class="QLineEdit" name="le_altitude">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+             </widget>
             </item>
             <item row="0" column="7">
-             <widget class="QLineEdit" name="le_heading"/>
+             <widget class="QLineEdit" name="le_heading">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+             </widget>
             </item>
             <item row="0" column="4">
              <widget class="QLabel" name="lbl_altitude">
@@ -1055,7 +1118,8 @@ QRadioButton::indicator::checked {
                </font>
               </property>
               <property name="text">
-               <string>Lat: 0.000000, Lng: 0.000000, Distance: 0 m</string>
+               <string>Lat: 0.000000, Lng: 0.000000, 
+Distance (Drone): 0 m, Distance (Home): 0 m</string>
               </property>
              </widget>
             </item>
@@ -1070,19 +1134,37 @@ QRadioButton::indicator::checked {
         <property name="enabled">
          <bool>true</bool>
         </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="title">
          <string>Flight Command Panel</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_7">
-         <item row="1" column="1">
+         <item row="2" column="1">
           <widget class="QLabel" name="lbl_yawRate">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Yaw Rate:</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="2">
+         <item row="2" column="2">
           <widget class="QSpinBox" name="sb_yawRate">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="buttonSymbols">
             <enum>QAbstractSpinBox::NoButtons</enum>
            </property>
@@ -1100,7 +1182,7 @@ QRadioButton::indicator::checked {
            </property>
           </widget>
          </item>
-         <item row="1" column="3">
+         <item row="2" column="3">
           <widget class="QPushButton" name="btn_hp_start">
            <property name="text">
             <string>Rotate</string>
@@ -1110,8 +1192,27 @@ QRadioButton::indicator::checked {
            </property>
           </widget>
          </item>
+         <item row="0" column="3">
+          <widget class="QPushButton" name="btn_runCommand">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Run</string>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="1" colspan="2">
           <widget class="QComboBox" name="cb_command">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <item>
             <property name="text">
              <string>Takeoff</string>
@@ -1164,10 +1265,16 @@ QRadioButton::indicator::checked {
            </item>
           </widget>
          </item>
-         <item row="0" column="3">
-          <widget class="QPushButton" name="btn_runCommand">
+         <item row="1" column="3">
+          <widget class="QPushButton" name="btn_autopilot">
            <property name="text">
-            <string>Run</string>
+            <string>Autopilot</string>
+           </property>
+           <property name="shortcut">
+            <string>Space</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -1184,7 +1291,7 @@ QRadioButton::indicator::checked {
      <x>0</x>
      <y>0</y>
      <width>1095</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
@@ -1202,7 +1309,7 @@ QRadioButton::indicator::checked {
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="bgr_modes"/>
   <buttongroup name="bgr_markers"/>
+  <buttongroup name="bgr_modes"/>
  </buttongroups>
 </ui>

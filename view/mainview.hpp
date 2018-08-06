@@ -49,11 +49,12 @@ public:
     void connectionDjiVehicleResetted();
     void updateTelemetryData(const QVector<double> &subscribeData);
     void displayPhaseDeviation(const double &phDev);
+    void automaticPathFinder(const double &phDev);
 
     //void correctPolarScales(const double &rad);
 
-    Q_INVOKABLE void setHomePoint(QString azimuth);
-    Q_INVOKABLE void setPointOnMap(QString lat, QString lng);
+    Q_INVOKABLE void setHomePoint(QString azimuth, QString lat, QString lng, QString range);
+    Q_INVOKABLE void setPointOnMap(QString lat, QString lng, QString range_dr, QString range_hp);
 
 private slots:
     void on_btn_apply_clicked();
@@ -91,6 +92,9 @@ private slots:
 
     void makeDirection(const double &direction);
     void phaseCorrectionChanged(double phaseCorrection);
+    void changeAutoVelocity(double velocity);
+    void changeAutoYawRate(double yawRate);
+    void changeAutoAntialiasing(double value);
 
     void on_btn_clearMap_clicked();
 
@@ -110,6 +114,8 @@ private slots:
     void shiftFrequenciesStepRight();
     void shiftFrequenciesPrevChannel();
     void shiftFrequenciesNextChannel();
+
+    void on_btn_autopilot_clicked(bool checked);
 
 private:
     void writeToFile(const QString &fileName);
@@ -133,7 +139,9 @@ private:
     QAction *loadPresetAct;
 
     double markerLatitude, markerLongitude;
+    double aaCoeff;
     int channel;
+    bool autopilot;
 };
 
 #endif // MAINVIEW_HPP

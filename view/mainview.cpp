@@ -4,7 +4,9 @@
 MainView::MainView(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainView),
-    channel(3)
+    aaCoeff(0.9),
+    channel(3),
+    autopilot(false)
 {
     ui->setupUi(this);
     presenter = new MatriceDFPresenter(this);
@@ -37,10 +39,74 @@ MainView::MainView(QWidget *parent) :
     deviationIndicator->setOrientation(Qt::Horizontal);
     deviationIndicator->setOriginMode(QwtThermo::OriginCustom);
     deviationIndicator->setOrigin(0.0);
-    deviationIndicator->setScale(-90.0, 90.0);
+    deviationIndicator->setScale(-180.0, 180.0);
     deviationIndicator->setFillBrush(Qt::darkMagenta);
     ui->configLayout->addWidget(deviationIndicator);
     current_phDev = 0.0;
+
+    /* Horizonal velocity, yaw rate and antialiasing coefficient conrols */
+    QwtLinearColorMap *colorMap = new QwtLinearColorMap();
+    colorMap->setColorInterval( Qt::blue, Qt::red);
+
+    wheelPitch = new QwtWheel();
+    wheelPitch->setValue(3);
+    wheelPitch->setWheelWidth(15);
+    wheelPitch->setMass(1.0);
+    wheelPitch->setOrientation(Qt::Vertical);
+    wheelPitch->setRange(0, 10);
+    wheelPitch->setSingleStep(1.0);
+    wheelPitch->setTotalAngle(90.0);
+    thermoPitch = new QwtThermo();
+    thermoPitch->setValue(3);
+    thermoPitch->setOrientation(Qt::Vertical);
+    thermoPitch->setScale(0, 10);
+    thermoPitch->setColorMap(colorMap);
+
+    connect(wheelPitch, &QwtWheel::valueChanged, this, &MainView::changeAutoVelocity);
+
+    ui->speedLayout->addWidget(wheelPitch, 0, 0, 1, 1);
+    ui->speedLayout->addWidget(thermoPitch, 0, 1, 1, 1);
+    ui->speedLayout->addWidget(ui->lbl_pitch, 1, 0, 1, 2);
+
+    wheelYaw = new QwtWheel();
+    wheelYaw->setValue(3);
+    wheelYaw->setWheelWidth(15);
+    wheelYaw->setMass(1.0);
+    wheelYaw->setOrientation(Qt::Vertical);
+    wheelYaw->setRange(0, 16);
+    wheelYaw->setSingleStep(1.0);
+    wheelYaw->setTotalAngle(90.0);
+    thermoYaw = new QwtThermo();
+    thermoYaw->setValue(3);
+    thermoYaw->setOrientation(Qt::Vertical);
+    thermoYaw->setScale(0, 16);
+    thermoYaw->setColorMap(colorMap);
+
+    connect(wheelYaw, &QwtWheel::valueChanged, this, &MainView::changeAutoYawRate);
+
+    ui->speedLayout->addWidget(wheelYaw, 0, 2, 1, 1);
+    ui->speedLayout->addWidget(thermoYaw, 0, 3, 1, 1);
+    ui->speedLayout->addWidget(ui->lbl_yaw, 1, 2, 1, 2);
+
+    wheelAntialiasing = new QwtWheel();
+    wheelAntialiasing->setValue(90);
+    wheelAntialiasing->setWheelWidth(15);
+    wheelAntialiasing->setMass(1.0);
+    wheelAntialiasing->setOrientation(Qt::Vertical);
+    wheelAntialiasing->setRange(0, 99);
+    wheelAntialiasing->setSingleStep(1.0);
+    wheelAntialiasing->setTotalAngle(180.0);
+    thermoAntialiasing = new QwtThermo();
+    thermoAntialiasing->setOrientation(Qt::Vertical);
+    thermoAntialiasing->setValue(90);
+    thermoAntialiasing->setScale(0, 100);
+    thermoAntialiasing->setFillBrush(Qt::blue);
+
+    connect(wheelAntialiasing, &QwtWheel::valueChanged, this, &MainView::changeAutoAntialiasing);
+
+    ui->speedLayout->addWidget(wheelAntialiasing, 0, 4, 1, 1);
+    ui->speedLayout->addWidget(thermoAntialiasing, 0, 5, 1, 1);
+    ui->speedLayout->addWidget(ui->lbl_antialiasing, 1, 4, 1, 2);
 
     /* map */
     map = new QQuickView;
@@ -145,6 +211,13 @@ void MainView::keyPressEvent(QKeyEvent *event)
         else if (controlModifier) presenter->sendSlowRollRequest(1);
         else presenter->sendStableRollRequest(1);
         break;
+    /* case Qt::Key_Space:
+        presenter->sendResetPitch();
+        presenter->sendResetRoll();
+        presenter->sendResetThrust();
+        presenter->sendResetYaw();
+        on_btn_autopilot_clicked(false);
+        break; */
     default:
         break;
     }
@@ -310,19 +383,47 @@ void MainView::updateTelemetryData(const QVector<double> &subscribeData){
 
 void MainView::displayPhaseDeviation(const double &phDev)
 {
-    double expCoeff = ui->sb_expCoeff->value();
-    double new_phDev = expCoeff * phDev + (1 - expCoeff) * current_phDev;
-    deviationIndicator->setValue(new_phDev);
+    double expCoeff = 1 - aaCoeff;
+    current_phDev = expCoeff * phDev + (1 - expCoeff) * current_phDev;
+    deviationIndicator->setValue(current_phDev);
+    automaticPathFinder(current_phDev);
 }
 
-void MainView::setHomePoint(QString azimuth) {
+void MainView::automaticPathFinder(const double &phDev)
+{
+    if (!autopilot)
+        return;
+
+    if (phDev > 0)
+        presenter->sendAutoYawRequest(-1);
+    else if (phDev < 0)
+        presenter->sendAutoYawRequest(1);
+}
+
+void MainView::setHomePoint(QString azimuth, QString lat, QString lng, QString range) {
+    double lat_homePoint = lat.toDouble();
+    double lng_homePoint = lng.toDouble();
+    double range_homePoint = range.toDouble();
+
+    ui->lbl_hpCoordinates->setText(QString("Lat: %1, Lng: %2, Distance: %3 m")
+                                   .arg(QString::number(lat_homePoint,'f',6))
+                                   .arg(QString::number(lng_homePoint,'f',6))
+                                   .arg(QString::number(range_homePoint,'f',2)));
     polarPlot->updateAllyDirection(azimuth.toDouble());
 }
 
-void MainView::setPointOnMap(QString lat, QString lng)
+void MainView::setPointOnMap(QString lat, QString lng, QString range_dr, QString range_hp)
 {
     markerLatitude = lat.toDouble();
     markerLongitude = lng.toDouble();
+    double range_droneMarker = range_dr.toDouble();
+    double range_homeMarker = range_hp.toDouble();
+
+    ui->lbl_dstCoordinates->setText(QString("Lat: %1, Lng: %2, \nDistance (Drone): %3 m, Distance (Home): %4 m")
+                                   .arg(QString::number(markerLatitude,'f',6))
+                                   .arg(QString::number(markerLongitude,'f',6))
+                                   .arg(QString::number(range_droneMarker,'f',2))
+                                   .arg(QString::number(range_homeMarker,'f',2)));
 
     QVector<double> coordinates;
     coordinates.append(markerLatitude);
@@ -340,15 +441,35 @@ void MainView::makeDirection(const double &direction)
 
 void MainView::phaseCorrectionChanged(double phaseCorrection)
 {
-    // 5760: -130
-    // 2430: +130
-    // 915: -180
-
     presenter->changePhaseCorrection(phaseCorrection);
     if (phaseCorrection <= 0)
         ui->lbltest_phase->setText("Phase: " + QString::number(phaseCorrection));
     else
         ui->lbltest_phase->setText("Phase: +" + QString::number(phaseCorrection));
+}
+
+void MainView::changeAutoVelocity(double velocity)
+{
+    thermoPitch->setValue(velocity);
+    ui->lbl_pitch->setText(QString("Velocity: %1 m/s")
+                           .arg(QString::number(velocity,'f',0)));
+    presenter->sendSetAutoHorizontalVelocityRequest(velocity);
+}
+
+void MainView::changeAutoYawRate(double yawRate)
+{
+    thermoYaw->setValue(yawRate);
+    ui->lbl_yaw->setText(QString("Yaw Rate: %1 °/s")
+                         .arg(QString::number(yawRate,'f',0)));
+    presenter->sendSetAutoYawRateRequest(yawRate);
+}
+
+void MainView::changeAutoAntialiasing(double value)
+{
+    thermoAntialiasing->setValue(value);
+    ui->lbl_antialiasing->setText(QString("Antialiasing: %1 %")
+                                  .arg(QString::number(value,'f',0)));
+    aaCoeff = value / 100.0;
 }
 
 void MainView::on_cb_droneClassSelect_activated(const QString &arg1)
@@ -642,4 +763,16 @@ void MainView::setMapSettingsArray(QVector<int> mapSettings)
     QMetaObject::invokeMethod(object, "setMapHomePoint",
                               Q_ARG(QVariant, mapSettings.at(4) / 1000000.0),
                               Q_ARG(QVariant, mapSettings.at(5) / 1000000.0));
+}
+
+void MainView::on_btn_autopilot_clicked(bool checked)
+{
+    autopilot = checked;
+    if (autopilot) presenter->sendAutoPitchRequest(1);
+    else {
+        presenter->sendResetPitch();
+        presenter->sendResetRoll();
+        presenter->sendResetThrust();
+        presenter->sendResetYaw();
+    }
 }

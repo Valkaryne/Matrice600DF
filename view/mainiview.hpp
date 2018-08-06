@@ -6,6 +6,8 @@
 #include <widgets/phasespectrumplot.hpp>
 #include <widgets/polarplot.hpp>
 #include <qwt_thermo.h>
+#include <qwt_wheel.h>
+#include <qwt_color_map.h>
 
 class MainIView
 {
@@ -29,6 +31,7 @@ public:
     virtual void connectionDjiVehicleResetted() = 0;
     virtual void updateTelemetryData(const QVector<double> &subscribeData);
     virtual void displayPhaseDeviation(const double &phDev) = 0;
+    virtual void automaticPathFinder(const double &phDev) = 0;
 
 public:
     int freqEnum[31] = { 895, 915, 2400, 2420, 2440, 2460, 2480, 2500, 5180, 5200, 5220, 5240, 5260, 5280,
@@ -40,6 +43,12 @@ protected:
     SpectrumPlot        *phaseSpectrumPlot;
     PolarPlot           *polarPlot;
     QwtThermo           *deviationIndicator;
+    QwtWheel            *wheelPitch;
+    QwtWheel            *wheelYaw;
+    QwtWheel            *wheelAntialiasing;
+    QwtThermo           *thermoPitch;
+    QwtThermo           *thermoYaw;
+    QwtThermo           *thermoAntialiasing;
 
     double current_phDev;
 };
