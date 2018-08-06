@@ -137,6 +137,11 @@ void QtOsdk::autoPitchRequest(int &direction)
     flightController->autoPitch(direction);
 }
 
+void QtOsdk::autoRollRequest(int &direction)
+{
+    flightController->autoRoll(direction);
+}
+
 void QtOsdk::autoYawRequest(int &direction)
 {
     flightController->autoYaw(direction);

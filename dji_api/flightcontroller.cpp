@@ -117,6 +117,11 @@ void FlightController::autoPitch(int &direction)
     command.x = autoHorizontalVelocity * direction;
 }
 
+void FlightController::autoRoll(int &direction)
+{
+    command.y = autoHorizontalVelocity * direction * 2;
+}
+
 void FlightController::stableThrust(int &direction)
 {
     command.z = stableVerticalVelocity * direction;

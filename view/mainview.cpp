@@ -6,7 +6,7 @@ MainView::MainView(QWidget *parent) :
     ui(new Ui::MainView),
     aaCoeff(0.9),
     channel(3),
-    autopilot(false)
+    autosearch(false)
 {
     ui->setupUi(this);
     presenter = new MatriceDFPresenter(this);
@@ -211,13 +211,6 @@ void MainView::keyPressEvent(QKeyEvent *event)
         else if (controlModifier) presenter->sendSlowRollRequest(1);
         else presenter->sendStableRollRequest(1);
         break;
-    /* case Qt::Key_Space:
-        presenter->sendResetPitch();
-        presenter->sendResetRoll();
-        presenter->sendResetThrust();
-        presenter->sendResetYaw();
-        on_btn_autopilot_clicked(false);
-        break; */
     default:
         break;
     }
@@ -391,7 +384,7 @@ void MainView::displayPhaseDeviation(const double &phDev)
 
 void MainView::automaticPathFinder(const double &phDev)
 {
-    if (!autopilot)
+    if (!autosearch)
         return;
 
     if (phDev > 0)
@@ -765,7 +758,7 @@ void MainView::setMapSettingsArray(QVector<int> mapSettings)
                               Q_ARG(QVariant, mapSettings.at(5) / 1000000.0));
 }
 
-void MainView::on_btn_autopilot_clicked(bool checked)
+/* void MainView::on_btn_autopilot_clicked(bool checked)
 {
     autopilot = checked;
     if (autopilot) presenter->sendAutoPitchRequest(1);
@@ -775,4 +768,26 @@ void MainView::on_btn_autopilot_clicked(bool checked)
         presenter->sendResetThrust();
         presenter->sendResetYaw();
     }
+} */
+
+void MainView::on_dial_autoSearch_valueChanged(int value)
+{
+    if (value == 0) {
+        presenter->sendResetPitch();
+        presenter->sendResetRoll();
+        presenter->sendResetThrust();
+        presenter->sendResetYaw();
+        autosearch = false;
+        return;
+    } else if (value == 1) {
+        presenter->sendAutoPitchRequest(1);
+        presenter->sendAutoRollRequest(-1);
+    } else if (value == 2) {
+        presenter->sendAutoPitchRequest(1);
+        presenter->sendAutoRollRequest(0);
+    } else if (value == 3) {
+        presenter->sendAutoPitchRequest(1);
+        presenter->sendAutoRollRequest(1);
+    }
+    autosearch = true;
 }

@@ -24,6 +24,7 @@ public:
 
     void autoYaw(int &direction);
     void autoPitch(int &direction);
+    void autoRoll(int &direction);
 
     void stableThrust(int &direction);
     void stableYaw(int &direction);

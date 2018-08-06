@@ -53,6 +53,7 @@ public:
 
     void autoYawRequest(int &direction);
     void autoPitchRequest(int &direction);
+    void autoRollRequest(int &direction);
 
     void stableThrustRequest(int &direction);
     void stableYawRequest(int &direction);

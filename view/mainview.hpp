@@ -115,7 +115,9 @@ private slots:
     void shiftFrequenciesPrevChannel();
     void shiftFrequenciesNextChannel();
 
-    void on_btn_autopilot_clicked(bool checked);
+    //void on_btn_autopilot_clicked(bool checked);
+
+    void on_dial_autoSearch_valueChanged(int value);
 
 private:
     void writeToFile(const QString &fileName);
@@ -141,7 +143,7 @@ private:
     double markerLatitude, markerLongitude;
     double aaCoeff;
     int channel;
-    bool autopilot;
+    bool autosearch;
 };
 
 #endif // MAINVIEW_HPP

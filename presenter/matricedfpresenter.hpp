@@ -34,6 +34,7 @@ public:
 
     void sendAutoYawRequest(int direction);
     void sendAutoPitchRequest(int direction);
+    void sendAutoRollRequest(int direction);
 
     void sendStableThrustRequest(int direction);
     void sendStableYawRequest(int direction);

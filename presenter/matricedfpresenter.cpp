@@ -102,6 +102,11 @@ void MatriceDFPresenter::sendAutoPitchRequest(int direction)
     dji->autoPitchRequest(direction);
 }
 
+void MatriceDFPresenter::sendAutoRollRequest(int direction)
+{
+    dji->autoRollRequest(direction);
+}
+
 void MatriceDFPresenter::sendAutoYawRequest(int direction)
 {
     dji->autoYawRequest(direction);
