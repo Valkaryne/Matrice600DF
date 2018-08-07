@@ -86,8 +86,8 @@ void Subscribe::startPkgRequested()
     freq = 50; // Hz
     Telemetry::TopicName topicList[Telemetry::TOTAL_TOPIC_NUMBER];
     pkgIndices.push_back(0); // Quaternion
-    pkgIndices.push_back(7); // Altitude fusioned
-    pkgIndices.push_back(8); // Altitude barometer
+    //pkgIndices.push_back(7); // Altitude fusioned
+    //pkgIndices.push_back(8); // Altitude barometer
     pkgIndices.push_back(10); // Height fusion
     pkgIndices.push_back(14); // GPS Position
     for (int i = 0; i < pkgIndices.size(); i++)
