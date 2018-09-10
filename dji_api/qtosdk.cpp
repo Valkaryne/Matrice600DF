@@ -111,7 +111,8 @@ void QtOsdk::obtainCtrl(QString ctrlOperation)
 
 void QtOsdk::resetConnection()
 {
-    subscribe->stopPkgRequested();
+    subscribe->stopPkg50Requested();
+    subscribe->stopPkg10Requested();
     QThread::msleep(100);
     //vehicle->closePort();
     emit changeConnectionButtons();
@@ -225,6 +226,11 @@ void QtOsdk::resetPitch()
 void QtOsdk::resetRoll()
 {
     flightController->resetRoll();
+}
+
+void QtOsdk::setDefinedDirectionRequest(double &heading)
+{
+    flightController->setDefiniteDirection(heading);
 }
 
 void QtOsdk::initWaypointRequest(const QHash<QString, int> &settings)

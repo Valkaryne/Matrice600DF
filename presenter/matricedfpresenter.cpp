@@ -192,6 +192,14 @@ void MatriceDFPresenter::sendResetRoll()
     dji->resetRoll();
 }
 
+void MatriceDFPresenter::sendSetDefinedDirectionRequest(double &heading)
+{
+    if (heading > 180)
+        heading -= 360;
+
+    dji->setDefinedDirectionRequest(heading);
+}
+
 void MatriceDFPresenter::sendInitWaypointRequest(const QHash<QString, int> &settings)
 {
     dji->initWaypointRequest(settings);

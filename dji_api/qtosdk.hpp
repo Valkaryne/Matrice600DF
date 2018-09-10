@@ -75,6 +75,8 @@ public:
     void resetPitch();
     void resetRoll();
 
+    void setDefinedDirectionRequest(double &heading);
+
     void initWaypointRequest(const QHash<QString, int> &settings);
     void loadWaypointRequest(const QHash<QString, int> &settings);
     void startWaypointRequest();

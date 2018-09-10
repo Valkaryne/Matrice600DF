@@ -18,13 +18,19 @@ public:
 
     void prepareSubscribeData(DJI::OSDK::Telemetry::TopicName topicName, uint32_t id);
 
-    static void pkgUnpackCallback(DJI::OSDK::Vehicle       *vehiclePtr,
+    static void pkg50UnpackCallback(DJI::OSDK::Vehicle       *vehiclePtr,
                                   DJI::OSDK::RecvContainer  recvContainer,
                                   DJI::OSDK::UserData       userData);
-    void stopPkgRequested();
+    static void pkg10UnpackCallback(DJI::OSDK::Vehicle       *vehiclePtr,
+                                    DJI::OSDK::RecvContainer  recvContainter,
+                                    DJI::OSDK::UserData       userData);
+
+    void stopPkg50Requested();
+    void stopPkg10Requested();
 
 private slots:
-    void startPkgRequested();
+    void startPkg50Requested();
+    void startPkg10Requested();
 
 
 signals:
@@ -32,7 +38,8 @@ signals:
 
 private:
     QVector<double> subscribeData;
-    QVector<int> pkgIndices;
+    QVector<int> pkg50Indices;
+    QVector<int> pkg10Indices;
     DJI::OSDK::Vehicle  *vehicle;
 };
 
