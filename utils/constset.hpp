@@ -23,6 +23,6 @@ const double RSHIFT = RANGE - LSHIFT;
 
 const double CALIBRATION = 170.0;
 
-#define DEG2RAD 0.01745329252;
+const double DEG2RAD = 0.01745329252;
 
 #endif // CONSTSET_HPP

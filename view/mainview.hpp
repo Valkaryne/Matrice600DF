@@ -80,8 +80,6 @@ private slots:
 
     void on_slider_add_valueChanged(int position);
 
-    void on_slider_product_valueChanged(int position);
-
     void on_btn_resetScales_clicked();
 
     void on_btn_refresh_clicked();
@@ -90,7 +88,7 @@ private slots:
     void savePreset();
     void loadPreset();
 
-    void makeDirection(const double &direction);
+    void makeDirection(double &direction);
     void phaseCorrectionChanged(double phaseCorrection);
     void changeAutoVelocity(double velocity);
     void changeAutoYawRate(double yawRate);
@@ -140,6 +138,7 @@ private:
     QAction *savePresetAct;
     QAction *loadPresetAct;
 
+    double diff_altitude;
     double markerLatitude, markerLongitude;
     double aaCoeff;
     int channel;

@@ -49,7 +49,7 @@ MainView::MainView(QWidget *parent) :
     colorMap->setColorInterval( Qt::blue, Qt::red);
 
     wheelPitch = new QwtWheel();
-    wheelPitch->setValue(3);
+    wheelPitch->setValue(6);
     wheelPitch->setWheelWidth(15);
     wheelPitch->setMass(1.0);
     wheelPitch->setOrientation(Qt::Vertical);
@@ -57,7 +57,7 @@ MainView::MainView(QWidget *parent) :
     wheelPitch->setSingleStep(1.0);
     wheelPitch->setTotalAngle(90.0);
     thermoPitch = new QwtThermo();
-    thermoPitch->setValue(3);
+    thermoPitch->setValue(6);
     thermoPitch->setOrientation(Qt::Vertical);
     thermoPitch->setScale(0, 10);
     thermoPitch->setColorMap(colorMap);
@@ -69,7 +69,7 @@ MainView::MainView(QWidget *parent) :
     ui->speedLayout->addWidget(ui->lbl_pitch, 1, 0, 1, 2);
 
     wheelYaw = new QwtWheel();
-    wheelYaw->setValue(3);
+    wheelYaw->setValue(10);
     wheelYaw->setWheelWidth(15);
     wheelYaw->setMass(1.0);
     wheelYaw->setOrientation(Qt::Vertical);
@@ -77,7 +77,7 @@ MainView::MainView(QWidget *parent) :
     wheelYaw->setSingleStep(1.0);
     wheelYaw->setTotalAngle(90.0);
     thermoYaw = new QwtThermo();
-    thermoYaw->setValue(3);
+    thermoYaw->setValue(10);
     thermoYaw->setOrientation(Qt::Vertical);
     thermoYaw->setScale(0, 16);
     thermoYaw->setColorMap(colorMap);
@@ -148,6 +148,8 @@ MainView::MainView(QWidget *parent) :
     ui->spectrumPlotLayout->addWidget(btn_nextChannel, 0, 2, 2, 3);
     connect(btn_prevChannel, &QPushButton::clicked, this, &MainView::shiftFrequenciesPrevChannel);
     connect(btn_nextChannel, &QPushButton::clicked, this, &MainView::shiftFrequenciesNextChannel);
+
+    this->diff_altitude = 125.9;
 }
 
 MainView::~MainView()
@@ -297,6 +299,7 @@ void MainView::on_btn_testActivate_clicked()
 void MainView::on_btn_testControl_clicked()
 {
     presenter->obtainDjiControl(ui->btn_testControl->text());
+    //this->diff_altitude = ui->le_altitude->text().toDouble();
 }
 
 void MainView::on_btn_testReset_clicked()
@@ -355,15 +358,19 @@ void MainView::connectionDjiVehicleResetted()
 }
 
 void MainView::updateTelemetryData(const QVector<double> &subscribeData){
-    double latitude = subscribeData.at(3) / 10000000.0;
-    double longitude = subscribeData.at(2) / 10000000.0;
+
+    double battery = subscribeData.at(4);
+    double latitude = subscribeData.at(3);
+    double longitude = subscribeData.at(2);
     double altitude = subscribeData.at(1);
     double heading = subscribeData.at(0);
 
     ui->le_latitude->setText(QString::number(latitude,'f',6));
     ui->le_longitude->setText(QString::number(longitude,'f',6));
-    ui->le_altitude->setText(QString::number(altitude,'f',2));
+    ui->le_altitude->setText(QString::number(altitude - diff_altitude,'f',2));
     ui->le_heading->setText(QString::number(heading,'f',2));
+    ui->lbl_battery->setText(QString("Battery: %1 %")
+                             .arg(QString::number(battery,'f',0)));
 
     QObject *object = map->rootObject();
     QMetaObject::invokeMethod(object, "updateDroneLocation",
@@ -378,8 +385,8 @@ void MainView::displayPhaseDeviation(const double &phDev)
 {
     double expCoeff = 1 - aaCoeff;
     current_phDev = expCoeff * phDev + (1 - expCoeff) * current_phDev;
-    deviationIndicator->setValue(current_phDev);
-    automaticPathFinder(current_phDev);
+    deviationIndicator->setValue(-current_phDev);
+    automaticPathFinder(current_phDev); // disable inversion
 }
 
 void MainView::automaticPathFinder(const double &phDev)
@@ -387,10 +394,12 @@ void MainView::automaticPathFinder(const double &phDev)
     if (!autosearch)
         return;
 
-    if (phDev > 0)
+    presenter->sendAutoYawRequest((int)phDev);
+
+    /* if (phDev > 0)
         presenter->sendAutoYawRequest(-1);
     else if (phDev < 0)
-        presenter->sendAutoYawRequest(1);
+        presenter->sendAutoYawRequest(1);*/
 }
 
 void MainView::setHomePoint(QString azimuth, QString lat, QString lng, QString range) {
@@ -425,11 +434,12 @@ void MainView::setPointOnMap(QString lat, QString lng, QString range_dr, QString
     presenter->sendInitHotpointRequest(coordinates);
 }
 
-void MainView::makeDirection(const double &direction)
+void MainView::makeDirection(double &direction)
 {
     QObject *object = map->rootObject();
     QMetaObject::invokeMethod(object, "makeBeam",
                               Q_ARG(QVariant, direction));
+    presenter->sendSetDefinedDirectionRequest(direction);
 }
 
 void MainView::phaseCorrectionChanged(double phaseCorrection)
@@ -529,11 +539,6 @@ void MainView::on_slider_add_valueChanged(int position)
     polarPlot->changeSharpCoefficient(position);
 }
 
-void MainView::on_slider_product_valueChanged(int position)
-{
-
-}
-
 void MainView::on_btn_resetScales_clicked()
 {
     polarPlot->resetScales();
@@ -597,6 +602,10 @@ void MainView::on_btn_wp_load_clicked()
 
 void MainView::on_btn_wp_start_clicked()
 {
+    // test //
+    on_btn_wp_init_clicked();
+    on_btn_wp_load_clicked();
+
     presenter->sendStartWaypointRequest();
 }
 
@@ -757,18 +766,6 @@ void MainView::setMapSettingsArray(QVector<int> mapSettings)
                               Q_ARG(QVariant, mapSettings.at(4) / 1000000.0),
                               Q_ARG(QVariant, mapSettings.at(5) / 1000000.0));
 }
-
-/* void MainView::on_btn_autopilot_clicked(bool checked)
-{
-    autopilot = checked;
-    if (autopilot) presenter->sendAutoPitchRequest(1);
-    else {
-        presenter->sendResetPitch();
-        presenter->sendResetRoll();
-        presenter->sendResetThrust();
-        presenter->sendResetYaw();
-    }
-} */
 
 void MainView::on_dial_autoSearch_valueChanged(int value)
 {

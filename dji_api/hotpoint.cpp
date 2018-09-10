@@ -40,8 +40,8 @@ void Hotpoint::startHotpoint(int yawRate)
                 longitude, latitude, altitude);
     vehicle->missionManager->hpMission->setClockwise(yawRate > 0);
     vehicle->missionManager->hpMission->setYawRate(qAbs(yawRate));
-    vehicle->missionManager->hpMission->setRadius(5.0);
-    vehicle->missionManager->hpMission->setYawMode(HotpointMission::YawMode::YAW_OUTSIDE);
+    vehicle->missionManager->hpMission->setRadius(25.0);
+    vehicle->missionManager->hpMission->setYawMode(HotpointMission::YawMode::YAW_INSIDE);
     vehicle->missionManager->hpMission->start(hotpointReadCallback, this);
 }
 

@@ -46,14 +46,15 @@ public:
     void resetPitch();
     void resetRoll();
 
+    void setDefiniteDirection(double &heading);
     void sendFlightCommand();
 
 private:
     DJI::OSDK::Vehicle              *vehicle;
     DJI::OSDK::Control::CtrlData     command;
 
-    int autoHorizontalVelocity = 3;
-    int autoYawRate = 3;
+    int autoHorizontalVelocity = 6;
+    int autoYawRate = 10;
 
     int stableHorizontalVelocity = 5;
     int stableVerticalVelocity = 2;

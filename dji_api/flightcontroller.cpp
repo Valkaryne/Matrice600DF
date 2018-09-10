@@ -100,16 +100,23 @@ void FlightController::flightRunCommand(int &commandIndex)
 void FlightController::setAutoHorizontalVelocity(int &velocity)
 {
     this->autoHorizontalVelocity = velocity;
+    float currentX = qAbs(command.x);
+    command.x = command.x / currentX * autoHorizontalVelocity;
+
+    float currentY = qAbs(command.y);
+    command.y = command.y / currentY * 0.5 * autoHorizontalVelocity;
 }
 
 void FlightController::setAutoYawRate(int &rate)
 {
     this->autoYawRate = rate;
+    float currentYaw = qAbs(command.yaw);
+    command.yaw = command.yaw / currentYaw * autoYawRate;
 }
 
 void FlightController::autoYaw(int &direction)
 {
-    command.yaw = autoYawRate * direction;
+    command.yaw = autoYawRate * (direction / 180.0);
 }
 
 void FlightController::autoPitch(int &direction)
@@ -120,6 +127,7 @@ void FlightController::autoPitch(int &direction)
 void FlightController::autoRoll(int &direction)
 {
     command.y = 0.5 * autoHorizontalVelocity * direction;
+    // 1/16
 }
 
 void FlightController::stableThrust(int &direction)
@@ -200,6 +208,18 @@ void FlightController::resetPitch()
 void FlightController::resetRoll()
 {
     command.y = 0;
+}
+
+void FlightController::setDefiniteDirection(double &heading)
+{
+    command.flag &= 0xF7;
+    command.flag |= Control::YawLogic::YAW_ANGLE; // (-180; 180)
+
+    command.yaw = heading;
+    vehicle->control->flightCtrl(command);
+
+    command.flag &= 0xF7;
+    command.flag |= Control::YawLogic::YAW_RATE; // (-36, 36)
 }
 
 void FlightController::sendFlightCommand()
