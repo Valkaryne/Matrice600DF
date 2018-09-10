@@ -33,6 +33,30 @@ Item {
         PluginParameter { name: "esri.mapping.cache.directory"; value: "F:/mapesri_cache/" }
     }
 
+    MissionDialog {
+        id: dialogMission
+        dialogButtonCancel.onClicked: dialogMission.close()
+        dialogButtonOk.onClicked: {
+            console.log("Lat: " + dialogMission.latitude)
+            console.log("Lng: " + dialogMission.longitude)
+            printParameters(dialogMission.missionSwitch.checked, dialogMission.velocityField.text,
+                            dialogMission.altitudeField.text)
+            dialogMission.close()
+        }
+    }
+
+    function printParameters(type, velocity, altitude)
+    {
+        var missionType, missionVelocity, missionAltitude
+        if (type === true) {
+            missionType = 1
+            //marker.path = marker.hotpath
+        } else {
+            missionType = 0
+            //marker.path = marker.waypath
+        }
+    }
+
     function initializeMapItems()
     {
         console.log("Cat here")
@@ -47,6 +71,7 @@ Item {
         map.addMapItem(homePoint)
         map.addMapItem(droneVector)
         marker.z = map.z + 1
+        dialogMission.marker = marker
         console.log("Map is initilized")
     }
 
@@ -120,6 +145,7 @@ Item {
 
         marker = Qt.createQmlObject('Marker {}', map)
         map.addMapItem(marker)
+        dialogMission.marker = marker
 
         drone = Qt.createQmlObject('Drone {}', map)
         map.addMapItem(drone)

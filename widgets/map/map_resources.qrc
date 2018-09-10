@@ -8,5 +8,8 @@
         <file>resources/marker.png</file>
         <file>Home.qml</file>
         <file>resources/home.png</file>
+        <file>MissionDialog.qml</file>
+        <file>resources/marker_hot.png</file>
+        <file>resources/marker_way.png</file>
     </qresource>
 </RCC>

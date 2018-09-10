@@ -7,9 +7,13 @@ MapQuickItem {
     anchorPoint.x: image.width / 2
     anchorPoint.y: image.height
 
+    property var hotpath: "resources/marker_hot.png"
+    property var waypath: "resources/marker_way.png"
+    property var path
+
     sourceItem: Image {
         id: image
-        source: "resources/marker.png"
+        source: path
         opacity: 0.9
     }
 }
