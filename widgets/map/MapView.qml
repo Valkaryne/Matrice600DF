@@ -37,8 +37,7 @@ Item {
         id: dialogMission
         dialogButtonCancel.onClicked: dialogMission.close()
         dialogButtonOk.onClicked: {
-            console.log("Lat: " + dialogMission.latitude)
-            console.log("Lng: " + dialogMission.longitude)
+            setPoint()
             printParameters(dialogMission.missionSwitch.checked, dialogMission.velocityField.text,
                             dialogMission.altitudeField.text)
             dialogMission.close()
@@ -49,12 +48,33 @@ Item {
     {
         var missionType, missionVelocity, missionAltitude
         if (type === true) {
-            missionType = 1
-            //marker.path = marker.hotpath
+            missionType = "Hotpoint"
+            mainview.invokeHotpointInit(velocity, altitude)
         } else {
-            missionType = 0
-            //marker.path = marker.waypath
+            missionType = "Waypoint"
+            mainview.invokeWaypointInit(velocity, altitude)
         }
+    }
+
+    function setPoint()
+    {
+        var endLat = MissionDialog.latitude;
+        var endLng = MissionDialog.longitude;
+
+        var stLat1 = drone.coordinate.latitude;
+        var stLng1 = drone.coordinate.longitude;
+        var stLat2 = homePoint.coordinate.latitude;
+        var stLng2 = homePoint.coordinate.longitude;
+
+        var x01 = stLat1 / dLat;
+        var y01 = stLng1 / dLng;
+        var x02 = stLat2 / dLat;
+        var y02 = stLng2 / dLng;
+        var x1 = endLat / dLat;
+        var y1 = endLng / dLng;
+
+        var range_dr = Math.sqrt(Math.pow(x1 - x01, 2) + Math.pow(y1 - y01, 2));
+        var range_hp = Math.sqrt(Math.pow(x1 - x02, 2) + Math.pow(y1 - y02, 2));
     }
 
     function initializeMapItems()

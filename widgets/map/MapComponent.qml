@@ -20,7 +20,7 @@ Map {
         var endLat = marker.coordinate.latitude
         var endLng = marker.coordinate.longitude
 
-        /*var stLat1 = drone.coordinate.latitude;
+        var stLat1 = drone.coordinate.latitude;
         var stLng1 = drone.coordinate.longitude;
         var stLat2 = homePoint.coordinate.latitude;
         var stLng2 = homePoint.coordinate.longitude;
@@ -33,12 +33,12 @@ Map {
         var y1 = endLng / dLng;
 
         var range_dr = Math.sqrt(Math.pow(x1 - x01, 2) + Math.pow(y1 - y01, 2));
-        var range_hp = Math.sqrt(Math.pow(x1 - x02, 2) + Math.pow(y1 - y02, 2)); */
+        var range_hp = Math.sqrt(Math.pow(x1 - x02, 2) + Math.pow(y1 - y02, 2));
+
+        mainview.setPointOnMap(endLat, endLng, range_dr, range_hp);
 
         dialogMission.latitude = endLat;
         dialogMission.longitude = endLng;
-
-        //mainview.setPointOnMap(endLat, endLng, range_dr, range_hp);
     }
 
     function setHomePoint() {

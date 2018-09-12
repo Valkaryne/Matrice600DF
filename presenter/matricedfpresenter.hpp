@@ -64,7 +64,7 @@ public:
     void sendAbortWaypointRequest();
 
     void sendInitHotpointRequest(const QVector<double> &coordinates);
-    void sendStartHotpointRequest(int yawRate);
+    void sendStartHotpointRequest();
     void sendStopHotpointRequest();
 
 private slots:

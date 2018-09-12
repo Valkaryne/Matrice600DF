@@ -32,14 +32,15 @@ void Hotpoint::initHotpoint(const QVector<double> &coordinates)
     this->latitude = coordinates.at(0) * DEG2RAD;
     this->longitude = coordinates.at(1) * DEG2RAD;
     this->altitude = coordinates.at(2);
+    this->velocity = coordinates.at(3);
 }
 
-void Hotpoint::startHotpoint(int yawRate)
+void Hotpoint::startHotpoint()
 {
     vehicle->missionManager->hpMission->setHotPoint(
                 longitude, latitude, altitude);
-    vehicle->missionManager->hpMission->setClockwise(yawRate > 0);
-    vehicle->missionManager->hpMission->setYawRate(qAbs(yawRate));
+    vehicle->missionManager->hpMission->setClockwise(velocity > 0);
+    vehicle->missionManager->hpMission->setYawRate(qAbs(velocity));
     vehicle->missionManager->hpMission->setRadius(25.0);
     vehicle->missionManager->hpMission->setYawMode(HotpointMission::YawMode::YAW_INSIDE);
     vehicle->missionManager->hpMission->start(hotpointReadCallback, this);

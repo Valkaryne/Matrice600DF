@@ -83,7 +83,7 @@ public:
     void abortWaypointRequest();
 
     void initHotpointRequest(const QVector<double> &coordinates);
-    void startHotpointRequest(int yawRate);
+    void startHotpointRequest();
     void stopHotpointRequest();
 
 signals:

@@ -9,7 +9,7 @@ MapQuickItem {
 
     property var hotpath: "resources/marker_hot.png"
     property var waypath: "resources/marker_way.png"
-    property var path
+    property var path: "resources/marker_way.png"
 
     sourceItem: Image {
         id: image

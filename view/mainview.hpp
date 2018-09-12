@@ -55,6 +55,8 @@ public:
 
     Q_INVOKABLE void setHomePoint(QString azimuth, QString lat, QString lng, QString range);
     Q_INVOKABLE void setPointOnMap(QString lat, QString lng, QString range_dr, QString range_hp);
+    Q_INVOKABLE void invokeWaypointInit(QString velocity, QString altitude);
+    Q_INVOKABLE void invokeHotpointInit(QString velocity, QString altitude);
 
 private slots:
     void on_btn_apply_clicked();

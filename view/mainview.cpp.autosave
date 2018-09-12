@@ -642,8 +642,8 @@ void MainView::on_btn_wp_load_clicked()
 void MainView::on_btn_wp_start_clicked()
 {
     // test //
-    on_btn_wp_init_clicked();
-    on_btn_wp_load_clicked();
+    //on_btn_wp_init_clicked();
+    //on_btn_wp_load_clicked();
 
     presenter->sendStartWaypointRequest();
 }

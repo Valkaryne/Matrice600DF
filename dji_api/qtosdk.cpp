@@ -258,9 +258,9 @@ void QtOsdk::initHotpointRequest(const QVector<double> &coordinates)
     hotpoint->initHotpoint(coordinates);
 }
 
-void QtOsdk::startHotpointRequest(int yawRate)
+void QtOsdk::startHotpointRequest()
 {
-    hotpoint->startHotpoint(yawRate);
+    hotpoint->startHotpoint();
 }
 
 void QtOsdk::stopHotpointRequest()

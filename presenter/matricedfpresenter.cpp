@@ -225,9 +225,9 @@ void MatriceDFPresenter::sendInitHotpointRequest(const QVector<double> &coordina
     dji->initHotpointRequest(coordinates);
 }
 
-void MatriceDFPresenter::sendStartHotpointRequest(int yawRate)
+void MatriceDFPresenter::sendStartHotpointRequest()
 {
-    dji->startHotpointRequest(yawRate);
+    dji->startHotpointRequest();
 }
 
 void MatriceDFPresenter::sendStopHotpointRequest()

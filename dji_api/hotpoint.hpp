@@ -20,13 +20,13 @@ public:
                                      DJI::OSDK::UserData        userData);
 
     void initHotpoint(const QVector<double> &coordinates);
-    void startHotpoint(int yawRate);
+    void startHotpoint();
     void stopHotpoint();
 
 private:
     DJI::OSDK::Vehicle  *vehicle;
 
-    double latitude, longitude, altitude;
+    double latitude, longitude, altitude, velocity;
 };
 
 
