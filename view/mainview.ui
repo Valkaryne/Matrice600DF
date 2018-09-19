@@ -856,153 +856,6 @@ QRadioButton::indicator::checked {
     </item>
     <item>
      <layout class="QGridLayout" name="gridLayout_6">
-      <item row="1" column="2">
-       <widget class="QGroupBox" name="missionBox">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="title">
-         <string>Mission Control Panel</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_5">
-         <item row="0" column="1">
-          <widget class="QSpinBox" name="sb_wp_velocity">
-           <property name="suffix">
-            <string> m/s</string>
-           </property>
-           <property name="maximum">
-            <number>15</number>
-           </property>
-           <property name="value">
-            <number>15</number>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="lbl_wp_velocity">
-           <property name="text">
-            <string>Velocity:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QSpinBox" name="sb_wp_altitude">
-           <property name="suffix">
-            <string> m</string>
-           </property>
-           <property name="maximum">
-            <number>200</number>
-           </property>
-           <property name="value">
-            <number>30</number>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="lbl_wp_altitude">
-           <property name="text">
-            <string>Altitude:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QComboBox" name="cb_wp_rcLost">
-           <property name="currentIndex">
-            <number>1</number>
-           </property>
-           <item>
-            <property name="text">
-             <string>Quit Mission</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Keep Going</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QPushButton" name="btn_wp_init">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Initialize</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="lbl_wp_rcLost">
-           <property name="text">
-            <string>On RC Lost:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QPushButton" name="btn_wp_start">
-           <property name="text">
-            <string>Start</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QPushButton" name="btn_wp_load">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>Load</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="2">
-          <widget class="QPushButton" name="btn_wp_abort">
-           <property name="text">
-            <string>Abort</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QComboBox" name="cb_wp_yawLogic">
-           <item>
-            <property name="text">
-             <string>Auto yaw</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>No yaw</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>RC yaw</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Waypoint</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="lbl_wp_yawLogic">
-           <property name="text">
-            <string>Yaw Logic:</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
       <item row="0" column="0" colspan="3">
        <widget class="QGroupBox" name="locationBox">
         <property name="title">
@@ -1194,54 +1047,6 @@ Distance (Drone): 0 m, Distance (Home): 0 m</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="3">
-          <widget class="QPushButton" name="btn_hp_start">
-           <property name="text">
-            <string>Fix Target</string>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QSpinBox" name="sb_yawRate">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="buttonSymbols">
-            <enum>QAbstractSpinBox::NoButtons</enum>
-           </property>
-           <property name="suffix">
-            <string> °/sec</string>
-           </property>
-           <property name="minimum">
-            <number>-36</number>
-           </property>
-           <property name="maximum">
-            <number>36</number>
-           </property>
-           <property name="value">
-            <number>15</number>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="lbl_yawRate">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Yaw Rate:</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="1" colspan="2">
           <widget class="QComboBox" name="cb_command">
            <property name="sizePolicy">
@@ -1312,6 +1117,30 @@ Distance (Drone): 0 m, Distance (Home): 0 m</string>
            </property>
            <property name="text">
             <string>Run</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="btn_hp_start">
+           <property name="text">
+            <string>Fix Target</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QPushButton" name="btn_wp_start">
+           <property name="text">
+            <string>Start</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3">
+          <widget class="QPushButton" name="btn_wp_abort">
+           <property name="text">
+            <string>Abort</string>
            </property>
           </widget>
          </item>

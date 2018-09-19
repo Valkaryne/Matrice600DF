@@ -98,10 +98,6 @@ private slots:
 
     void on_btn_clearMap_clicked();
 
-    void on_btn_wp_init_clicked();
-
-    void on_btn_wp_load_clicked();
-
     void on_btn_wp_start_clicked();
 
     void on_btn_wp_abort_clicked();

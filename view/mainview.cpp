@@ -32,7 +32,7 @@ MainView::MainView(QWidget *parent) :
     ui->polarPlotLayout->addWidget(polarPlot, 0, 0, 2, 2);
     ui->polarPlotLayout->addWidget(ui->slider_add, 2, 0, 1, 1);
     ui->polarPlotLayout->addWidget(ui->slider_product, 0, 3, 1, 1);
-    connect(polarPlot, SIGNAL(setDirectionRequest(const double &)), SLOT(makeDirection(const double &)));
+    connect(polarPlot, SIGNAL(setDirectionRequest(double &)), SLOT(makeDirection(double &)));
 
     /* Phase deviation indicator */
     deviationIndicator = new QwtThermo();
@@ -471,6 +471,7 @@ void MainView::invokeHotpointInit(QString velocity, QString altitude)
     hotpointInitData.append(markerLongitude);
     hotpointInitData.append(altitude.toDouble());
     hotpointInitData.append(velocity.toDouble());
+    presenter->sendInitHotpointRequest(hotpointInitData);
 }
 
 void MainView::makeDirection(double &direction)
@@ -616,35 +617,8 @@ void MainView::on_btn_clearMap_clicked()
     QMetaObject::invokeMethod(object, "clearMap");
 }
 
-void MainView::on_btn_wp_init_clicked()
-{
-    QHash<QString, int> initSettings;
-    initSettings.insert("latitude", ui->le_latitude->text().toDouble() * 1000000);
-    initSettings.insert("longitude", ui->le_longitude->text().toDouble() * 1000000);
-    initSettings.insert("altitude", ui->le_altitude->text().toInt());
-    initSettings.insert("velocity", ui->sb_wp_velocity->value());
-    initSettings.insert("yaw logic", ui->cb_wp_yawLogic->currentIndex());
-    initSettings.insert("on rc lost", ui->cb_wp_rcLost->currentIndex());
-
-    presenter->sendInitWaypointRequest(initSettings);
-}
-
-void MainView::on_btn_wp_load_clicked()
-{
-    QHash<QString, int> loadSettings;
-    loadSettings.insert("latitude", markerLatitude * 1000000);
-    loadSettings.insert("longitude", markerLongitude * 1000000);
-    loadSettings.insert("altitude", ui->sb_wp_altitude->value());
-
-    presenter->sendLoadWaypointRequest(loadSettings);
-}
-
 void MainView::on_btn_wp_start_clicked()
 {
-    // test //
-    on_btn_wp_init_clicked();
-    on_btn_wp_load_clicked();
-
     presenter->sendStartWaypointRequest();
 }
 
@@ -662,12 +636,11 @@ void MainView::on_btn_runCommand_clicked()
 void MainView::on_btn_hp_start_clicked(bool checked)
 {
     if (checked) {
-        int yawRate = ui->sb_yawRate->value();
         presenter->sendStartHotpointRequest();
         ui->btn_hp_start->setText("Stop");
     } else {
         presenter->sendStopHotpointRequest();
-        ui->btn_hp_start->setText("Rotate");
+        ui->btn_hp_start->setText("Fix Target");
     }
 }
 

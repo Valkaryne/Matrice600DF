@@ -41,7 +41,7 @@ private slots:
     void getDirectionManual(const QwtPointPolar &point);
 
 signals:
-    void setDirectionRequest(const double &direction);
+    void setDirectionRequest(double &direction);
 
 private:
     double estimateZeroPhase(const double azimuth);
