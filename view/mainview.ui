@@ -81,7 +81,7 @@
       <item>
        <widget class="QGroupBox" name="usrpBox">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Maximum">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -106,9 +106,15 @@
          </item>
          <item row="1" column="1" colspan="2">
           <widget class="QSpinBox" name="sb_gain">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="maximumSize">
             <size>
-             <width>75</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
@@ -143,21 +149,14 @@
            </property>
           </widget>
          </item>
-         <item row="6" column="0" colspan="3">
-          <widget class="QPushButton" name="btn_apply">
+         <item row="0" column="1" colspan="2">
+          <widget class="QDoubleSpinBox" name="sb_frequency">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="text">
-            <string>Apply</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1" colspan="2">
-          <widget class="QDoubleSpinBox" name="sb_frequency">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -166,7 +165,7 @@
            </property>
            <property name="maximumSize">
             <size>
-             <width>75</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
@@ -194,7 +193,7 @@
           <widget class="QSpinBox" name="sb_temp_add">
            <property name="maximumSize">
             <size>
-             <width>75</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
@@ -213,7 +212,7 @@
           <widget class="QSpinBox" name="sb_temp_prod">
            <property name="maximumSize">
             <size>
-             <width>75</width>
+             <width>16777215</width>
              <height>16777215</height>
             </size>
            </property>
@@ -228,13 +227,32 @@
            </property>
           </widget>
          </item>
+         <item row="5" column="1">
+          <widget class="QPushButton" name="btn_apply">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Apply</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
       <item>
        <widget class="QGroupBox" name="dfControlBox">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -243,84 +261,7 @@
          <string>DF Control Panel</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_2">
-         <item row="1" column="1">
-          <widget class="QRadioButton" name="rb_markersMode">
-           <property name="text">
-            <string>Markers</string>
-           </property>
-           <property name="checked">
-            <bool>false</bool>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">bgr_modes</string>
-           </attribute>
-          </widget>
-         </item>
-         <item row="4" column="2">
-          <widget class="QPushButton" name="btn_maxHold">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Disable MaxHold</string>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLabel" name="lbl_droneClassSelect">
-           <property name="text">
-            <string>Drone Class:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QComboBox" name="cb_droneClassSelect">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <item>
-            <property name="text">
-             <string>Matrice/Phantom</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Mavic/Spark</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Planer</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QPushButton" name="btn_refresh">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Refresh</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
+         <item row="4" column="1">
           <widget class="QRadioButton" name="rb_thresholdMode">
            <property name="text">
             <string>Thresholds</string>
@@ -330,20 +271,7 @@
            </attribute>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QRadioButton" name="rb_zoomMode">
-           <property name="text">
-            <string>Zoom</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">bgr_modes</string>
-           </attribute>
-          </widget>
-         </item>
-         <item row="3" column="2">
+         <item row="4" column="2">
           <widget class="QPushButton" name="btn_amMode">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -359,7 +287,20 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
+         <item row="3" column="1">
+          <widget class="QRadioButton" name="rb_zoomMode">
+           <property name="text">
+            <string>Zoom</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">bgr_modes</string>
+           </attribute>
+          </widget>
+         </item>
+         <item row="5" column="1">
           <widget class="QDoubleSpinBox" name="sb_expCoeff">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -393,7 +334,7 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="2">
+         <item row="3" column="2">
           <widget class="QPushButton" name="btn_resetScales">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -406,7 +347,84 @@
            </property>
           </widget>
          </item>
-         <item row="5" column="1" colspan="2">
+         <item row="2" column="1">
+          <widget class="QRadioButton" name="rb_markersMode">
+           <property name="text">
+            <string>Markers</string>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">bgr_modes</string>
+           </attribute>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="lbl_droneClassSelect">
+           <property name="text">
+            <string>Drone Class:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QComboBox" name="cb_droneClassSelect">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <item>
+            <property name="text">
+             <string>Matrice/Phantom</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Mavic/Spark</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Planer</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="5" column="2">
+          <widget class="QPushButton" name="btn_maxHold">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Disable MaxHold</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="btn_refresh">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Refresh</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1" colspan="2">
           <widget class="QFrame" name="markersFrame">
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
@@ -615,103 +633,9 @@ QRadioButton::indicator::checked {
        </widget>
       </item>
       <item>
-       <widget class="QGroupBox" name="connectionBox">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="title">
-         <string>Connection</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_3">
-         <item row="2" column="1">
-          <widget class="QComboBox" name="comboBox"/>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="lbl_usrp">
-           <property name="text">
-            <string>USRP:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="lbl_com">
-           <property name="text">
-            <string>COM:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="le_usrpIP">
-           <property name="maximumSize">
-            <size>
-             <width>100</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>192.168.3.2</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QLineEdit" name="le_usrpPort">
-           <property name="maximumSize">
-            <size>
-             <width>45</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>25000</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="lbl_pc">
-           <property name="text">
-            <string>PC:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="le_pcIP">
-           <property name="maximumSize">
-            <size>
-             <width>100</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>192.168.3.1</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLineEdit" name="le_pcPort">
-           <property name="maximumSize">
-            <size>
-             <width>45</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>8995</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
        <widget class="QGroupBox" name="initAircraftBox">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -727,6 +651,12 @@ QRadioButton::indicator::checked {
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>0</height>
+            </size>
            </property>
            <property name="text">
             <string>Initialize</string>
@@ -753,6 +683,12 @@ QRadioButton::indicator::checked {
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>0</height>
+            </size>
            </property>
            <property name="text">
             <string>Reset Connection</string>
@@ -802,7 +738,33 @@ QRadioButton::indicator::checked {
        </widget>
       </item>
       <item>
+       <widget class="QLabel" name="lbl_angerror">
+        <property name="text">
+         <string>Angle Error: 0</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
        <widget class="QFrame" name="speedFrame">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -1147,6 +1109,106 @@ Distance (Drone): 0 m, Distance (Home): 0 m</string>
         </layout>
        </widget>
       </item>
+      <item row="1" column="2">
+       <widget class="QGroupBox" name="connectionBox">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="title">
+         <string>Connection</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="2" column="1">
+          <widget class="QComboBox" name="comboBox"/>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="lbl_usrp">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>USRP:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="lbl_com">
+           <property name="text">
+            <string>COM:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="le_usrpIP">
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>192.168.3.2</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLineEdit" name="le_usrpPort">
+           <property name="maximumSize">
+            <size>
+             <width>45</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>25000</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="lbl_pc">
+           <property name="text">
+            <string>PC:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="le_pcIP">
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>192.168.3.1</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLineEdit" name="le_pcPort">
+           <property name="maximumSize">
+            <size>
+             <width>45</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>8995</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
      </layout>
     </item>
    </layout>
@@ -1157,7 +1219,7 @@ Distance (Drone): 0 m, Distance (Home): 0 m</string>
      <x>0</x>
      <y>0</y>
      <width>1095</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -1175,7 +1237,7 @@ Distance (Drone): 0 m, Distance (Home): 0 m</string>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="bgr_modes"/>
   <buttongroup name="bgr_markers"/>
+  <buttongroup name="bgr_modes"/>
  </buttongroups>
 </ui>

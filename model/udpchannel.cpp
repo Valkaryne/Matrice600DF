@@ -21,7 +21,6 @@ void UdpChannel::readPendingDatagram()
         QNetworkDatagram datagram = socket->receiveDatagram();
 
         QByteArray tmp = datagram.data();
-        //qDebug() << "Recv: " << tmp;
         QVector<double> samplesAm1, samplesAm2, samplesPh;
         QVector<unsigned char> numbers;
 
@@ -62,11 +61,8 @@ void UdpChannel::readPendingDatagram()
         {
             number = number + (numbers.at(i) << i);
         }
-        //qDebug() << "Num: " << number;
-        if (number != 0)
-        {
-           emit samplesReceived(samplesAm1, samplesAm2, samplesPh, number);
-        }
+
+        emit samplesReceived(samplesAm1, samplesAm2, samplesPh, number);
     }
 }
 
