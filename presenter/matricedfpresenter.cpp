@@ -12,10 +12,10 @@ MatriceDFPresenter::MatriceDFPresenter(MainIView *view, QObject *parent) :
 
     //dji->moveToThread((QThread*)this);
 
-    connect(model, SIGNAL(amplitudeSamplesReady(const QVector<double>,const QVector<double>,const QVector<double>)),
-            SLOT(amplitudeSamplesPresenter(const QVector<double>,const QVector<double>,const QVector<double>)));
-    connect(model, SIGNAL(phaseSamplesReady(const QVector<double>)),
-            SLOT(phaseSamplesPresenter(const QVector<double>)));
+    connect(model, SIGNAL(amplitudeSamplesReady(const QVector<double>,const QVector<double>,const QVector<double>,const int)),
+            SLOT(amplitudeSamplesPresenter(const QVector<double>,const QVector<double>,const QVector<double>,const int)));
+    connect(model, SIGNAL(phaseSamplesReady(const QVector<double>,const int)),
+            SLOT(phaseSamplesPresenter(const QVector<double>,const int)));
     connect(model, SIGNAL(polarSamplesReady(const int,const double,const double,const double,const double)),
             SLOT(polarSamplesPresenter(const int,const double,const double, const double,const double)));
     connect(model, SIGNAL(phaseDeviationEstimated(const double)),
@@ -237,14 +237,14 @@ void MatriceDFPresenter::sendStopHotpointRequest()
 
 /* Slots */
 void MatriceDFPresenter::amplitudeSamplesPresenter(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
-                                              const QVector<double> samplesAmS)
+                                              const QVector<double> samplesAmS, const int number)
 {
-    view->getAmplitudeSpectrumPlot()->updateCurve(samplesAm1, samplesAm2, samplesAmS);
+    view->getAmplitudeSpectrumPlot()->updateCurve(samplesAm1, samplesAm2, samplesAmS, number);
 }
 
-void MatriceDFPresenter::phaseSamplesPresenter(const QVector<double> samplesPh)
+void MatriceDFPresenter::phaseSamplesPresenter(const QVector<double> samplesPh, const int number)
 {
-    view->getPhaseSpectrumPlot()->updateCurve(samplesPh);
+    view->getPhaseSpectrumPlot()->updateCurve(samplesPh, number);
 }
 
 void MatriceDFPresenter::polarSamplesPresenter(const int az, const double rado, const double radl, const double rads,

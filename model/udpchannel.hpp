@@ -16,7 +16,7 @@ public:
 
 signals:
     void samplesReceived(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
-                         const QVector<double> samplesPh);
+                         const QVector<double> samplesPh, const int number);
 
 public slots:
     void readPendingDatagram();

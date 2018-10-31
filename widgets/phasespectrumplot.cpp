@@ -28,6 +28,11 @@ PhaseSpectrumPlot::PhaseSpectrumPlot(QWidget *parent) :
     wheel->setEnabled(true);
 
     connect(wheel,SIGNAL(valueChanged(double)),SIGNAL(phaseCorrector(double)));
+
+    for (int i = 0; i < 4096; i++)
+    {
+        this->samplesPh.append(0);
+    }
 }
 
 void PhaseSpectrumPlot::setCentralFrequency(double cntrFrequency)
@@ -44,15 +49,22 @@ void PhaseSpectrumPlot::setPhaseCorrection(int phaseCorrection)
     wheel->setValue(phaseCorrection);
 }
 
-void PhaseSpectrumPlot::updateCurve(const QVector<double> &samplesPh)
+void PhaseSpectrumPlot::updateCurve(const QVector<double> &samplesPh, const int &number)
 {
     QVector<double> frequency;
 
     for (double i = cntrFrequency - LSHIFT; i < cntrFrequency + RSHIFT; i += INCR)
         frequency.append(i);
 
-    curve->setSamples(frequency, samplesPh);
-    replot();
+    for (int i = 256 * (number - 1), j = 0; i < 256 * number; i++, j++)
+    {
+        this->samplesPh.replace(i, samplesPh.at(j));
+    }
+
+    if (number != -1) {
+        curve->setSamples(frequency, this->samplesPh);
+        replot();
+    }
 }
 
 void PhaseSpectrumPlot::equalZoom(const QRectF &rect)

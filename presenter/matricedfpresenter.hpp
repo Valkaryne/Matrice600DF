@@ -69,8 +69,8 @@ public:
 
 private slots:
     void amplitudeSamplesPresenter(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
-                                   const QVector<double> samplesAmS);
-    void phaseSamplesPresenter(const QVector<double> samplesPh);
+                                   const QVector<double> samplesAmS, const int number);
+    void phaseSamplesPresenter(const QVector<double> samplesPh, const int number);
     void polarSamplesPresenter(const int az, const double rado, const double radl, const double rads,
                                const double phase);
     void phaseDeviationPresenter(const double phDev);

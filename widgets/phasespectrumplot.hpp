@@ -15,7 +15,7 @@ public:
     }
     void setPhaseCorrection(int phaseCorrection);
 
-    void updateCurve(const QVector<double> &samplesPh);
+    void updateCurve(const QVector<double> &samplesPh, const int &number);
 
 private slots:
     void equalZoom(const QRectF &rect);
@@ -26,6 +26,7 @@ signals:
 
 private:
     QwtPlotCurve    *curve;
+    QVector<double> samplesPh;
 };
 
 #endif // PHASESPECTRUMPLOT_HPP

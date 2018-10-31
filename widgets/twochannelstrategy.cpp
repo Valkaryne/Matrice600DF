@@ -20,28 +20,39 @@ TwoChannelStrategy::TwoChannelStrategy(PolarPlot *polarPlot)
 }
 
 void TwoChannelStrategy::update(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
-                                 const QVector<double> &samplesAmS)
+                                 const QVector<double> &samplesAmS, const int &number)
 {
     Q_UNUSED(samplesAmS)
-    int size = samplesAm1.size();
+    int size = plot->samplesAm1.size();
     QVector<double> frequency;
     double cntrFrequency = plot->getCentralFrequency();
 
     for (double i = cntrFrequency - LSHIFT; i < size * INCR + (cntrFrequency - LSHIFT); i += INCR)
         frequency.append(i);
 
-    for (int j = 0; j < samplesAm1.size(); j++) {
-        if (samplesAm1.at(j) > plot->maxSamples.at(j))
-            plot->maxSamples.replace(j, expCoeff * samplesAm1.at(j) + (1 - expCoeff) * plot->maxSamples.at(j) + 5);
-        else
-            plot->maxSamples.replace(j, (1 - expCoeff) * samplesAm1.at(j) + expCoeff * plot->maxSamples.at(j));
+    for (int i = 256 * (number - 1), j = 0; i < 256 * number; i++, j++)
+    {
+        plot->samplesAm1.replace(i, samplesAm1.at(j));
+        plot->samplesAm2.replace(i, samplesAm2.at(j));
     }
 
-    plot->curveAm1->setSamples(frequency, samplesAm1);
-    plot->curveAm2->setSamples(frequency, samplesAm2);
-    plot->curveMax->setSamples(frequency, plot->maxSamples);
+    for (int j = 0; j < plot->samplesAm1.size(); j++) {
+        if (plot->samplesAm1.at(j) > plot->maxSamples.at(j))
+            plot->maxSamples.replace(j, expCoeff * plot->samplesAm1.at(j) + (1 - expCoeff) * plot->maxSamples.at(j) + 5);
+        else
+            plot->maxSamples.replace(j, (1 - expCoeff) * plot->samplesAm1.at(j) + expCoeff * plot->maxSamples.at(j));
+    }
 
-    plot->replot();
+    // number != -1
+    // number == 16
+    if (number != -1)
+    {
+        plot->curveAm1->setSamples(frequency, plot->samplesAm1);
+        plot->curveAm2->setSamples(frequency, plot->samplesAm2);
+        plot->curveMax->setSamples(frequency, plot->maxSamples);
+
+        plot->replot();
+    }
 }
 
 void TwoChannelStrategy::update(const int &azHeading, const double &radAm1,

@@ -21,7 +21,9 @@ void UdpChannel::readPendingDatagram()
         QNetworkDatagram datagram = socket->receiveDatagram();
 
         QByteArray tmp = datagram.data();
+        //qDebug() << "Recv: " << tmp;
         QVector<double> samplesAm1, samplesAm2, samplesPh;
+        QVector<unsigned char> numbers;
 
         for (int i = 0; i < tmp.size() / 4; i++)
         {
@@ -42,14 +44,29 @@ void UdpChannel::readPendingDatagram()
 
             unsigned short val_ph = (static_cast<unsigned short>(val3) << 8) |
                     (static_cast<unsigned short>(val4));
-            val_ph <<= 6;
-            val_ph >>= 6;
+            val_ph <<= 7;
+            val_ph >>= 7;
+
+            unsigned char val_num = (val3 << 6);
+            val_num >>= 7;
 
             samplesAm1.append(static_cast<double>(val_am1));
             samplesAm2.append(static_cast<double>(val_am2));
             samplesPh.append(static_cast<double>(val_ph));
+            numbers.append(val_num);
         }
-        emit samplesReceived(samplesAm1, samplesAm2, samplesPh);
+        numbers.resize(32);
+        std::reverse(numbers.begin(), numbers.end());
+        int number = 0;
+        for (int i = 0; i < numbers.size(); i++)
+        {
+            number = number + (numbers.at(i) << i);
+        }
+        //qDebug() << "Num: " << number;
+        if (number != 0)
+        {
+           emit samplesReceived(samplesAm1, samplesAm2, samplesPh, number);
+        }
     }
 }
 

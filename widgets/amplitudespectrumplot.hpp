@@ -40,12 +40,13 @@ public:
     /* Other */
     void resetMarkers(double dF);
     void updateCurve(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
-                     const QVector<double> &samplesAmS);
+                     const QVector<double> &samplesAmS, const int &number);
 
     QwtPlotCurve    *curveAm1, *curveAm2, *curveAmS;
     QwtPlotCurve    *curveMax;
     QVector<QwtPlotMarker*> markerVector;
     QVector<double> maxSamples;
+    QVector<double> samplesAm1, samplesAm2, samplesAmS;
 
 private slots:
     void moveMarkers(const QPoint &pos);
