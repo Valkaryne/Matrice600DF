@@ -20,35 +20,28 @@ SummaryStrategy::SummaryStrategy(PolarPlot *polarPlot)
 }
 
 void SummaryStrategy::update(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
-                             const QVector<double> &samplesAmS, const int &number)
+                             const QVector<double> &samplesAmS)
 {
     Q_UNUSED(samplesAm1)
     Q_UNUSED(samplesAm2)
-    int size = plot->samplesAmS.size();
     QVector<double> frequency;
     double cntrFrequency = plot->getCentralFrequency();
 
-    for (double i = cntrFrequency - LSHIFT; i < size * INCR + (cntrFrequency - LSHIFT); i += INCR)
+    for (double i = cntrFrequency - LSHIFT; i < cntrFrequency + RSHIFT; i += INCR)
+    {
         frequency.append(i);
-
-    for (int i = 256 * (number - 1), j = 0; i < 256 * number; i++, j++)
-    {
-        plot->samplesAmS.replace(i, samplesAmS.at(j));
     }
 
-    for (int j = 0; j < plot->samplesAmS.size(); j++) {
-        if (plot->samplesAmS.at(j) > plot->maxSamples.at(j))
-            plot->maxSamples.replace(j, expCoeff * plot->samplesAmS.at(j) + (1 - expCoeff) * plot->maxSamples.at(j) + 5);
+    for (int j = 0; j < samplesAmS.size(); j++) {
+        if (samplesAmS.at(j) > plot->maxSamples.at(j))
+            plot->maxSamples.replace(j, expCoeff * samplesAmS.at(j) + (1 - expCoeff) * plot->maxSamples.at(j) + 5);
         else
-            plot->maxSamples.replace(j, (1 - expCoeff) * plot->samplesAmS.at(j) + expCoeff * plot->maxSamples.at(j));
+            plot->maxSamples.replace(j, (1 - expCoeff) * samplesAmS.at(j) + expCoeff * plot->maxSamples.at(j));
     }
 
-    if (number != -1)
-    {
-        plot->curveAmS->setSamples(frequency, plot->samplesAmS);
-        plot->curveMax->setSamples(frequency, plot->maxSamples);
-        plot->replot();
-    }
+    plot->curveAmS->setSamples(frequency, samplesAmS);
+    plot->curveMax->setSamples(frequency, plot->maxSamples);
+    plot->replot();
 }
 
 void SummaryStrategy::update(const int &azHeading, const double &radAm1, const double &radAm2,

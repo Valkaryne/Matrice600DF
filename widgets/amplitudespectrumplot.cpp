@@ -125,9 +125,6 @@ AmplitudeSpectrumPlot::AmplitudeSpectrumPlot(QWidget *parent) :
     for (int i = 0; i < 4096; i++)
     {
         maxSamples.append(0);
-        this->samplesAm1.append(0);
-        this->samplesAm2.append(0);
-        this->samplesAmS.append(0);
     }
 
     for (int i = 1; i <= 5; i++)
@@ -289,9 +286,9 @@ void AmplitudeSpectrumPlot::resetMarkers(double dF)
 }
 
 void AmplitudeSpectrumPlot::updateCurve(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
-                                        const QVector<double> &samplesAmS, const int &number)
+                                        const QVector<double> &samplesAmS)
 {
-    strategy->update(samplesAm1, samplesAm2, samplesAmS, number);
+    strategy->update(samplesAm1, samplesAm2, samplesAmS);
 }
 
 void AmplitudeSpectrumPlot::moveMarkers(const QPoint &pos)

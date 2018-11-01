@@ -13,7 +13,7 @@ class AmplitudeDisplayStrategy
 public:
     virtual ~AmplitudeDisplayStrategy() {}
     virtual void update(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
-                        const QVector<double> &samplesAmS, const int &number) = 0;
+                        const QVector<double> &samplesAmS) = 0;
     virtual void update(const int &azHeading, const double &radAm1, const double &radAm2,
                         const double &radAmS, const double &radPh) = 0;
 

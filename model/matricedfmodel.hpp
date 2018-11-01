@@ -15,17 +15,13 @@ public:
     explicit MatriceDFModel();
 
     /* Setters */
-    void setBand(int band) {
-        if (this->band != band)
-            this->band = band;
-    }
 
-    void setCurrentGain(double gain) {
+    void setCurrentGain(double &gain) {
         if (this->gain != gain)
             this->gain = gain;
     }
 
-    void setRangeBounds(QVector<int> rangeBounds) {
+    void setRangeBounds(QVector<int> &rangeBounds) {
         this->rangeBounds = rangeBounds;
     }
 
@@ -44,22 +40,23 @@ public:
 
 private:
     double phaseCorrectionHandler(const double phase);
+    void prepareLinearSamples(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
+                              const QVector<double> &samplesAmS, const QVector<double> &samplesPh);
+    void preparePolarSamples(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
+                              const QVector<double> &samplesAmS, const QVector<double> &samplesPh);
 
 private slots:
-    void samplesHandler(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
-                        const QVector<double> samplesPh, const int number);
-    void polarSamplesHandler(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
-                             const QVector<double> samplesPh);
+    void samplesHandler(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
+                        const QVector<double> &samplesAmS, const QVector<double> &samplesPh);
 
 signals:
-    void amplitudeSamplesReady(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
-                               const QVector<double> samplesAmS, const int number);
-    void phaseSamplesReady(const QVector<double> samplesPh, const int number);
-    void polarSamplesReady(const int az, const double rado, const double radl, const double rads, const double phase);
-    void phaseDeviationEstimated(const double phDev);
+    void amplitudeSamplesReady(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
+                               const QVector<double> &samplesAmS);
+    void phaseSamplesReady(const QVector<double> &samplesPh);
+    void polarSamplesReady(const int &az, const double &rado, const double &radl, const double &rads, const double &phase);
+    void phaseDeviationEstimated(const double &phDev);
 
 private:
-    int band;
     double gain;
     QVector<int> rangeBounds;
 

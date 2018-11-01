@@ -17,8 +17,7 @@ public:
     void applyUsrpSettings(QVector<double> &settings);
 
     void changeGainParameter(double gain);
-    void changeBandParameter(int band);
-    void changeBoundsParameters(QVector<int> bounds);
+    void changeBoundsParameters(QVector<int> &bounds);
     void updateCurrentHeading(const int &heading);
     void changePhaseCorrection(const double &phaseCorrection);
 
@@ -68,12 +67,12 @@ public:
     void sendStopHotpointRequest();
 
 private slots:
-    void amplitudeSamplesPresenter(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
-                                   const QVector<double> samplesAmS, const int number);
-    void phaseSamplesPresenter(const QVector<double> samplesPh, const int number);
-    void polarSamplesPresenter(const int az, const double rado, const double radl, const double rads,
-                               const double phase);
-    void phaseDeviationPresenter(const double phDev);
+    void amplitudeSamplesPresenter(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
+                                   const QVector<double> &samplesAmS);
+    void phaseSamplesPresenter(const QVector<double> &samplesPh);
+    void polarSamplesPresenter(const int &az, const double &rado, const double &radl, const double &rads,
+                               const double &phase);
+    void phaseDeviationPresenter(const double &phDev);
 
     void changeControlAuthorityStatus(QString textToDisplay);
     void changeInitButton(QString textToDisplay, bool success);
