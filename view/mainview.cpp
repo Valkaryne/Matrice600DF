@@ -268,7 +268,6 @@ void MainView::on_btn_apply_clicked()
     getAmplitudeSpectrumPlot()->setCentralFrequency(ui->sb_frequency->value());
     getPhaseSpectrumPlot()->setCentralFrequency(ui->sb_frequency->value());
     presenter->changeGainParameter(ui->sb_gain->value());
-    presenter->changeBandParameter((int)ui->sb_frequency->value() / 1000);
     presenter->changeBoundsParameters(bounds);
 }
 

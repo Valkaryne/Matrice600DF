@@ -12,14 +12,14 @@ MatriceDFPresenter::MatriceDFPresenter(MainIView *view, QObject *parent) :
 
     //dji->moveToThread((QThread*)this);
 
-    connect(model, SIGNAL(amplitudeSamplesReady(const QVector<double>,const QVector<double>,const QVector<double>,const int)),
-            SLOT(amplitudeSamplesPresenter(const QVector<double>,const QVector<double>,const QVector<double>,const int)));
-    connect(model, SIGNAL(phaseSamplesReady(const QVector<double>,const int)),
-            SLOT(phaseSamplesPresenter(const QVector<double>,const int)));
-    connect(model, SIGNAL(polarSamplesReady(const int,const double,const double,const double,const double)),
-            SLOT(polarSamplesPresenter(const int,const double,const double, const double,const double)));
-    connect(model, SIGNAL(phaseDeviationEstimated(const double)),
-            SLOT(phaseDeviationPresenter(const double)));
+    connect(model, SIGNAL(amplitudeSamplesReady(const QVector<double> &, const QVector<double> &, const QVector<double> &)),
+            SLOT(amplitudeSamplesPresenter(const QVector<double> &, const QVector<double> &, const QVector<double> &)));
+    connect(model, SIGNAL(phaseSamplesReady(const QVector<double> &)),
+            SLOT(phaseSamplesPresenter(const QVector<double> &)));
+    connect(model, SIGNAL(polarSamplesReady(const int &, const double &, const double &, const double &, const double &)),
+            SLOT(polarSamplesPresenter(const int &, const double &, const double &, const double &, const double &)));
+    connect(model, SIGNAL(phaseDeviationEstimated(const double &)),
+            SLOT(phaseDeviationPresenter(const double &)));
 
     connect(dji, SIGNAL(changeControlAuthorityStatus(QString)),
             SLOT(changeControlAuthorityStatus(QString)));
@@ -47,12 +47,7 @@ void MatriceDFPresenter::changeGainParameter(double gain)
     model->setCurrentGain(gain);
 }
 
-void MatriceDFPresenter::changeBandParameter(int band)
-{
-    model->setBand(band);
-}
-
-void MatriceDFPresenter::changeBoundsParameters(QVector<int> bounds)
+void MatriceDFPresenter::changeBoundsParameters(QVector<int> &bounds)
 {
     model->setRangeBounds(bounds);
 }
@@ -236,24 +231,24 @@ void MatriceDFPresenter::sendStopHotpointRequest()
 }
 
 /* Slots */
-void MatriceDFPresenter::amplitudeSamplesPresenter(const QVector<double> samplesAm1, const QVector<double> samplesAm2,
-                                              const QVector<double> samplesAmS, const int number)
+void MatriceDFPresenter::amplitudeSamplesPresenter(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
+                                              const QVector<double> &samplesAmS)
 {
-    view->getAmplitudeSpectrumPlot()->updateCurve(samplesAm1, samplesAm2, samplesAmS, number);
+    view->getAmplitudeSpectrumPlot()->updateCurve(samplesAm1, samplesAm2, samplesAmS);
 }
 
-void MatriceDFPresenter::phaseSamplesPresenter(const QVector<double> samplesPh, const int number)
+void MatriceDFPresenter::phaseSamplesPresenter(const QVector<double> &samplesPh)
 {
-    view->getPhaseSpectrumPlot()->updateCurve(samplesPh, number);
+    view->getPhaseSpectrumPlot()->updateCurve(samplesPh);
 }
 
-void MatriceDFPresenter::polarSamplesPresenter(const int az, const double rado, const double radl, const double rads,
-                                          const double phase)
+void MatriceDFPresenter::polarSamplesPresenter(const int &az, const double &rado, const double &radl, const double &rads,
+                                          const double &phase)
 {
     view->getPolarPlot()->updateDiagram(az,rado,radl,rads,phase);
 }
 
-void MatriceDFPresenter::phaseDeviationPresenter(const double phDev)
+void MatriceDFPresenter::phaseDeviationPresenter(const double &phDev)
 {
     view->displayPhaseDeviation(phDev);
     //view->automaticPathFinder(phDev);
