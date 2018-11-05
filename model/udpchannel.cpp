@@ -1,11 +1,35 @@
 #include "udpchannel.hpp"
 
-UdpChannel::UdpChannel(const QHostAddress &addressSrv, quint16 portSrv,
-                       const QHostAddress &addressClt, quint16 portClt,
-                       QObject *parent) :
-    QObject(parent)
+UdpChannel *UdpChannel::channelInstance = 0;
+UdpChannelDestroyer UdpChannel::channelDestroyer;
+
+UdpChannelDestroyer::~UdpChannelDestroyer()
 {
-    socket = new QUdpSocket(this);
+    delete channelInstance;
+}
+
+void UdpChannelDestroyer::initialize(UdpChannel *channel)
+{
+    channelInstance = channel;
+}
+
+UdpChannel& UdpChannel::getInstance(const QHostAddress &addressSrv, quint16 portSrv,
+                                    const QHostAddress &addressClt, quint16 portClt,
+                                    QObject *parent)
+{
+    if (!channelInstance) {
+        channelInstance = new UdpChannel(parent);
+        channelDestroyer.initialize(channelInstance);
+
+        channelInstance->establishUdpConnection(addressSrv, portSrv, addressClt, portClt);
+    }
+    return *channelInstance;
+}
+
+void UdpChannel::establishUdpConnection(const QHostAddress &addressSrv, quint16 portSrv,
+                                        const QHostAddress &addressClt, quint16 portClt)
+{
+    socket = new QUdpSocket(channelInstance);
     socket->bind(addressSrv, portSrv);
 
     addressSendTo = addressClt;

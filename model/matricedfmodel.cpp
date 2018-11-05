@@ -1,8 +1,13 @@
+/*
+ * TODO: make udpchannel as a singletone with static instance
+ */
+
 #include "matricedfmodel.hpp"
 
 MatriceDFModel::MatriceDFModel()
 {
-    udpChannel = new UdpChannel(QHostAddress(SERVER_IP), SERVER_PORT, QHostAddress(CLIENT_IP), CLIENT_PORT);
+    //udpChannel = new UdpChannel(QHostAddress(SERVER_IP), SERVER_PORT, QHostAddress(CLIENT_IP), CLIENT_PORT);
+    udpChannel = &UdpChannel::getInstance(QHostAddress(SERVER_IP), SERVER_PORT, QHostAddress(CLIENT_IP), CLIENT_PORT);
     qRegisterMetaType<QVector<double>>("QVector<double>");
     connect(udpChannel,SIGNAL(samplesReceived(const QVector<double> &, const QVector<double> &, const QVector<double> &, const QVector<double> &)),
             SLOT(samplesHandler(const QVector<double> &, const QVector<double> &, const QVector<double> &, const QVector<double> &)));
