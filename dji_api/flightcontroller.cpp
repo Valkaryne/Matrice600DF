@@ -212,14 +212,14 @@ void FlightController::resetRoll()
 
 void FlightController::setDefiniteDirection(double &heading)
 {
-    command.flag &= 0xF7;
+    /*command.flag &= 0xF7;
     command.flag |= Control::YawLogic::YAW_ANGLE; // (-180; 180)
 
     command.yaw = heading;
     vehicle->control->flightCtrl(command);
 
     command.flag &= 0xF7;
-    command.flag |= Control::YawLogic::YAW_RATE; // (-36, 36)
+    command.flag |= Control::YawLogic::YAW_RATE; // (-36, 36) */
 }
 
 void FlightController::sendFlightCommand()

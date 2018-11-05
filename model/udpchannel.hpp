@@ -9,13 +9,35 @@ constexpr int PACKAGE_LENGTH = 256;
 constexpr int PACKAGE_NUMBER = 16;
 constexpr int FULL_LENGTH = PACKAGE_LENGTH * PACKAGE_NUMBER;
 
+class UdpChannel;
+
+class UdpChannelDestroyer
+{
+private:
+    UdpChannel *channelInstance;
+public:
+    ~UdpChannelDestroyer();
+    void initialize(UdpChannel* channel);
+};
+
 class UdpChannel : public QObject
 {
     Q_OBJECT
+
+private:
+    static UdpChannel *channelInstance;
+    static UdpChannelDestroyer channelDestroyer;
+protected:
+    UdpChannel(QObject *parent = nullptr) : QObject(parent) { }
+    UdpChannel(const UdpChannel& );
+    UdpChannel& operator=(UdpChannel&);
+    ~UdpChannel() { }
+    friend class UdpChannelDestroyer;
+
 public:
-    explicit UdpChannel(const QHostAddress &addressSrv, quint16 portSrv,
-                        const QHostAddress &addressClt, quint16 portClt,
-                        QObject *parent = nullptr);
+    static UdpChannel& getInstance(const QHostAddress &addressSrv, quint16 portSrv,
+                                   const QHostAddress &addressClt, quint16 portClt,
+                                   QObject *parent = nullptr);
     void sendDatagram(const QVector<double> settings);
 
 signals:
@@ -26,6 +48,8 @@ public slots:
     void readPendingDatagram();
 
 private:
+    void establishUdpConnection(const QHostAddress &addressSrv, quint16 portSrv,
+                                const QHostAddress &addressClt, quint16 portClt);
     int getPackageNumber(QVector<unsigned char> &binaryVector);
     void putSamples(const QVector<double> &srcSamples, QVector<double> &dstSamples, const int &number);
 
