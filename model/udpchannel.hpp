@@ -38,6 +38,7 @@ public:
     static UdpChannel& getInstance(const QHostAddress &addressSrv, quint16 portSrv,
                                    const QHostAddress &addressClt, quint16 portClt,
                                    QObject *parent = nullptr);
+    static UdpChannel& getInstance();
     void sendDatagram(const QVector<double> settings);
 
 signals:

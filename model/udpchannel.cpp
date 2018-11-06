@@ -26,6 +26,13 @@ UdpChannel& UdpChannel::getInstance(const QHostAddress &addressSrv, quint16 port
     return *channelInstance;
 }
 
+UdpChannel& UdpChannel::getInstance()
+{
+    if (channelInstance) {
+        return *channelInstance;
+    }
+}
+
 void UdpChannel::establishUdpConnection(const QHostAddress &addressSrv, quint16 portSrv,
                                         const QHostAddress &addressClt, quint16 portClt)
 {

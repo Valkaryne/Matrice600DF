@@ -6,6 +6,7 @@
 
 #include "../utils/constset.hpp"
 #include "udpchannel.hpp"
+#include "samplespreparator.hpp"
 
 class MatriceDFModel : public QThread
 {
@@ -21,12 +22,12 @@ public:
             this->gain = gain;
     }
 
-    void setRangeBounds(QVector<int> &rangeBounds) {
-        this->rangeBounds = rangeBounds;
+    static void setRangeBounds(QVector<int> &rangeBounds) {
+        MatriceDFModel::rangeBounds = rangeBounds;
     }
 
-    void updateCurrentHeading(const int &heading) {
-        this->heading = heading;
+    static void updateCurrentHeading(const int &heading) {
+        MatriceDFModel::heading = heading;
     }
 
     void setPhaseCorrection(const double &phaseCorrection) {
@@ -34,22 +35,28 @@ public:
     }
 
     /* Getters */
-    UdpChannel* getUdpChannel() {
-        return udpChannel;
+    static UdpChannel* getUdpChannel() {
+        return &UdpChannel::getInstance();
+    }
+
+    static QVector<int> getRangeBounds() {
+        return rangeBounds;
+    }
+
+    static int getCurrentHeading() {
+        return heading;
     }
 
 private:
     double phaseCorrectionHandler(const double phase);
-    void prepareLinearSamples(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
-                              const QVector<double> &samplesAmS, const QVector<double> &samplesPh);
-    void preparePolarSamples(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
-                              const QVector<double> &samplesAmS, const QVector<double> &samplesPh);
 
 private slots:
     void samplesHandler(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
                         const QVector<double> &samplesAmS, const QVector<double> &samplesPh);
 
 signals:
+    void prepareSamples(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
+                        const QVector<double> &samplesAmS, const QVector<double> &samplesPh);
     void amplitudeSamplesReady(const QVector<double> &samplesAm1, const QVector<double> &samplesAm2,
                                const QVector<double> &samplesAmS);
     void phaseSamplesReady(const QVector<double> &samplesPh);
@@ -58,10 +65,10 @@ signals:
 
 private:
     double gain;
-    QVector<int> rangeBounds;
+    static QVector<int> rangeBounds;
 
     double phaseCorrection;
-    int heading;
+    static int heading;
 
     UdpChannel *udpChannel;
 };
