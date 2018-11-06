@@ -10,8 +10,6 @@ MatriceDFPresenter::MatriceDFPresenter(MainIView *view, QObject *parent) :
     model->moveToThread(model);
     model->start();
 
-    //dji->moveToThread((QThread*)this);
-
     connect(model, SIGNAL(amplitudeSamplesReady(const QVector<double> &, const QVector<double> &, const QVector<double> &)),
             SLOT(amplitudeSamplesPresenter(const QVector<double> &, const QVector<double> &, const QVector<double> &)));
     connect(model, SIGNAL(phaseSamplesReady(const QVector<double> &)),
@@ -39,7 +37,7 @@ MatriceDFPresenter::~MatriceDFPresenter()
 
 void MatriceDFPresenter::applyUsrpSettings(QVector<double> &settings)
 {
-    model->getUdpChannel()->sendDatagram(settings);
+    MatriceDFModel::getUdpChannel()->sendDatagram(settings);
 }
 
 void MatriceDFPresenter::changeGainParameter(double gain)

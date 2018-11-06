@@ -39,8 +39,7 @@ SOURCES += \
     widgets/spreadspectrumstrategy.cpp \
     widgets/polarplot.cpp \
     widgets/densehoppingstrategy.cpp \
-    model/linearsamplesmodel.cpp \
-    model/polarsamplesmodel.cpp
+    model/samplespreparator.cpp
 
 HEADERS += \
         $$PWD\view\mainview.hpp \
@@ -60,8 +59,7 @@ HEADERS += \
     widgets/spreadspectrumstrategy.hpp \
     widgets/polarplot.hpp \
     widgets/densehoppingstrategy.hpp \
-    model/polarsamplesmodel.hpp \
-    model/linearsamplesmodel.hpp
+    model/samplespreparator.hpp
 
 FORMS += \
         $$PWD\view\mainview.ui
