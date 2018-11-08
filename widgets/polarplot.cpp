@@ -170,6 +170,7 @@ void PolarPlot::updateDiagram(const int &azHeading, const double &radAm1, const 
                               const double &radAmS, const double &radPh)
 {
     strategy->update(azHeading, radAm1, radAm2, radAmS, radPh);
+    emit polarPlotReady();
 }
 
 void PolarPlot::updateAllyDirection(const int az)

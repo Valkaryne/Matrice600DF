@@ -53,6 +53,7 @@ void UdpChannel::establishUdpConnection(const QHostAddress &addressSrv, quint16 
     }
 
     counter = 0;
+    signalAllowed = true;
 }
 
 void UdpChannel::readPendingDatagram()
@@ -103,13 +104,19 @@ void UdpChannel::readPendingDatagram()
         putSamples(samplesAmS, this->samplesAmS, number);
         putSamples(samplesPh, this->samplesPh, number);
 
-        counter++;
+        //counter++;
 
-        if (counter == 3) {
+        if (signalAllowed) {
             emit samplesReceived(this->samplesAm1, this->samplesAm2, this->samplesAmS, this->samplesPh);
-            counter = 0;
+            signalAllowed = false;
+            //counter = 0;
         }
     }
+}
+
+void UdpChannel::setSignalAllowed()
+{
+    signalAllowed = true;
 }
 
 void UdpChannel::sendDatagram(const QVector<double> settings)

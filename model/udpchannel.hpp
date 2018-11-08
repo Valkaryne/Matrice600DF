@@ -47,6 +47,7 @@ signals:
 
 public slots:
     void readPendingDatagram();
+    void setSignalAllowed();
 
 private:
     void establishUdpConnection(const QHostAddress &addressSrv, quint16 portSrv,
@@ -60,6 +61,7 @@ private:
     quint16          portSendTo;
 
     int counter;
+    bool signalAllowed;
 
     QVector<double> samplesAm1, samplesAm2, samplesAmS, samplesPh;
 };

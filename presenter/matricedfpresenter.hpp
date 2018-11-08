@@ -80,6 +80,8 @@ private slots:
     void changeConnectionButtons();
     void receiveTelemetryData(const QVector<double> &subscribeData);
 
+    void testCat();
+
 private:
     MainIView       *view;
     MatriceDFModel  *model;

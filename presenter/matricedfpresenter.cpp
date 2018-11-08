@@ -29,10 +29,19 @@ MatriceDFPresenter::MatriceDFPresenter(MainIView *view, QObject *parent) :
             SLOT(changeConnectionButtons()));
     connect(dji, SIGNAL(receiveTelemetryData(const QVector<double> &)),
             SLOT(receiveTelemetryData(const QVector<double> &)));
+
+
+
+    //connect(this->view->getPolarPlot(), SIGNAL(polarPlotReady()), this, SLOT(testCat()));
 }
 
 MatriceDFPresenter::~MatriceDFPresenter()
 {
+}
+
+void MatriceDFPresenter::testCat()
+{
+    qDebug() << "I'm a cat";
 }
 
 void MatriceDFPresenter::applyUsrpSettings(QVector<double> &settings)
@@ -244,6 +253,7 @@ void MatriceDFPresenter::polarSamplesPresenter(const int &az, const double &rado
                                           const double &phase)
 {
     view->getPolarPlot()->updateDiagram(az,rado,radl,rads,phase);
+    model->getUdpChannel()->setSignalAllowed();
 }
 
 void MatriceDFPresenter::phaseDeviationPresenter(const double &phDev)

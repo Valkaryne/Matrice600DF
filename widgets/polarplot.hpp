@@ -42,6 +42,7 @@ private slots:
 
 signals:
     void setDirectionRequest(double &direction);
+    void polarPlotReady();
 
 private:
     double estimateZeroPhase(const double azimuth);
