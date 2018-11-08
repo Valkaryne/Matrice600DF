@@ -51,6 +51,8 @@ void UdpChannel::establishUdpConnection(const QHostAddress &addressSrv, quint16 
         samplesAmS.append(0);
         samplesPh.append(0);
     }
+
+    counter = 0;
 }
 
 void UdpChannel::readPendingDatagram()
@@ -101,7 +103,12 @@ void UdpChannel::readPendingDatagram()
         putSamples(samplesAmS, this->samplesAmS, number);
         putSamples(samplesPh, this->samplesPh, number);
 
-        emit samplesReceived(this->samplesAm1, this->samplesAm2, this->samplesAmS, this->samplesPh);
+        counter++;
+
+        if (counter == 3) {
+            emit samplesReceived(this->samplesAm1, this->samplesAm2, this->samplesAmS, this->samplesPh);
+            counter = 0;
+        }
     }
 }
 

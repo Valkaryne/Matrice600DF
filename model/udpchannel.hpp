@@ -59,6 +59,8 @@ private:
     QHostAddress     addressSendTo;
     quint16          portSendTo;
 
+    int counter;
+
     QVector<double> samplesAm1, samplesAm2, samplesAmS, samplesPh;
 };
 

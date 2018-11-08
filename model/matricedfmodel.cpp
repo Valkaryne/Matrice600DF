@@ -26,13 +26,13 @@ MatriceDFModel::MatriceDFModel()
             polarPreparator, SLOT(preparePolarSamples(const QVector<double> &, const QVector<double> &, const QVector<double> &, const QVector<double> &)));
 
     connect(linearPreparator, SIGNAL(amplitudeSamplesReady(const QVector<double> &, const QVector<double> &, const QVector<double> &)),
-            this, SLOT(amplitudeSamplesReady(const QVector<double> &, const QVector<double> &, const QVector<double> &)));
+            this, SIGNAL(amplitudeSamplesReady(const QVector<double> &, const QVector<double> &, const QVector<double> &)));
     connect(linearPreparator, SIGNAL(phaseSamplesReady(const QVector<double> &)),
-            this, SLOT(phaseSamplesReady(const QVector<double> &)));
+            this, SIGNAL(phaseSamplesReady(const QVector<double> &)));
     connect(polarPreparator, SIGNAL(polarSamplesReady(const int &, const double &, const double &, const double &, const double &)),
-            this, SLOT(polarSamplesReady(const int &, const double &, const double &, const double &, const double &)));
+            this, SIGNAL(polarSamplesReady(const int &, const double &, const double &, const double &, const double &)));
     connect(polarPreparator, SIGNAL(phaseDeviationEstimated(const double &)),
-            this, SLOT(phaseDeviationEstimated(const double &)));
+            this, SIGNAL(phaseDeviationEstimated(const double &)));
 
     this->gain = 60;
     this->phaseCorrection = 0;
