@@ -26,58 +26,27 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        $$PWD\view\mainview.cpp \
-    presenter/matricedfpresenter.cpp \
-    model/matricedfmodel.cpp \
-    model/udpchannel.cpp \
-    widgets/spectrumplot.cpp \
-    widgets/amplitudespectrumplot.cpp \
-    widgets/phasespectrumplot.cpp \
-    widgets/twochannelstrategy.cpp \
-    widgets/summarystrategy.cpp \
-    widgets/frequencyhoppingstrategy.cpp \
-    widgets/spreadspectrumstrategy.cpp \
-    widgets/polarplot.cpp \
-    widgets/densehoppingstrategy.cpp \
-    model/samplespreparator.cpp
+    view/mainview.cpp \
+    presenter/mainpresenter.cpp \
+    model/mainmodel.cpp
 
 HEADERS += \
-        $$PWD\view\mainview.hpp \
     view/mainiview.hpp \
-    presenter/matricedfpresenter.hpp \
-    model/matricedfmodel.hpp \
-    model/udpchannel.hpp \
-    utils/constset.hpp \
-    widgets/spectrumplot.hpp \
-    widgets/amplitudespectrumplot.hpp \
-    widgets/phasespectrumplot.hpp \
-    widgets/amplitudedisplaystrategy.hpp \
-    widgets/twochannelstrategy.hpp \
-    widgets/summarystrategy.hpp \
-    widgets/markermovingstrategy.hpp \
-    widgets/frequencyhoppingstrategy.hpp \
-    widgets/spreadspectrumstrategy.hpp \
-    widgets/polarplot.hpp \
-    widgets/densehoppingstrategy.hpp \
-    model/samplespreparator.hpp
+    view/mainview.hpp \
+    presenter/mainpresenter.hpp \
+    model/mainmodel.hpp \
+    utils/template_functions.hpp
 
 FORMS += \
-        $$PWD\view\mainview.ui
+    view/mainview.ui
 
 CONFIG += \
     console \
     qwt \
     qwtpolar
 
-include(dji_api/dji_api.pri)
+#include(dji_api/dji_api.pri)
 
 DISTFILES += \
-    widgets/map/mapview.qml \
-    widgets/map/Marker.qml \
-    widgets/map/Drone.qml \
-    widgets/map/Home.qml \
-    widgets/map/MapComponent.qml
 
 RESOURCES += \
-    widgets/map/map_resources.qrc
-
