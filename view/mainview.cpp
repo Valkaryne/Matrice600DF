@@ -1,8 +1,5 @@
 #include "mainview.hpp"
 
-
-#include <QDebug>
-
 MainView::MainView(QWidget *parent) :
     MainIView (parent)
 {

@@ -2,6 +2,5 @@
 
 MainModel::MainModel()
 {
-    qDebug() << "I'm a cat";
 }
 
