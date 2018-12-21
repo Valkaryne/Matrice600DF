@@ -246,6 +246,26 @@
            </property>
           </widget>
          </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="lbl_df_correction">
+           <property name="text">
+            <string>Correction:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1" colspan="2">
+          <widget class="QSpinBox" name="sb_df_correction">
+           <property name="buttonSymbols">
+            <enum>QAbstractSpinBox::NoButtons</enum>
+           </property>
+           <property name="minimum">
+            <number>-90</number>
+           </property>
+           <property name="maximum">
+            <number>90</number>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
@@ -1237,7 +1257,7 @@ Distance (Drone): 0 m, Distance (Home): 0 m</string>
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="bgr_markers"/>
   <buttongroup name="bgr_modes"/>
+  <buttongroup name="bgr_markers"/>
  </buttongroups>
 </ui>

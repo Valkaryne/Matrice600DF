@@ -245,10 +245,10 @@ void PolarPlot::getDirectionAuto(const QwtPointPolar &point)
     if (zeroPhase < 0) {
         qDebug() << "Nope";
         return;
-    } else if ((zeroPhase < azimuth - 20) || (zeroPhase > azimuth + 20)) {
-        qDebug() << "Nope";
-        return;
-    }
+    } //else if ((zeroPhase < azimuth - 20) || (zeroPhase > azimuth + 20)) {
+        //qDebug() << "Nope";
+        //return;
+    //}
 
     PolarCurveData *data = (PolarCurveData*)(dfVector->data());
     data->clear();

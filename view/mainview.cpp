@@ -405,12 +405,14 @@ void MainView::setHomePoint(QString azimuth, QString lat, QString lng, QString r
     double lat_homePoint = lat.toDouble();
     double lng_homePoint = lng.toDouble();
     double range_homePoint = range.toDouble();
+    double az_homePoint = azimuth.toDouble();
 
     ui->lbl_hpCoordinates->setText(QString("Lat: %1, Lng: %2, Distance: %3 m")
                                    .arg(QString::number(lat_homePoint,'f',6))
                                    .arg(QString::number(lng_homePoint,'f',6))
                                    .arg(QString::number(range_homePoint,'f',2)));
     polarPlot->updateAllyDirection(azimuth.toDouble());
+    real_azimuth = az_homePoint;
 }
 
 void MainView::setPointOnMap(QString lat, QString lng, QString range_dr, QString range_hp)
@@ -475,10 +477,13 @@ void MainView::invokeHotpointInit(QString velocity, QString altitude)
 
 void MainView::makeDirection(double &direction)
 {
+    direction -= ui->sb_df_correction->value();
     QObject *object = map->rootObject();
     QMetaObject::invokeMethod(object, "makeBeam",
                               Q_ARG(QVariant, direction));
-    presenter->sendSetDefinedDirectionRequest(direction);
+    //presenter->sendSetDefinedDirectionRequest(direction);
+    est_azimuth = direction;
+    implement_dog_nail();
 }
 
 void MainView::phaseCorrectionChanged(double phaseCorrection)
@@ -716,6 +721,7 @@ QVector<int> MainView::getSettingsArray()
     settings.append(ui->sb_gain->value());
     settings.append(ui->sb_temp_prod->value());
     settings.append(ui->sb_temp_add->value());
+    settings.append(ui->sb_df_correction->value());
     settings.append(ui->lbltest_phase->text().remove(0,7).toInt());
 
     return settings;
@@ -758,8 +764,9 @@ void MainView::setSettingsArray(QVector<int> settings)
     ui->sb_gain->setValue(settings.at(1));
     ui->sb_temp_prod->setValue(settings.at(2));
     ui->sb_temp_add->setValue(settings.at(3));
+    ui->sb_df_correction->setValue(settings.at(4));
 
-    getPhaseSpectrumPlot()->setPhaseCorrection(settings.at(4));
+    getPhaseSpectrumPlot()->setPhaseCorrection(settings.at(5));
 }
 
 void MainView::setMapSettingsArray(QVector<int> mapSettings)
@@ -798,4 +805,10 @@ void MainView::on_dial_autoSearch_valueChanged(int value)
         presenter->sendAutoRollRequest(1);
     }
     autosearch = true;
+}
+
+
+/* Dog-nail */
+void MainView::implement_dog_nail() {
+    ui->lbl_angerror->setText("Angle Error: " + QString::number(real_azimuth - est_azimuth));
 }

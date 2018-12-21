@@ -141,11 +141,13 @@ Item {
 
     function clearMap() {
         var count = beams.length
-        for (var i = 0; i < count; i++) {
+        map.removeMapItem(beams[count-1])
+        beams.pop()
+        /*for (var i = 0; i < count; i++) {
             map.removeMapItem(beams[i])
             beams[i].destroy()
         }
-        beams = []
+        beams = [] */
     }
 
     function switchProvider()

@@ -124,6 +124,8 @@ private:
     void setSettingsArray(QVector<int> settings);
     void setMapSettingsArray(QVector<int> mapSettings);
 
+    void implement_dog_nail();
+
 private:
     Ui::MainView        *ui;
     MatriceDFPresenter  *presenter;
@@ -141,6 +143,9 @@ private:
     double aaCoeff;
     int channel;
     bool autosearch;
+
+    // dog_nail
+    double real_azimuth, est_azimuth;
 };
 
 #endif // MAINVIEW_HPP
